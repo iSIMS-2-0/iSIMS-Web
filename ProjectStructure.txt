@@ -1,0 +1,51 @@
+/iSIMS2.0/                  # Project root
+├── public/                 # Web‑accessible files
+│   ├── index.php           # Front controller (all requests go through here)
+│   ├── assets/             # CSS, JS, images, fonts
+│   └── .htaccess           # URL rewriting, security headers
+│
+├── src/                    # Application code
+│   ├── Controllers/        # HTTP request handlers
+│   │   └── StudentController.php
+│   │   └── AuthController.php
+│   │
+│   ├── Models/             # Database‑mapped entities
+│   │   └── User.php
+│   │   └── Subject.php
+│   │
+│   ├── Views/              # PHP/HTML templates (or Twig/Blade files)
+│   │   └── layout.php
+│   │   └── dashboard.php
+│   │
+│   ├── Services/           # Business logic, external APIs
+│   │   └── EmailService.php
+│   │   └── AnalyticsService.php
+│   │
+│   └── Helpers/            # Utility functions (e.g. sanitize, auth checks)
+│       └── auth.php
+│
+├── config/                 # Configuration files
+│   ├── config.php          # Main settings (DB credentials via env)
+│   └── routes.php          # URI → Controller mappings
+│
+├── templates/              # Reusable UI fragments (header, footer, nav)
+│   ├── header.php
+│   └── footer.php
+│
+├── tests/                  # Unit & integration tests (PHPUnit)
+│   └── Controllers/
+│   └── Models/
+│
+├── vendor/                 # Composer‑managed libraries
+│
+├── docker/                 # Docker setup (Dockerfile, Compose)
+│   ├── php/                # PHP‑FPM Dockerfile
+│   └── mysql/              # MySQL Dockerfile (if customized)
+│
+├── .env.example            # Sample environment variables
+├── composer.json           # PHP package manifest
+├── docker-compose.yml      # Development / staging stack
+├── .gitignore              # Exclude logs, vendor/, .env
+├── README.md               # Project overview & setup instructions
+└── .github/                
+    └── workflows/          # CI (lint, tests, deploy) configs

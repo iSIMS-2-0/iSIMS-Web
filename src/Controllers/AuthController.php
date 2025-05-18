@@ -16,13 +16,13 @@ class AuthController {
             $user = $userModel->findById($id);
             // Debugging output
             echo "<h2>Debug: User fetched = " . htmlspecialchars(print_r($user, true)) . "</h2>";
-            if ($user && $password === $user['password_hash']) {
+            if ($user && $password === $user['password_hash']) { // checks if the credentials are correct
                 // maybe some redirection to the dashboard
                 // or some other page
                 // For now, just a welcome message
                 // should use a session to store user data
                 // and redirect to a protected page
-                session_start();
+                session_start(); 
                 $_SESSION['user_id'] = $user['id'];
                 $message = "Welcome, " . htmlspecialchars($user['name']) . " (ID: " . htmlspecialchars($user['id']) . ")!";
             } else {

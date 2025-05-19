@@ -17,6 +17,12 @@
         </div>
 
         <div class="userCredentials">
+            <?php if (!empty($error)): ?>
+            <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+            <?php endif; ?>
+            <?php if (!empty($message)): ?>
+                <p style="color:green;"><?= htmlspecialchars($message) ?></p>
+            <?php endif; ?>
             <form method="post" id="login_form">
                 <div class="student_number">
                     <label for="Student Number">Student Number</label>
@@ -37,7 +43,6 @@
                         <p>Forget Pass?</p>
                     </div>
                 </div>
-
                 <button type="submit">Login</button>
             </form>
         </div>

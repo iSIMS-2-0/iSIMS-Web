@@ -1,14 +1,14 @@
-<?php include $_SERVER["DOCUMENT_ROOT"] . "/iSIMS-WEB/templates/header.php"; session_start(); ?> 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/iSIMS-Web/public/assets/CSS/header.css">
     <link rel="stylesheet" href="/iSIMS-Web/public/assets/CSS/login.css">
     <title>Document</title>
 </head>
 <body>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . "/iSIMS-WEB/templates/header.php"; ?> 
         <h1>Login Page</h1>
     <?php if (!empty($error)): ?>
         <p style="color:red;"><?= htmlspecialchars($error) ?></p>

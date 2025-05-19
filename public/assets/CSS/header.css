@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header_container {
+    display: flex;
+    background-image: linear-gradient(to right, #000000 20%, #14346D 80%);
+    padding: 1rem 1rem;
+}
+
+.header_container img {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+}

@@ -1,11 +1,15 @@
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/iSIMS-WEB/templates/header.php"; session_start(); ?> 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/iSIMS-Web/public/assets/CSS/login.css">
+    <title>Document</title>
 </head>
 <body>
-    <h1>Login Page</h1>
+        <h1>Login Page</h1>
     <?php if (!empty($error)): ?>
         <p style="color:red;"><?= htmlspecialchars($error) ?></p>
     <?php endif; ?>
@@ -14,10 +18,10 @@
     <?php endif; ?>
     <form method="post">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" name="username">
         <br>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password">
         <br>
         <button type="submit">Login</button>
     </form>

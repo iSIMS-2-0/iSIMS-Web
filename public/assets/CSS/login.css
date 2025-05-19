@@ -1,10 +1,73 @@
-body{
+body {
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+}
+
+.backgImg {
+    position: fixed;
     width: 100%;
-    height: 100vh;
-    background-image: url('https://i.ibb.co/Cpjm8zfy/iacademy-2-1.jpg') ;
+    height: 100%;
+    background-image: url('http://photos.wikimapia.org/p/00/07/12/10/46_big.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    z-index: -1;
+}
+
+
+.logInContainer {
+    max-width: 450px;
+    margin: 5rem auto;
+    background-color: white;
+    border:#071C41 1px solid;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    display:flex;
+    flex-direction: column;
+}
+
+.title {
+    background-color: #071C41;
+    color: white;
+    padding: .8rem;
+    text-align: left;
+    width: 100%;
+}
+
+.userCredentials{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+}
+
+button {
+    background-color: #071C41;
+    margin: 1rem 6rem;
+    color: white;
+    padding: .5rem;
+    border: none;
+    width: 40%;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+form{
+    width:80%;
+}
+
+#username, #password {
+    width: 100%;
+    padding: .5rem;
+    margin: .5rem 0;
+    border-radius: 6px;
+    border: gray 1px solid;
+}
+
+.loginFeatures{
+    display: flex;
+    margin-top:1rem;
+    gap: 8rem;
 }

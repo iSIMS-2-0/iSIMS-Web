@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="/public/assets/CSS/login.css">
     <title>Document</title>
 </head>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
 <body>
     <div class="backgImg"> </div>
-    <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
 
     <div class="logInContainer">
         <div class="title">
@@ -17,25 +17,23 @@
         </div>
 
         <div class="userCredentials">
-            <?php if (!empty($error)): ?>
-            <p style="color:red;"><?= htmlspecialchars($error) ?></p>
-            <?php endif; ?>
-            <?php if (!empty($message)): ?>
-                <p style="color:green;"><?= htmlspecialchars($message) ?></p>
-            <?php endif; ?>
-            <form method="post">
-                <h2>Student Number</h2>
-                <input type="text" id="username" name="username" placeholder="student number">
+            <form method="post" id="login_form">
+                <div class="student_number">
+                    <label for="Student Number">Student Number</label>
+                    <input type="text" id="username" name="username" placeholder="student number">
+                </div>
 
-                <h2>Password</h2>
-                <input type="password" id="password" name="password" placeholder="password">
+                <div class="password">
+                    <label for="Password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="password">
+                </div>
 
-                <div class="loginFeatures">
-                    <div class="rememberMe">
+                <div class="login_features">
+                    <div class="remember_me">
                         <input type="checkbox" id="remember" name="remember" value="Agree">
                         <label for="terms">Remember Me</label>
                     </div>
-                    <div class="forgetPass">
+                    <div class="forget_password">
                         <p>Forget Pass?</p>
                     </div>
                 </div>

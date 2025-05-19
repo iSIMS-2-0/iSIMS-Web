@@ -84,7 +84,14 @@ label{
 
 @font-face {
     font-family: 'Degular Demo';
-    src: url(C:\Users\LENOVO\Documents\iSIMS-Web\public\assets\Fonts\DegularDemo-Regular.otf) format('opentype');
-    font-weight: normal;
+    src: url('../Fonts/DegularDemo-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Degular Demo';
+    src: url('../Fonts/DegularDemo-Regular.otf') format('opentype');
+    font-weight: 400;
     font-style: normal;
 }

@@ -9,8 +9,8 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 // Simple router
-$uri = $_SERVER['REQUEST_URI'];
-echo "<h2>Debug: URI = " . htmlspecialchars($uri) . "</h2>";
+// $uri = $_SERVER['REQUEST_URI'];
+// echo "<h2>Debug: URI = " . htmlspecialchars($uri) . "</h2>";
 $controller = new AuthController($pdo);
 $controller->login();
 ?>

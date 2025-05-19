@@ -15,7 +15,7 @@ class AuthController {
             $userModel = new User($this->pdo);
             $user = $userModel->findById($id);
             // Debugging output
-            echo "<h2>Debug: User fetched = " . htmlspecialchars(print_r($user, true)) . "</h2>";
+            // echo "<h2>Debug: User fetched = " . htmlspecialchars(print_r($user, true)) . "</h2>";
             if ($user && $password === $user['password_hash']) { // checks if the credentials are correct
                 // maybe some redirection to the dashboard
                 // or some other page

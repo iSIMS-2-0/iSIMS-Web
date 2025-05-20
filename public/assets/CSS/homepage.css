@@ -1,14 +1,13 @@
 
 body{
-    height: 100vh; /* max-height; 100vh; to dati */
-    /* background-color: aqua; */
+   max-height: 100vh;
 }
 
 .mainContainer{
     display: flex;
     background-color: var(--white);
     width:100%;
-    height: 100%; /* calc(100vh - 100px); to dati */
+    height: calc(100vh - 100px);
     font-family: 'Degular Demo', sans-serif;
 }
 

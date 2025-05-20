@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="/public/assets/CSS/login.css">
     <title>Document</title>
 </head>
-    <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
+    
 <body>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
     <div class="backgImg"> </div>
 
     <div class="logInContainer">

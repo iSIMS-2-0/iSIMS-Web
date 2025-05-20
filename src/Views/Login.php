@@ -41,7 +41,7 @@
                         <label for="terms">Remember Me</label>
                     </div>
                     <div class="forget_password">
-                        <p>Forget Pass?</p>
+                        <a href="#">Forget Pass?</a>
                     </div>
                 </div>
                 <button type="submit">Login</button>

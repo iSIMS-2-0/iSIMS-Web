@@ -1,20 +1,19 @@
+
 body{
-    margin: 0;
-    padding: 0;
-    max-height: 100vh;
-    background-color: aqua;
+    height: 100vh; /* max-height; 100vh; to dati */
+    /* background-color: aqua; */
 }
 
 .mainContainer{
     display: flex;
-    background-color: white;
+    background-color: var(--white);
     width:100%;
-    height: calc(100vh - 100px);
+    height: 100%; /* calc(100vh - 100px); to dati */
     font-family: 'Degular Demo', sans-serif;
 }
 
 .navBar{
-    background-color: #071C41;
+    background-color: var(--deep-navy);
     width: 20%;
     margin: 1rem;
     padding: 1rem;
@@ -37,7 +36,7 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     height:35%;
-    color: white;
+    color: var(--white);
     padding: 1rem;
     font-size: 2rem;
     display: flex;
@@ -55,7 +54,7 @@ body{
 }
 
 .announcements, .remarks, .calendar{
-    background-color: white;
+    background-color: var(--white);
     padding: 1.5rem;
     width:32%;
     height:100%; 

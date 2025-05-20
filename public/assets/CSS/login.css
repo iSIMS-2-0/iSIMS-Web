@@ -1,6 +1,4 @@
 body {
-    margin: 0;
-    padding: 0;
     max-height: 100vh;
     overflow:hidden;
 }
@@ -26,7 +24,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: white;
-    border: #071C41 1px solid;
+    border: var(--deep-navy) 1px solid;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     font-family: 'Degular Demo', sans-serif;
 }
@@ -34,8 +32,8 @@ body {
 
 .title {
     width: 100%;
-    color: white;
-    background-color: #071C41;
+    color: var(--white);
+    background-color: var(--deep-navy);
     padding: 1rem;
 }
 
@@ -69,7 +67,7 @@ body {
 }
 
 button {
-    background-color: #071C41;
+    background-color: var(--deep-navy);
     margin: 1rem auto;
     color: white;
     padding: .5rem;
@@ -90,18 +88,4 @@ label{
 
 .forget_password a{
     text-decoration: none;
-}
-
-@font-face {
-    font-family: 'Degular Demo';
-    src: url('../Fonts/DegularDemo-Black.otf') format('opentype');
-    font-weight: 900;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Degular Demo';
-    src: url('../Fonts/DegularDemo-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
 }

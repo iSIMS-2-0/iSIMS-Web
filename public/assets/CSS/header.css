@@ -5,7 +5,7 @@
 }
 
 .header_container {
-    background-image: linear-gradient(to right, #000000 20%, #14346D 80%);
+    background-image: linear-gradient(to right, var(--black) 20%, var(--dark-blue) 80%);
     height: 100px;
     padding: 1rem;
 }

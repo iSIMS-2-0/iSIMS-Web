@@ -9,7 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    <?php include $_SERVER["DOCUMENT_ROOT"] . "templates/header.php"; ?>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
     <div class="mainContainer">
         <div class="navBar"> 
             <!--Thinking na each section title, may sariling div kase may icon pa, instead na patong patong lang na text href -->

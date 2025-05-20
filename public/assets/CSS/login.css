@@ -1,4 +1,11 @@
-.background_image {
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow:hidden;
+}
+
+.backgImg {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -9,22 +16,22 @@
     z-index: -1;
 }
 
-.main_content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 150px); 
-}
-
-.login_container{
-    width: 100%;
+.logInContainer {
+    position: absolute;
+    top: calc(50% + 50px); 
+    left: 50%;
+    transform: translate(-50%, -50%);
     max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     background-color: white;
     border: #071C41 1px solid;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
+    font-family: 'Degular Demo', sans-serif;
+    z-index: 1;
 }
+
 
 .title {
     width: 100%;
@@ -33,35 +40,36 @@
     padding: 1rem;
 }
 
-
-#login_form {
-    width: 80%;
+.userCredentials{
+    width:100%;
     display: flex;
     flex-direction: column;
-    margin: 0 auto; 
+    align-items: center; 
 }
 
-label{
-    margin-top: 1.5rem;
-    font-size: 1.2rem;
+#login_form{
+    width: 60%;
 }
 
-input[type="text"],
-input[type="password"] {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+.student_number, .password{
+    margin: 1.5rem 0;
+}
+
+#username, #password {
+    width: 100%;
+    padding: .5rem;
+    border-radius: 5px;
+    border: gray 1px solid;
 }
 
 .login_features{
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
+    font-size: 1.2rem;
 }
 
-.button {
+button {
     background-color: #071C41;
     margin: 1rem auto;
     color: white;
@@ -75,6 +83,10 @@ input[type="password"] {
     justify-content: center;
     font-family: 'Degular Demo', sans-serif;
     margin-bottom: 1.8rem;
+}
+
+label{
+    font-size: 1.2rem;
 }
 
 @font-face {

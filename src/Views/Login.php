@@ -3,51 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/assets/CSS/base.css">
-    <link rel="stylesheet" href="/public/assets/CSS/header.css">
-    <link rel="stylesheet" href="/public/assets/CSS/login.css">
+    <link rel="stylesheet" href="/public/assets/CSS/main.css">
     <title>Document</title>
 </head>
-    
 <body>
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
-    <div class="backgImg"> </div>
+    <section class="background_image"></section>
 
-    <div class="logInContainer">
-        <div class="title">
+    <main class="login_container">
+        <header class="title">
             <h1>Login</h1>
-        </div>
+        </header>
 
-        <div class="userCredentials">
+        <section class="user_credentials">
             <?php if (!empty($error)): ?>
-            <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+                <p style="color:red;"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
+            
             <?php if (!empty($message)): ?>
                 <p style="color:green;"><?= htmlspecialchars($message) ?></p>
             <?php endif; ?>
+
             <form method="post" id="login_form">
-                <div class="student_number">
-                    <label for="Student Number">Student Number</label>
-                    <input type="text" id="username" name="username" placeholder="student number">
+                <div class="username_field">
+                    <label for="username">Student Number</label>
+                    <input type="text" id="username" name="username" placeholder="student number" required>
                 </div>
 
-                <div class="password">
-                    <label for="Password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="password">
+                <div class="password_field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="password" required>
                 </div>
 
                 <div class="login_features">
                     <div class="remember_me">
                         <input type="checkbox" id="remember" name="remember" value="Agree">
-                        <label for="terms">Remember Me</label>
+                        <label for="remember">Remember Me</label>
                     </div>
+
                     <div class="forget_password">
-                        <a href="#">Forget Pass?</a>
+                        <a href="#">Forget Password?</a>
                     </div>
                 </div>
-                <button type="submit">Login</button>
+                 
+                <button type="submit" class="submit">Submit</button>
             </form>
-        </div>
-    </div>
+
+        </section>
+
+    </main>
 </body>
 </html>

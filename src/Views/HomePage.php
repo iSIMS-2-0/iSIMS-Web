@@ -3,16 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/assets/CSS/base.css">
-    <link rel="stylesheet" href="/public/assets/CSS/header.css">
-    <link rel="stylesheet" href="/public/assets/CSS/homepage.css">
+    <link rel="stylesheet" href="/public/assets/CSS/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Document</title>
 </head>
 <body>
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
     <div class="mainContainer">
         <div class="navBar"> 
-            <!--Thinking na each section title, may sariling div kase may icon pa, instead na patong patong lang na text href -->
+            <ul class="navBar__list">
+                <h3><li class="navbar__item"> <a href="#">PROFILE</a></li></h3>
+                <h3><li class="navbar__item"> <a href="#">REGISTRATION</a></li>
+                <h3><li class="navbar__item"> <a href="#">CURRICULUM</a></li>
+                <h3><li class="navbar__item"> <a href="#">SCHEDULE</a></li>
+                <h3><li class="navbar__item"> <a href="#">GRADES</a></li>
+                <h3><li class="navbar__item"> <a href="#">ELECTRONIC REGISTRATION FORM</a></li>
+                <h3><li class="navbar__item"> <a href="#">ONLINE PAYMENT</a></li>
+                <h3><li class="navbar__item"> <a href="#">PAYMENT HISTORY</a></li>
+                <h3><li class="navbar__item"> <a href="#">CONCERNS AND FEEDBACK</a></li>
+            </ul>
+            <div class="logout_button">
+                <a href="#" class="navbar__logout">LOGOUT</a>
+            </div>
         </div>
         <div class="contents">
             <div class="welcomeMessage">

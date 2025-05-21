@@ -1,8 +1,4 @@
-
-body{
-   max-height: 100vh;
-}
-
+/* ==== Body Container==== */
 .mainContainer{
     display: flex;
     background-color: var(--white);
@@ -11,16 +7,41 @@ body{
     font-family: 'Degular Demo', sans-serif;
 }
 
+/* ==== Navigation Bar Styling ==== */
 .navBar{
-    background-color: var(--deep-navy);
     width: 20%;
+    background-color: var(--deep-navy);
     margin: 1rem;
-    padding: 1rem;
+    padding: 2rem 2rem;
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
 }
 
+
+.navBar__list{
+    list-style: none;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.navBar__list a , .navbar__logout{
+    text-decoration: none;
+    color: var(--white);
+}
+
+.navbar__logout{
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+.logout_button{
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto;
+}
+
+/* ==== Main Content Area ==== */
 .contents{
     width: 80%;
     margin: 1rem;
@@ -52,7 +73,9 @@ body{
     justify-content: space-between;
 }
 
-.announcements, .remarks, .calendar{
+.announcements, 
+.remarks, 
+.calendar{
     background-color: var(--white);
     padding: 1.5rem;
     width:32%;

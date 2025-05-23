@@ -54,7 +54,7 @@
 /* Nav Bar Effects */
 .sidebar:hover,
 .sidebar.expanded{
-    width: 15%;
+    width: 16%;
 }
 
 .sidebar:hover .navItem,
@@ -95,7 +95,7 @@
 }
 
 .navList::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
 }
 .navList::-webkit-scrollbar-thumb {
     background-color: var(--gray);

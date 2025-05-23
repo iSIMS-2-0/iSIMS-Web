@@ -94,11 +94,20 @@
 }
 
 .navList::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
 }
 .navList::-webkit-scrollbar-thumb {
-    background-color: var(--slate-blue);
+    background-color: var(--gray);
+    border: 1.5px solid var(--dark-gray);
 }
 .navList::-webkit-scrollbar-track {
     background-color: var(--dark-blue);
 }
+
+.sidebar:hover .navItem,
+.sidebar.expanded .navItem, 
+.sidebar:hover .navLogout,
+.sidebar.expanded .navLogout {
+    border-top: 1px solid var(--slate-blue);
+}
+

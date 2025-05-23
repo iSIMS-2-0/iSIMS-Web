@@ -1,7 +1,7 @@
 function toggleDropdown(id) {
 
     const dropdown = document.getElementById(id);
-    const sidebar = document.getElementById("sidebar");
+    const sidebar = document.getElementById("navBar");
     const navItem = dropdown.previousElementSibling;  // the .navItem before dropdown
 
     if (dropdown.classList.contains("visible")) {

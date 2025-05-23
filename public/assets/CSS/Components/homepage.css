@@ -1,13 +1,12 @@
 /* ==== Body Container==== */
-/* .mainContainer{
+.mainContainer{
     display: flex;
     background-color: var(--white);
-    width:(100vw - 130px);
-    margin-left: 130px;
+    width: 100%;
     height: calc(100vh - 100px);
+    padding-left: 130px;
     font-family: 'Degular Demo', sans-serif;
-} */
-
+}
 
 /* ==== Main Content Area ==== */
 .contents{

@@ -4,28 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/assets/CSS/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script defer src="/public/assets/JavaScript/sidebar.js"></script>
     <title>Document</title>
 </head>
 <body>
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
     <div class="mainContainer">
-        <div class="navBar"> 
-            <ul class="navBar__list">
-                <h3><li class="navbar__item"> <a href="#">PROFILE</a></li></h3>
-                <h3><li class="navbar__item"> <a href="#">REGISTRATION</a></li>
-                <h3><li class="navbar__item"> <a href="#">CURRICULUM</a></li>
-                <h3><li class="navbar__item"> <a href="#">SCHEDULE</a></li>
-                <h3><li class="navbar__item"> <a href="#">GRADES</a></li>
-                <h3><li class="navbar__item"> <a href="#">ELECTRONIC REGISTRATION FORM</a></li>
-                <h3><li class="navbar__item"> <a href="#">ONLINE PAYMENT</a></li>
-                <h3><li class="navbar__item"> <a href="#">PAYMENT HISTORY</a></li>
-                <h3><li class="navbar__item"> <a href="#">CONCERNS AND FEEDBACK</a></li>
-            </ul>
-            <div class="logout_button">
-                <a href="#" class="navbar__logout">LOGOUT</a>
-            </div>
-        </div>
+        <aside class="nav_bar" id="sidebar">
+                <div class="nav_item">
+                    <i class="fa-solid fa-house fa-lg"></i>
+                    <p>HOME</p>
+                </div>
+
+                <div class="nav_item" onclick="toggleDropdown('profile')">
+                    <i class="fa-solid fa-user fa-lg"></i>
+                    <p>PROFILE</p>
+                </div>
+                <div id="profile" class="dropdown">
+                    <a href="#"><p>Student Profile</p></a>
+                    <a href="#"><p>Grades </p></a>
+                    <a href="#"><p>Schedule</p></a>
+                </div>
+
+                <div class="nav_item" onclick="toggleDropdown('enrollment')">
+                    <i class="fa-solid fa-user fa-lg"></i>
+                    <p>ENROLLMENT</p>
+                </div>
+                <div id="enrollment" class="dropdown">
+                    <a href="#"><p>Student Profile</p></a>
+                    <a href="#"><p>Grades </p></a>
+                    <a href="#"><p>Schedule</p></a>
+                </div>
+
+                <div class="nav_item" onclick="toggleDropdown('payment')">
+                    <i class="fa-solid fa-user fa-lg"></i>
+                    <p>PAYMENT</p>
+                </div>
+                <div id="payment" class="dropdown">
+                    <a href="#"><p>Student Profile</p></a>
+                    <a href="#"><p>Grades </p></a>
+                    <a href="#"><p>Schedule</p></a>
+                </div>
+
+                <div class="nav_item" onclick="toggleDropdown('concernsfeedback')">
+                    <i class="fa-solid fa-user fa-lg"></i>
+                    <p>CONCERNS/<br>FEEDBACK</p>
+                </div>
+                <div id="concernsfeedback" class="dropdown">
+                    <a href="#"><p>Student Profile</p></a>
+                    <a href="#"><p>Grades </p></a>
+                    <a href="#"><p>Schedule</p></a>
+                </div>
+                <div class="logout_button">
+                    <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+                    <a href="#"><p>LOGOUT</p></a>
+                </div>
+        </aside>    
+
         <div class="contents">
             <div class="welcomeMessage">
                 <p>Welcome, [First Name][Last Name]</p> <!-- di naka h kase para di naka bold, pero pwede rin h tas set lang font weight -->

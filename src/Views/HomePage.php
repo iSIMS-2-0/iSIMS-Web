@@ -11,6 +11,7 @@
 <body>
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/navBar.php"; ?>  
+
     <div class="mainContainer">  
         <div class="contents">
             <div class="welcomeMessage">

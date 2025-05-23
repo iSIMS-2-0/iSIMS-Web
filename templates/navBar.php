@@ -1,11 +1,12 @@
-<aside id="navBar" class="navBar">
+<aside id="sidebar" class="sidebar">
     <div class="navList">
         <div class="navItem">
             <i class="fa-solid fa-house fa-lg"></i>
             <p>HOME</p>
         </div>
 
-        <div class="navItem" onclick="toggleDropdown('profile')">
+        <!-- PROFILE -->
+        <div class="navItem" onclick="toggleDropdown('profile', this)">
             <i class="fa-solid fa-user fa-lg"></i>
             <p>PROFILE</p>
             <div class="arrowIcon">
@@ -15,10 +16,11 @@
         <div id="profile" class="dropdown">
             <a href="#"><p>| Student Profile</p></a>
             <a href="#"><p>| Grades </p></a>
-            <a href="#"><p>| Class Schedule</p></a>
+            <a href="#"><p>| Schedule</p></a>
         </div>
 
-        <div class="navItem" onclick="toggleDropdown('registration')">
+        <!-- REGISTRATION -->
+        <div class="navItem" onclick="toggleDropdown('registration', this)">
             <i class="fa-solid fa-file-invoice fa-lg"></i>
             <p>REGISTRATION</p>
             <div class="arrowIcon">
@@ -30,11 +32,12 @@
             <a href="#"><p>| Manage Section</p></a>
         </div>
 
-        <div class="navItem" onclick="toggleDropdown('payment')">
+        <!-- PAYMENT -->
+        <div class="navItem" onclick="toggleDropdown('payment', this)">
             <i class="fa-solid fa-credit-card fa-lg"></i>
             <p>PAYMENT</p>
             <div class="arrowIcon">
-                <i class="fa-solid fa-caret-right fa-lg"></i>
+                <i class="fa-solid fa-caret-right fa-lg dropdown"></i>
             </div>
         </div>
         <div id="payment" class="dropdown">
@@ -42,7 +45,8 @@
             <a href="#"><p>| Online payment</p></a>
             <a href="#"><p>| Payment History</p></a>
         </div>
-        
+                
+        <!-- CONCERNS/FEEDBACK -->
         <div class="navItem">
             <i class="fa-solid fa-circle-exclamation fa-lg"></i>
             <p>CONCERNS/<br>FEEDBACK</p>
@@ -54,3 +58,4 @@
         <p>LOGOUT</p>
     </div>
 </aside>
+

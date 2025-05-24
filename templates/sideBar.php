@@ -14,9 +14,9 @@
             </div>
         </div>
         <div id="profile" class="dropdown">
-            <a href="#"><p>| Student Profile</p></a>
-            <a href="#"><p>| Grades </p></a>
-            <a href="#"><p>| Schedule</p></a>
+            <a href="#"><p>Student Profile</p></a>
+            <a href="#"><p>Grades </p></a>
+            <a href="#"><p>Schedule</p></a>
         </div>
 
         <!-- REGISTRATION -->
@@ -28,8 +28,8 @@
             </div>
         </div>
         <div id="registration" class="dropdown">
-            <a href="#"><p>| Curriculum</p></a>
-            <a href="#"><p>| Manage Section</p></a>
+            <a href="#"><p>Curriculum</p></a>
+            <a href="#"><p>Manage Section</p></a>
         </div>
 
         <!-- PAYMENT -->
@@ -41,9 +41,9 @@
             </div>
         </div>
         <div id="payment" class="dropdown">
-            <a href="#"><p>| Electronic Registration Form</p></a>
-            <a href="#"><p>| Online payment</p></a>
-            <a href="#"><p>| Payment History</p></a>
+            <a href="#"><p>Electronic Registration Form</p></a>
+            <a href="#"><p>Online payment</p></a>
+            <a href="#"><p>Payment History</p></a>
         </div>
                 
         <!-- CONCERNS/FEEDBACK -->

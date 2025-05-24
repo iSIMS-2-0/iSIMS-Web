@@ -88,10 +88,24 @@
 .dropdown a:hover{
     text-decoration: underline;
     color: white;
+    text-underline-offset: 4px;
 }
 
 .dropdown a p {
+    position: relative;
     padding: 0.5rem 1rem; 
+    margin: 10px;
+    border-left: none; 
+}
+
+.dropdown a p::before {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    top: 30%;         
+    height: 42%;      
+    width: 1px;
+    background: var(--white);
 }
 
 .navList::-webkit-scrollbar {

@@ -54,7 +54,10 @@
     </div>
 
     <div class="navLogout">
+        <a href="/public/logout.php">
         <i class="fa-solid fa-right-from-bracket fa-lg"></i>
         <p>LOGOUT</p>
+        </a>
     </div>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/loadingOverlay.php"; ?>
 </aside>

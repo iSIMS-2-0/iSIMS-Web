@@ -1,0 +1,75 @@
+- Hash Passwords
+
+Strong Hashing Algorithm Like bcrypt, argon2 or password_hash() in PHP
+
+- Verify Passwords:
+use password_verify() to comapre the hashed password with the user input.
+
+Do we store hashed password in database?
+- hashed passwords should always be stored in the database instead of plain-text passwords. Hashing ensures that even if the database is compromised, the actual passwords are not exposed.
+
+Why Use Hashing?
+One-Way Encryption: Hashing is irreversible, meaning you cannot retrieve the original password from the hash.
+Security: Even if attackers gain access to the database, they cannot easily reverse the hash to get the password.
+
+HTTPS:
+
+- Use HTTPS to encrypt data transmitted between the client and server.
+- Prevents Attackers from intercepting sensitive information like passwords.
+
+Rate Limiting:
+What is Rate Limiting?
+-
+
+- Prevent Brute-Force Attacks by limiting the number of login attempts per user or IP Address.
+- Use Tools like reCAPTCHA or implement a delay after multiple failed attemps.
+
+Use prepared statements.
+- Prevents SQL Injection by using prepared statements or an ORM.
+
+Secure Sessions:
+- Regenerate the session id after login to prevent session fixation attacks.
+
+```php
+session_start();
+session_regenerate_id(true);
+```
+
+Set Secure Session Cookies.
+Use the secure and HttpOnly flags for cookies.
+
+```php
+ini_set('session.cookie_secure', 1); // Only send cookies over HTTPS
+ini_set('session.cookie_httponly', 1); // Prevent JavaScript access to cookies
+```
+
+Protect Against Cross-Site Scripting (XSS)
+- Sanitize and escape all user inputs and outputs
+- Use ```htmlspecialchars``` in PHP to espace special characters.
+
+```php
+echo htmlspecialchars($userInput, ENT_QUOTES, 'UTF-8');
+```
+
+
+Provide Secure "Remember Me" Functionality
+- Use a secure, hashed token for "Remember Me" functionality instead of storing plain credentials.
+- Store the token in a secure cookie and validate it on the server.
+
+Log Authentication Events
+- Log Important Events like:
+    - Successful and Failed Login Attempts.
+    - Password Changes.
+    - Account lockouts.
+- Use these logs to detect suspicious activity.
+
+
+Implement Account Lockout
+- Temporarily lock accounts after multiple failed login attempts to prevent brute-force attacks.
+
+Test for Vulnerabilites
+- Regularly Test Authentication system for vulnerabilites like:
+    - SQL Injection
+    - XSS
+    - CSRF.
+    - Brute-Force attacks.

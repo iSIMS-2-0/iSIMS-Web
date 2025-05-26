@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/assets/CSS/main.css">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
     <section class="background_image"></section>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
 
     <main class="login_container">
         <header class="title">
@@ -52,5 +57,6 @@
         </section>
 
     </main>
+    <script defer src="/public/assets/JavaScript/login.js"></script>
 </body>
 </html>

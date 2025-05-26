@@ -1,3 +1,3 @@
 <header class="header_container">
-   <img src="assets/Pictures/logo.svg" alt="iACADEMY Logo">
+   <img src="/public/assets/Pictures/logo.svg" alt="iACADEMY Logo">
 </header>

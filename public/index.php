@@ -13,6 +13,4 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // echo "<h2>Debug: URI = " . htmlspecialchars($uri) . "</h2>";
 $controller = new AuthController($pdo);
 $controller->login();
-// $userModel = new User($pdo);
-// $userModel->createUser(202301043, 'securepassword123');
 ?>

@@ -22,7 +22,7 @@ class AuthController {
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['last_activity'] = time(); // Set the last activity time
                 header("Location: /src/Views/HomePage.php"); // Redirect to HomePage.php
-                exit(); // Ensure no further code is executed
+                exit(); 
             } else {
                 $error = "Invalid ID or password.";
             }

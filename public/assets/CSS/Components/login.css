@@ -25,6 +25,30 @@
     font-family: 'Degular Demo', sans-serif;
 }
 
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    flex: 1;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    /* font-size: 1.2rem; */
+    color: gray;
+}
+
+.toggle-password:hover {
+    color: var(--deep-navy); /* Adjust hover color */
+}
+
 /* ==== form header title ==== */
 .title{
     color: var(--white);

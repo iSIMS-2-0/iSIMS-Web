@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/assets/CSS/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Login</title>
 </head>
 <body>
@@ -37,7 +38,12 @@
 
                 <div class="password_field">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="password" required>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" placeholder="password" required>
+                        <button type="button" id="togglePassword" class="toggle-password">
+                            <i class="fa-solid fa-eye"></i> <!-- Font Awesome icon -->
+                        </button>
+                    </div>
                 </div>
 
                 <div class="login_features">

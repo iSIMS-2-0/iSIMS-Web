@@ -51,6 +51,37 @@
     cursor: pointer;
 }
 
+/* Logout Button Link */
+.navLogout a {
+    text-decoration: none; /* Remove underline */
+    color: var(--white); /* Set text color */
+    background-color: transparent; /* Make background transparent */
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column; /* Stack icon and text vertically */
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Add spacing between icon and text */
+    transition: all 0.3s ease;
+}
+
+/* Remove purple visited link styling */
+.navLogout a:visited {
+    color: var(--white); /* Ensure visited links remain white */
+}
+
+/* Hover Effect for Logout Button */
+.navLogout a:hover {
+    background-color: var(--slate-blue); /* Add hover background color */
+    color: var(--white); /* Keep text color white */
+    cursor: pointer;
+}
+
+/* Icon inside Logout Button */
+.navLogout a i {
+    font-size: 1.5rem;
+}
+
 /* Nav Bar Effects */
 .sidebar:hover,
 .sidebar.expanded{

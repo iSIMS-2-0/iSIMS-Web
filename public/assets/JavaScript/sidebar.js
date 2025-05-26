@@ -64,3 +64,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const logoutButton = document.getElementById("logoutButton");
+    const loadingOverlay = document.getElementById("loadingOverlay");
+
+    logoutButton.addEventListener("click", (e) => {
+        e.preventDefault(); // Prevent immediate navigation
+        loadingOverlay.classList.add("active"); // Show the loading overlay
+
+        // Redirect to the logout page after a short delay
+        setTimeout(() => {
+            window.location.href = logoutButton.href;
+        }, 1000); // 1-second delay
+    });
+});

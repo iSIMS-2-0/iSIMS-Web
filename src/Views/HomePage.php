@@ -1,7 +1,7 @@
 <?php
-session_start();
+//session_start();
 // Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
+/*if (!isset($_SESSION['user_id'])) {
     header("Location: /public/index.php?message=Please log in to access this page.");
     exit();
 }
@@ -15,16 +15,16 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
     exit();
 }
 // Update last activity time
-$_SESSION['last_activity'] = time();
+$_SESSION['last_activity'] = time();*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="/public/assets/CSS/main.css">
     <script defer src="/public/assets/JavaScript/sidebar.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <title>Home</title>
 </head>
 <body>

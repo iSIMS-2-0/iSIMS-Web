@@ -1,0 +1,136 @@
+.backgroundImage{
+    width: 100vw;
+    height: calc(100vh - 100px);
+    background-image: url('https://i.ibb.co/gbq3hzGm/Background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    z-index: -1;
+}
+
+.loginContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: clamp(300px, 60%, 500px);    
+    background-color: var(--white);
+    border: var(--deep-navy) 1px solid;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
+    top: calc(50% + 25px); 
+    left: 50%;
+    position: absolute;
+}
+
+
+/* Login Heading */
+.title{
+    background-color: var(--deep-navy);
+    color: var(--white);
+    padding: 1rem;
+    font-size: clamp(.8rem, 1vw, 1.5rem);
+}
+
+
+/* Login Container */
+.userCredentials{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.usernameField,
+.passwordField{
+    margin: 1.3rem 0; 
+}
+
+
+/* Login Features */
+.loginOptions{
+    display: flex;
+    justify-content: space-between;
+    margin: 1.3rem 0;
+}
+
+.rememberMe{
+    display: flex;
+    align-items: center; 
+    justify-content: center;  
+    gap: 0.25rem;
+}
+
+.rememberMe input{
+    width: 1rem;
+    height: 1rem;
+}
+
+.forgotPassword a{
+    text-decoration: none;
+    color: black;
+    font-size: clamp(.8rem, 1.25vw, 1.5rem);    
+} 
+
+.submit{
+    width: 50%;
+    border: none;
+    color: white;
+    background-color: var(--deep-navy);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    padding: .5rem;
+    margin: 1.3rem auto;
+    font-size: clamp(.8rem, 1.25vw, 1.5rem);
+}
+
+
+/* Form */
+#loginForm{
+    width: 80%;
+}
+
+label{
+    font-size: clamp(.8rem, 1.25vw, 1.5rem);
+}
+
+#username, #password {
+    width: 100%;
+    padding: .5rem;
+    border-radius: 5px;
+    border: gray 1px solid;
+}
+
+
+/* Eye Icon */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: gray;
+}
+
+
+/* Effects */
+.forgotPassword a:hover{
+    color: var(--slate-blue);
+}
+
+.submit:hover{
+    background-color: var(--vivid-medium-blue);
+    transition: background-color 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: var(--deep-navy); 
+}

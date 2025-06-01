@@ -1,35 +1,31 @@
-/* ==== Body Container==== */
 .mainContainer{
-    display: flex;
-    background-color: var(--white);
-    width: 100%;
+    width: calc(100vw - 130px);
     height: calc(100vh - 100px);
-    padding-left: 130px;
-    font-family: 'Degular Demo', sans-serif;
+    display: flex;
+    margin-left: 130px;
 }
 
-/* ==== Main Content Area ==== */
 .contents{
     width: 100%;
-    margin: 1rem;
     display: flex;
     flex-direction: column;
+    padding: 1rem;
 }
 
 .welcomeMessage{
+    height:35%;
+    color: var(--white);
     background-image:url('https://i.ibb.co/XkrzbqR2/Untitled-11-x-8-5-in.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    height:35%;
-    color: var(--white);
-    padding: 1rem;
-    font-size: 2rem;
     display: flex;
     justify-content: flex-start;   
     align-items: flex-end;         
     border-radius: 10px;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    font-size: clamp(1rem, 2vw, 2rem);
 }
 
 .schoolBulletin{
@@ -42,12 +38,11 @@
 .announcements, 
 .remarks, 
 .calendar{
-    background-color: var(--white);
-    padding: 1.5rem;
     width:32%;
     height:100%; 
+    background-color: var(--white);
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    padding: 1.5rem;
 }
-

@@ -1,8 +1,6 @@
 @import url('/public/assets/CSS/Base/reset.css');
 @import url('/public/assets/CSS/Base/variables.css');
 @import url('/public/assets/CSS/Base/typography.css');
-@import url('/public/assets/CSS/Components/header.css');
-@import url('/public/assets/CSS/Components/sideBar.css');
-@import url('/public/assets/CSS/Components/login.css');
-@import url('/public/assets/CSS/Components/homepage.css');
+@import url('/public/assets/CSS/Components/Repetitive/header.css');
+@import url('/public/assets/CSS/Components/Repetitive/sideBar.css');
 @import url('/public/assets/CSS/Components/loadingOverlay.css');

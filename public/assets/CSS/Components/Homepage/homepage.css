@@ -1,8 +1,8 @@
 .mainContainer{
-    width: calc(100vw - 130px);
-    height: calc(100vh - 100px);
     display: flex;
-    margin-left: 130px;
+    width: 100%;
+    height: calc(100vh - 100px);
+    padding-left: 130px;
 }
 
 .contents{
@@ -13,13 +13,9 @@
 }
 
 .welcomeMessage{
-<<<<<<< HEAD:public/assets/CSS/Components/Homepage/homepage.css
     height:35%;
     color: var(--white);
-    background-image:url('https://i.ibb.co/XkrzbqR2/Untitled-11-x-8-5-in.png');
-=======
-    background-image:url('/public/assets/Pictures/iacFront.svg');
->>>>>>> 6865caca30a0b0eff0a3b42bb95fb71d34cbcf46:public/assets/CSS/Components/homepage.css
+    background-image:url('/public/assets/Pictures/iac_front.svg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

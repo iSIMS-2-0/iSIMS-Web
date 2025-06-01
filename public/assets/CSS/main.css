@@ -1,6 +1,6 @@
-@import url('/public/assets/CSS/Base/reset.css');
+@import url('/public/assets/CSS/Base/all.css');
 @import url('/public/assets/CSS/Base/variables.css');
 @import url('/public/assets/CSS/Base/typography.css');
-@import url('/public/assets/CSS/Components/Repetitive/header.css');
-@import url('/public/assets/CSS/Components/Repetitive/sideBar.css');
+@import url('/public/assets/CSS/Components/Template/header.css');
+@import url('/public/assets/CSS/Components/Template/sideBar.css');
 @import url('/public/assets/CSS/Components/loadingOverlay.css');

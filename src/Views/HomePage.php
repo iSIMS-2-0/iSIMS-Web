@@ -41,17 +41,17 @@ $_SESSION['last_activity'] = time();*/
 
             <div class="schoolBulletin">
                 <div class="announcements">
-                    <h1>Announcements</h1>
+                    <h2>Announcements</h2>
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit, harum. Numquam cupiditate ipsum, quae minima autem amet rem perspiciatis veritatis natus aspernatur doloribus magni. Ex sed dicta laboriosam magni maxime?</p>
                 </div>
 
                 <div class="remarks">
-                    <h1>Remarks</h1>
+                    <h2>Remarks</h2>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus officiis quam in nulla debitis aliquid! Veniam cumque rerum quo nobis reprehenderit laudantium explicabo. Dignissimos iure nam fugiat suscipit a exercitationem?</p>
                 </div>
 
                 <div class="calendar">
-                    <h1>Calendar</h1>
+                    <h2>Calendar</h2>
                 </div>
             </div>
         </div>

@@ -1,10 +1,3 @@
-.contents{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-}
-
 .welcomeMessage{
     height:35%;
     color: var(--white);

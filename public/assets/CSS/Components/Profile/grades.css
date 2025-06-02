@@ -1,5 +1,11 @@
+.contents{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
 table, th, td {
-    margin: 2rem;
     border: 1px solid var(--black);
     border-collapse: collapse;
     padding: 1rem;

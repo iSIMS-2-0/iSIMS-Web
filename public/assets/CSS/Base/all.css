@@ -14,3 +14,10 @@ body{
     height: calc(100vh - 100px);
     padding-left: 130px;
 }
+
+.contents{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}

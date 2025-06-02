@@ -14,7 +14,7 @@
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/sideBar.php"; ?>  
 
    <div class="mainContainer">
-     <div class="container">
+     <div class="contents">
         <h1>Student Grades</h1>
         <table class="gradesTable">
         <thead>

@@ -19,6 +19,11 @@ body{
     width: 100%;
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
     padding: 1rem;;
     overflow-x: auto;
+=======
+    padding: 1rem;
+    overflow-y: auto;
+>>>>>>> e0f3618122fbeda6b13f6de4c2dd60ae60df99fe
 }

@@ -1,0 +1,12 @@
+table, th, td {
+    margin: 2rem;
+    border: 1px solid var(--black);
+    border-collapse: collapse;
+    padding: 1rem;
+}
+
+th{
+    background-color: var(--dark-blue);
+    color: var(--white);
+    font-weight: normal;
+}

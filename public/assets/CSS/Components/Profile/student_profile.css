@@ -1,6 +1,92 @@
-.mainContainer{
-    display: flex;
+.studentDetails,
+.sexGender,
+.contactDetails,
+.emailAddress,
+.mailingAddress,
+.mothersInformation,
+.fathersInformation,
+.emergencyContact,
+.otherContactInformation{
     width: 100%;
-    height: calc(100vh - 100px);
-    padding-left: 130px;
+    display: flex;
+    padding-left: 2rem;
+    gap: 1rem;
+    margin-top: .8rem;
+}
+
+/* Gender Checkbox */
+.genderField{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    padding-top: 1rem;
+}
+
+.familyInformationHeading{
+    margin-top: 2.5rem;
+    margin-bottom: -.5rem;
+}
+
+.parentsInformationTitle,
+.emergencyContactTitle{
+    padding-left: 2rem;
+    margin-top: 1rem;
+    margin-bottom: -.5rem;
+}
+
+/* Emergency Contact Checkbox */
+.motherCheckboxField,
+.fatherCheckboxField,
+.otherCheckboxField{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    width: 30%;
+}
+
+.otherContactInformation{
+    margin-bottom: 2rem;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: .5rem;
+    border-radius: 3px;
+    border: gray 1px solid;
+}
+
+input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+.studentNumberField,
+.sexField,
+.mobileNumberField,
+.emailAddressField,
+.lotBlkField,
+.mothersNameField,
+.fathersNameField,
+.otherNameField,
+.cityMunicipalityField{
+    width: 25%;
+}
+
+.studentNameField,
+.landlineField,
+.streetField,
+.mobileNumberField,
+.otherMobileNumberField,
+.countryField{
+    width: 25%;
+}
+
+
+.studentProgramField,
+.zipCodeField,
+.emailAddressField,
+.otherEmailAddressField{
+    width: 25%;
 }

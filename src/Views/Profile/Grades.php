@@ -1,3 +1,34 @@
+<?php
+$subjectGrade = array(
+    array(
+        'subject_code' => 'CS101',
+        'subject_name' => 'Computer Science 101',
+        'section' => 'A',
+        'units' => 3,
+        'grade' => 1.25
+    ),
+    array(
+        'subject_code' => 'COMPARCH',
+        'subject_name' => 'Computer Architecture',
+        'section' => 'SEG21',
+        'units' => 3,
+        'grade' => 0.00
+    )
+);
+
+    function gradeDisplay($subjectGrades){
+    foreach ($subjectGrades as $subjectGrade) {
+        echo "<tr>
+            <td>{$subjectGrade['subject_code']}</td>
+            <td>{$subjectGrade['subject_name']}</td>
+            <td>{$subjectGrade['section']}</td>
+            <td>{$subjectGrade['units']}</td>
+            <td>" . number_format($subjectGrade['grade'], 2) . "</td>
+        </tr>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,18 +47,39 @@
    <div class="mainContainer">
      <div class="contents">
         <h1>Student Grades</h1>
-        <table class="gradesTable">
-        <thead>
-            <tr>
-                <th>Subject Code</th>
-                <th>SUBJECT NAME</th>
-                <th>SECTION</th>
-                <th>UNITS</th>
-                <th>GRADE</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
+        <form>  
+            <div class="selection">
+            <div class="syDiv">
+                    <label for="schoolYear">School Year:</label>
+                    <select name="schoolYear" id="schoolYear">
+                        <option value="1st">2024-2025</option>
+                    </select>
+            </div>
+
+                <div class="termDiv">
+                    <label for="term">Term:</label>
+                    <select name="term" id="term">
+                        <option value="1st">1st Term</option>
+                        <option value="2nd">2nd Term</option>
+                        <option value="3rd">3rd Term</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject Code</th>
+                    <th>SUBJECT NAME</th>
+                    <th>SECTION</th>
+                    <th>UNITS</th>
+                    <th>GRADE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php gradeDisplay($subjectGrade); ?>
+            </tbody>
+        </table>
      </div>
    </div>
 </body>

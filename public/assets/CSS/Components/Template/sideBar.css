@@ -18,6 +18,23 @@
     overflow-x: hidden;
 }
 
+.navItem a {
+    text-decoration: none;
+    color: var(--white);
+    background-color: transparent;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
+    transition: all 0.3s ease;
+}
+
+.navItem a:visited {
+    color: var(--white);
+}
+
 .navItem{
     width: 100%;
     height: 20%;
@@ -39,6 +56,8 @@
     margin-left: auto;
     margin-right: 1rem;
 }
+
+
 
 .navLogout{
     width: 100%;

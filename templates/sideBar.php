@@ -1,8 +1,10 @@
 <aside id="sidebar" class="sidebar">
     <div class="navList">
         <div class="navItem">
+            <a href="/src/Views/HomePage.php">
             <i class="fa-solid fa-house fa-lg"></i>
             <p>HOME</p>
+                </a>
         </div>
 
         <!-- PROFILE -->

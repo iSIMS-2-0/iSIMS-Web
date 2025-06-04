@@ -39,4 +39,9 @@ th{
     margin-top: 3rem;
 }
 
+.gradeSummary th{
+    padding: 1.5rem;
+    width: 40%;
+}
+
 

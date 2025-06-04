@@ -1,21 +1,3 @@
-Table{
-    border-collapse: collapse;
-    width:80%;
-}
-
-th, td {
-    border: 1px solid var(--dark-gray);
-    padding: 0.5rem; 
-    font-size: 0.8rem;
-}
-
-th{
-    background-color: var(--dark-blue);
-    color: var(--white);
-    font-weight: normal;
-    
-}
-
 .selection{
     margin: 1rem 0;
     display: inline-flex;
@@ -34,4 +16,27 @@ select{
 .syDiv{
     margin-right: 3rem;
 }
+
+.gradesTable{
+    border-collapse: collapse;
+    width:80%;
+}
+
+th, td {
+    border: 1px solid var(--dark-gray);
+    padding: 0.5rem; 
+    font-size: 1rem;
+}
+
+th{
+    background-color: var(--dark-blue);
+    color: var(--white);
+}
+
+.gradeSummary{
+    border-collapse: collapse;
+    width: 45%;
+    margin-top: 3rem;
+}
+
 

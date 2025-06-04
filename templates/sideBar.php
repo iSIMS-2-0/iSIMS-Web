@@ -1,8 +1,10 @@
 <aside id="sidebar" class="sidebar">
     <div class="navList">
         <div class="navItem">
+            <a href="/src/Views/HomePage.php">
             <i class="fa-solid fa-house fa-lg"></i>
             <p>HOME</p>
+                </a>
         </div>
 
         <!-- PROFILE -->
@@ -14,9 +16,9 @@
             </div>
         </div>
         <div id="profile" class="dropdown">
-            <a href="#"><p>Student Profile</p></a>
-            <a href="#"><p>Grades </p></a>
-            <a href="#"><p>Schedule</p></a>
+            <a href="/src/Views/Profile/StudentProfile.php"><p>Student Profile</p></a>
+            <a href="/src/Views/Profile//Grades.php"><p>Grades </p></a>
+            <a href="/src/Views//Profile//Schedule.php"><p>Schedule</p></a>
         </div>
 
         <!-- REGISTRATION -->

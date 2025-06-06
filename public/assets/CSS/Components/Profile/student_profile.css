@@ -18,10 +18,17 @@
 }
 
 /*  Field's Container */
-.field{
+.field,
+.comorbiditiesField,
+.genderInput{
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 28%;
+}
+
+.comorbiditiesField,
+.genderInput{
+    display: none;
 }
 
 /* Checkbox Container */
@@ -30,45 +37,23 @@
     display: flex;
     align-items: center;
     gap: .5rem;
-    width: 25%;
+    width: 28%;
 }
 
-.hospitalizationContainer,
-.hospitalizationAnswer,
-.hospitalizationReasonContainer{
+
+/* Medical History Radio Buttons */
+.comorbidityOptions {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
 }
 
-/* Input Field */
-.hospitalizationReasonContainer{
-    width: 25%;
-}
-
-/* Illness Checkbox Group Container */
-.applicableIllnesses{
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-}
-
-.illnessField{
+.termsConditionsCheckbox{
+    width: 28%;
     display: flex;
     align-items: center;
+    text-align: justify;
     gap: .5rem;
-}
-
-/* Other Illness Input Field */
-.otherIllnessInput{
-    width: 19%;
-}
-
-
-.otherHealthConcern{
-    display: flex;
-    flex-direction: column;
-    width: 35%;
 }
 
 /* Form */
@@ -78,7 +63,8 @@
     gap: 1.5rem
 }
 
-input[type="text"] {
+input[type="text"],
+#gender{
     width: 100%;
     padding: .5rem;
     border-radius: 3px;
@@ -88,4 +74,17 @@ input[type="text"] {
 input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
+}
+
+.submitBtn{
+    width: 28%;
+    cursor: pointer;
+    background-color: var(--deep-navy);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: .5rem;
+    margin-left: 2rem;
+    font-size: clamp(.8rem, 1.25vw, 1.5rem);
 }

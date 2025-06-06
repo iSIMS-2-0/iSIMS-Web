@@ -20,6 +20,7 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
     <link rel="stylesheet" href="/public/assets/CSS/Components/Profile/student_profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script defer src="/public/assets/JavaScript/sidebar.js"></script>
+    <script defer src="/public/assets/JavaScript/studentProfile.js"></script>
     <title>Student Profile</title>
 </head>
 <body>
@@ -61,6 +62,18 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
                             <div class="genderField">
                                 <input type="checkbox" id="studentGender" name="studentGender" >
                                 <label for="studentGender">I hereby agree to disclose my gender</label>
+                            </div>
+                            
+                            
+                            <div class="genderInput">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="" hidden>-- Select Gender --</option>
+                                    <option value="male">He/Him/His</option>
+                                    <option value="female">She/Her/Hers</option>
+                                    <option value="they">They/Them/Theris</option>
+                                    <option value="zie">Zie/Zir/Zirs</option>
+                                </select>
                             </div>
                         </div>
 
@@ -160,17 +173,17 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
                         <h2>Emergency Contact</h2>
                         <div class="emergencyContactDetails">
                             <div class="emergencyContactField">
-                                <input type="checkbox" id="mothersInformation" name="mothersInformation" >
+                                <input type="radio" id="mothersInformation" name="contactInformation" required>
                                 <label for="mothersInformation">Same as Mother's Information</label>
                             </div>
 
                             <div class="emergencyContactField">
-                                <input type="checkbox" id="fathersInformation" name="fathersInformation" >
+                                <input type="radio" id="fathersInformation" name="contactInformation" required>
                                 <label for="fathersInformation">Same as Fathers's Information</label>
                             </div>
 
                             <div class="emergencyContactField">
-                                <input type="checkbox" id="otherInformation" name="otherInformation" >
+                                <input type="radio" id="otherInformation" name="contactInformation" required>
                                 <label for="otherInformation">Other Information</label>
                             </div>
                         </div>
@@ -200,60 +213,41 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
                     </div>
 
                     <div class="informationSection">
-                        <div class="hospitalizationContainer">
-                            <label>Have you been hospitalized before?</label>
-                            <div class="hospitalizationAnswer">
-                                <label><input type="radio" name="hospitalized" value="yes">Yes</label>
-                                <label><input type="radio" name="hospitalized" value="no">No</label>
-                            </div>
-                        </div>
-
-                        <div class="hospitalizationReasonContainer">
-                                <label for="hospitalReason">Reason(s)</label>
-                                <input type="text" name="hospitalReason" placeholder="reason">
-                        </div>
-
-                        <div class="illnessContainer">
-                            <label>Do you have any of the following? (Check all that apply)</label>
-                            <div class="applicableIllnesses">
-                                <div class="illnessField">
-                                    <input type="checkbox" name="diabetes" value="diabetes">
-                                    <label for="diabetes">Diabetes</label>
+                        <div class="field">
+                            <label>Do you have any comorbidities/medical conditions?</label>
+                            <div class="comorbidityOptions">
+                                <div>
+                                    <input type="radio" id="yes" name="comorbidity"  required>
+                                    <label for="yes">Yes</label>
                                 </div>
 
-                                <div class="illnessField">
-                                    <input type="checkbox" name="highBlood" value="highBlood">
-                                    <label for="highBlood">High Blood</label>
-                                </div>
-
-                                <div class="illnessField">
-                                    <input type="checkbox" name="allergies" value="allergies">
-                                    <label for="allergies">Allergies</label>
-                                </div>
-
-                                <div class="illnessField">
-                                    <input type="checkbox" name="anemia" value="anemia">
-                                    <label for="anemia">Anemia</label>
-                                </div>
-
-                                <div class="illnessField">
-                                        <input type="checkbox" name="otherIllness" value="otherIllness">
-                                        <label for="otherIllness">Others</label>
-                                    <div class="otherIllnessInput">
-                                        <input type="text" id="otherIllnessText" name="otherIllnessText" placeholder="Please specify other illness">
-                                    </div>
+                                <div>
+                                    <input type="radio" id="no" name="comorbidity"  required>
+                                    <label for="no">No</label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="otherHealthConcern">
-                            <label>Other health concerns/conditions the school should know about:</label>
-                            <textarea id="otherConcerns" name="otherConcerns" rows="4"></textarea>
+                        <div class="comorbiditiesField">
+                            <label>Comorbidities/Medical Conditions</label>
+                            <textarea id="comorbidities" name="comorbidities" rows="4" required></textarea>
                         </div>
-                    </div>
+
+                        <div class="termsConditionsCheckbox">
+                            <input type="checkbox" id="comorbidityDetails" name="studentDataCheckbox" required>
+                            <label for="studentDataCheckbox">I hereby affirm that all information supplied in this Student Data Sheet is real and accurate</label>
+                        </div>
+
+                        <div class="termsConditionsCheckbox">
+                            <input type="checkbox" id="comorbidityDetails" name="studentDataCheckbox1" required>
+                            <label for="studentDataCheckbox1">I hereby allow the University to collect, use and process the above information for legitimate purpose and allow
+                                  authorized personnel to ... information pursuant to the Data Privacy Policy  of the Univesity
+                            </label>
+                        </div>
 
                     </div>
                 </div>
+                <button type="submit" class="submitBtn">Submit</button>
             </form>
         </div>
     </div>

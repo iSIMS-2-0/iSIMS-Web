@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/public/assets/CSS/Components/Profile/student_profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script defer src="/public/assets/JavaScript/sidebar.js"></script>
-    <title>Document</title>
+    <title>Student Profile</title>
 </head>
 <body>
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/header.php"; ?>
@@ -15,166 +15,233 @@
 
     <div class="mainContainer">
         <div class="contents">
-            <div class="title">
-                <h1>Student Profile</h1>
-            </div>
+            <form method="post" id="studentInformationForm">
+                <div class="studentProfileContainer" >
+                    <div class="sectionTitle">
+                        <h1>Student Profile</h1>
+                    </div>
 
-            <div class="studentDetails">
-                <div class="studentNumberField">
-                    <label for="studentNumber">Student Number</label>
-                    <input type="text" id="studentNumber" name="studentNumber" placeholder="student number" >
+                    <div class="informationSection">
+                        <div class="studentDetails">
+                            <div class="field">
+                                <label for="studentNumber">Student Number</label>
+                                <input type="text" id="studentNumber" name="studentNumber" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="studentName">Name</label>
+                                <input type="text" id="studentName" name="studentName" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="studentProgram">Program</label>
+                                <input type="text" id="studentProgram" name="studentProgram" readonly>
+                            </div>
+                        </div>
+
+                        <div class="studentDetails">
+                            <div class="field">
+                                <label for="studentNumber">Sex</label>
+                                <input type="text" id="studentSex" name="studentSex" readonly>
+                            </div>
+
+                            <div class="genderField">
+                                <input type="checkbox" id="studentGender" name="studentGender" >
+                                <label for="studentGender">I hereby agree to disclose my gender</label>
+                            </div>
+                        </div>
+
+                        
+                        <div class="studentDetails">
+                            <div class="field">
+                                <label for="studentMobileNumber">Mobile Number</label>
+                                <input type="text" id="studentMobileNumber" name="studentMobileNumber" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="studentLandline">Landline</label>
+                                <input type="text" id="studentLandline" name="studentLandline" readonly>
+                            </div>
+                        </div>
+
+                        <div class="studentDetails">
+                            <div class="field">
+                                <label for="studentEmailAddress">Email Address</label>
+                                <input type="text" id="studentEmailAddress" name="studentEmailAddress" readonly>
+                            </div>
+                        </div>
+
+                        <div class="studentDetails">
+                            <div class="field">
+                                <label for="lotBlkNo">Lot/Blk No.</label>
+                                <input type="text" id="lotBlkNo" name="lotBlkNo" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="street">Street</label>
+                                <input type="text" id="street" name="street" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="zipCode">Zip Code</label>
+                                <input type="text" id="zipCode" name="zipCode" readonly>
+                            </div>
+                        </div>
+
+                        <div class="studentDetails">
+                            <div class="field">
+                                <label for="cityMuniciplaity">City/Municipality</label>
+                                <input type="text" id="cityMuniciplaity" name="cityMuniciplaity" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="country">Country</label>
+                                <input type="text" id="country" name="country" readonly>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="studentNameField">
-                    <label for="studentName">Name</label>
-                    <input type="text" id="studentName" name="studentName" placeholder="name" >
+                <div class="familyInformationContainer">
+                    <div class="sectionTitle">
+                        <h1>Family Information</h1>
+                    </div>
+
+                    <div class="informationSection">
+                        <h2>Parent's Information</h2>
+
+                        <div class="parentsDetails">
+                            <div class="field">
+                                <label for="mothersName">Mother's name</label>
+                                <input type="text" id="mothersName" name="mothersName" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="mothersMobileNumber">Mobile Number</label>
+                                <input type="text" id="mothersMobileNumber" name="mothersMobileNumber" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="mothersEmailAddress">Email Address</label>
+                                <input type="text" id="mothersEmailAddress" name="mothersEmailAddress" readonly>
+                            </div>
+                        </div>
+
+                        <div class="parentsDetails">
+                            <div class="field">
+                                <label for="fathersName">Father's name</label>
+                                <input type="text" id="fathersName" name="fathersName" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="fathersMobileNumber">Mobile Number</label>
+                                <input type="text" id="fathersMobileNumber" name="fathersMobileNumber" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="fathersEmailAddress">Email Address</label>
+                                <input type="text" id="fathersEmailAddress" name="fathersEmailAddress" readonly>
+                            </div>
+                        </div>
+
+                        <h2>Emergency Contact</h2>
+                        <div class="emergencyContactDetails">
+                            <div class="emergencyContactField">
+                                <input type="checkbox" id="mothersInformation" name="mothersInformation" >
+                                <label for="mothersInformation">Same as Mother's Information</label>
+                            </div>
+
+                            <div class="emergencyContactField">
+                                <input type="checkbox" id="fathersInformation" name="fathersInformation" >
+                                <label for="fathersInformation">Same as Fathers's Information</label>
+                            </div>
+
+                            <div class="emergencyContactField">
+                                <input type="checkbox" id="otherInformation" name="otherInformation" >
+                                <label for="otherInformation">Other Information</label>
+                            </div>
+                        </div>
+
+                        <div class="emergencyContactDetails">
+                            <div class="field">
+                                <label for="otherName">Name</label>
+                                <input type="text" id="otherName" name="otherName" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="otherMobileNumber">Mobile Number</label>
+                                <input type="text" id="otherMobileNumber" name="otherMobileNumber" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label for="otherEmailAddress">Email Address</label>
+                                <input type="text" id="otherEmailAddress" name="otherEmailAddress" readonly>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="studentProgramField">
-                    <label for="studentProgram">Program</label>
-                    <input type="text" id="studentProgram" name="studentProgram" placeholder="program " >
+                <div class="medicalHistoryContainer">
+                    <div class="sectionTitle">
+                        <h1>Medical History</h1>
+                    </div>
+
+                    <div class="informationSection">
+                        <div class="hospitalizationContainer">
+                            <label>Have you been hospitalized before?</label>
+                            <div class="hospitalizationAnswer">
+                                <label><input type="radio" name="hospitalized" value="yes">Yes</label>
+                                <label><input type="radio" name="hospitalized" value="no">No</label>
+                            </div>
+                        </div>
+
+                        <div class="hospitalizationReasonContainer">
+                                <label for="hospitalReason">Reason(s)</label>
+                                <input type="text" name="hospitalReason" placeholder="reason">
+                        </div>
+
+                        <div class="illnessContainer">
+                            <label>Do you have any of the following? (Check all that apply)</label>
+                            <div class="applicableIllnesses">
+                                <div class="illnessField">
+                                    <input type="checkbox" name="diabetes" value="diabetes">
+                                    <label for="diabetes">Diabetes</label>
+                                </div>
+
+                                <div class="illnessField">
+                                    <input type="checkbox" name="highBlood" value="highBlood">
+                                    <label for="highBlood">High Blood</label>
+                                </div>
+
+                                <div class="illnessField">
+                                    <input type="checkbox" name="allergies" value="allergies">
+                                    <label for="allergies">Allergies</label>
+                                </div>
+
+                                <div class="illnessField">
+                                    <input type="checkbox" name="anemia" value="anemia">
+                                    <label for="anemia">Anemia</label>
+                                </div>
+
+                                <div class="illnessField">
+                                        <input type="checkbox" name="otherIllness" value="otherIllness">
+                                        <label for="otherIllness">Others</label>
+                                    <div class="otherIllnessInput">
+                                        <input type="text" id="otherIllnessText" name="otherIllnessText" placeholder="Please specify other illness">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="otherHealthConcern">
+                            <label>Other health concerns/conditions the school should know about:</label>
+                            <textarea id="otherConcerns" name="otherConcerns" rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    </div>
                 </div>
-            </div>
-
-            <div class="sexGender">
-                <div class="sexField">
-                    <label for="sex">Sex</label>
-                    <input type="text" id="sex" name="sex" placeholder="sex " >
-                </div>
-
-                <div class="genderField">
-                    <input type="checkbox" id="gender" name="gender" >
-                    <label for="gender">I hereby agree to disclose my gender</label>
-                </div>
-            </div>
-
-            <div class="contactDetails">
-                <div class="mobileNumberField">
-                    <label for="mobileNumber">Mobile Number</label>
-                    <input type="text" id="mobileNumber" name="mobileNumber" placeholder="mobile number" >
-                </div>
-
-                <div class="landlineField">
-                    <label for="landline">Landline</label>
-                    <input type="text" id="landline" name="landline" placeholder="landline" >
-                </div>
-            </div>
-
-            <div class="emailAddress">
-                <div class="emailAddressField">
-                    <label for="emailAd">Email Address</label>
-                    <input type="text" id="emailAd" name="emailAd" placeholder="email address" >
-                </div>
-            </div>
-
-            <div class="mailingAddress">
-                <div class="lotBlkField">
-                    <label for="lotBlk">Lot/Blk No.</label>
-                    <input type="text" id="lotBlk" name="lotBlk" placeholder="lot/blk no." >
-                </div>
-
-                <div class="streetField">
-                    <label for="street">Street</label>
-                    <input type="text" id="street" name="street" placeholder="street" >
-                </div>
-
-                <div class="zipCodeField">
-                    <label for="zipCode">Zip Code</label>
-                    <input type="text" id="zipcode" name="zipcode" placeholder="zipcode" >
-                </div>
-            </div>
-
-            <div class="mailingAddress">
-                <div class="cityMunicipalityField">
-                    <label for="cityMunicipality">City/Municipality</label>
-                    <input type="text" id="cityMunicipality" name="cityMunicipality" placeholder="city/municipality" >
-                </div>
-
-                <div class="countryField">
-                    <label for="country">Country</label>
-                    <input type="text" id="country" name="country" placeholder="country" >
-                </div>
-            </div>
-
-            <h1 class="familyInformationHeading">Family Information</h1>
-
-            <div class="parentsInformationTitle">
-                <h2>Parent's Information</h2>
-            </div>
-
-
-            <div class="mothersInformation">
-                <div class="mothersNameField">
-                    <label for="motherName">Mother's Name</label>
-                    <input type="text" id="motherName" name="motherName" placeholder="mother's name" >
-                </div>
-
-                <div class="mobileNumberField">
-                    <label for="motherMobileNumber">Mobile Number</label>
-                    <input type="text" id="motherMobileNumber" name="motherMobileNumber" placeholder="mobile number" >
-                </div>
-
-                    <div class="emailAddressField">
-                    <label for="emailAd">Email Address</label>
-                    <input type="text" id="motherEmailAddress" name="motherEmailAddress" placeholder="email address" >
-                </div>
-            </div>
-
-            <div class="mothersInformation">
-                <div class="mothersNameField">
-                    <label for="motherName">Father's Name</label>
-                    <input type="text" id="motherName" name="motherName" placeholder="mother's name" >
-                </div>
-
-                <div class="mobileNumberField">
-                    <label for="motherMobileNumber">Mobile Number</label>
-                    <input type="text" id="motherMobileNumber" name="motherMobileNumber" placeholder="mobile number" >
-                </div>
-
-                    <div class="emailAddressField">
-                    <label for="emailAd">Email Address</label>
-                    <input type="text" id="motherEmailAddress" name="motherEmailAddress" placeholder="email address" >
-                </div>
-            </div>
-
-            <div class="emergencyContactTitle">
-                <h2>Emergency Contact</h2>
-            </div>
-
-            <div class="emergencyContact">
-                <div class="motherCheckboxField">
-                    <input type="checkbox" id="motherCheckbox" name="motherCheckbox" >
-                    <label for="gender">Same as Mother's Information</label>
-                </div>
-
-                <div class="fatherCheckboxField">
-                    <input type="checkbox" id="fatherCheckbox" name="fatherCheckbox" >
-                    <label for="gender">Same as Father's Information</label>
-                </div>
-
-                <div class="otherCheckboxField">
-                    <input type="checkbox" id="otherCheckbox" name="otherCheckbox" >
-                    <label for="gender">Other Information</label>
-                </div>
-            </div>
-
-            <div class="otherContactInformation">
-                <div class="otherNameField">
-                    <label for="otherName">Name</label>
-                    <input type="text" id="otherName" name="otherName" placeholder="name" >
-                </div>
-
-                <div class="otherMobileNumberField">
-                    <label for="otherNumber">Mobile Number</label>
-                    <input type="text" id="otherNumber" name="otherNumber" placeholder="mobile number" >
-                </div>
-
-                    <div class="otherEmailAddressField">
-                    <label for="otherEmailAd">Email Address</label>
-                    <input type="text" id="otherEmailAddress" name="otherEmailAddress" placeholder="email address" >
-                </div>
-            </div>
-
+            </form>
         </div>
     </div>
 </body>

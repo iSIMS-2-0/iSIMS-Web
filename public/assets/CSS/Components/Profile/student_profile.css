@@ -1,52 +1,81 @@
-.studentDetails,
-.sexGender,
-.contactDetails,
-.emailAddress,
-.mailingAddress,
-.mothersInformation,
-.fathersInformation,
-.emergencyContact,
-.otherContactInformation{
-    width: 100%;
+.contents{
+    gap: 1rem;
+}
+
+.informationSection{
     display: flex;
+    flex-direction: column;
     padding-left: 2rem;
     gap: 1rem;
-    margin-top: .8rem;
 }
 
-/* Gender Checkbox */
-.genderField{
+/* Containers for each row of label and input */
+.studentDetails,
+.parentsDetails,
+.emergencyContactDetails{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: .5rem;
-    padding-top: 1rem;
+    gap: 1rem;
 }
 
-.familyInformationHeading{
-    margin-top: 2.5rem;
-    margin-bottom: -.5rem;
+/*  Field's Container */
+.field{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
 }
 
-.parentsInformationTitle,
-.emergencyContactTitle{
-    padding-left: 2rem;
-    margin-top: 1rem;
-    margin-bottom: -.5rem;
-}
-
-/* Emergency Contact Checkbox */
-.motherCheckboxField,
-.fatherCheckboxField,
-.otherCheckboxField{
+/* Checkbox Container */
+.genderField,
+.emergencyContactField{
     display: flex;
     align-items: center;
     gap: .5rem;
-    width: 30%;
+    width: 25%;
 }
 
-.otherContactInformation{
-    margin-bottom: 2rem;
+.hospitalizationContainer,
+.hospitalizationAnswer,
+.hospitalizationReasonContainer{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Input Field */
+.hospitalizationReasonContainer{
+    width: 25%;
+}
+
+/* Illness Checkbox Group Container */
+.applicableIllnesses{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.illnessField{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+/* Other Illness Input Field */
+.otherIllnessInput{
+    width: 19%;
+}
+
+
+.otherHealthConcern{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+
+/* Form */
+#studentInformationForm{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem
 }
 
 input[type="text"] {
@@ -59,34 +88,4 @@ input[type="text"] {
 input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
-}
-
-
-.studentNumberField,
-.sexField,
-.mobileNumberField,
-.emailAddressField,
-.lotBlkField,
-.mothersNameField,
-.fathersNameField,
-.otherNameField,
-.cityMunicipalityField{
-    width: 25%;
-}
-
-.studentNameField,
-.landlineField,
-.streetField,
-.mobileNumberField,
-.otherMobileNumberField,
-.countryField{
-    width: 25%;
-}
-
-
-.studentProgramField,
-.zipCodeField,
-.emailAddressField,
-.otherEmailAddressField{
-    width: 25%;
 }

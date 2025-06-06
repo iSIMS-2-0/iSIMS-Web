@@ -233,6 +233,7 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
                             <textarea id="comorbidities" name="comorbidities" rows="4" required></textarea>
                         </div>
 
+                        <hr>
                         <div class="termsConditionsCheckbox">
                             <input type="checkbox" id="comorbidityDetails" name="studentDataCheckbox" required>
                             <label for="studentDataCheckbox">I hereby affirm that all information supplied in this Student Data Sheet is real and accurate</label>
@@ -240,14 +241,15 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
 
                         <div class="termsConditionsCheckbox">
                             <input type="checkbox" id="comorbidityDetails" name="studentDataCheckbox1" required>
-                            <label for="studentDataCheckbox1">I hereby allow the University to collect, use and process the above information for legitimate purpose and allow
-                                  authorized personnel to ... information pursuant to the Data Privacy Policy  of the Univesity
+                            <label for="studentDataCheckbox1"> I hereby allow the University to collect, use and process the above mentioned information for 
+                                legitimate purposes and allow authorized personnel to process such information pursuant to the Data Privacy Policy of the University.
                             </label>
                         </div>
-
                     </div>
                 </div>
-                <button type="submit" class="submitBtn">Submit</button>
+                <div class="buttonContainer">
+                    <button type="submit" class="submitBtn">Submit</button>
+                </div>
             </form>
         </div>
     </div>

@@ -2,6 +2,10 @@
     gap: 1rem;
 }
 
+.sectionTitle{
+    margin-left: 1rem;
+}
+
 .informationSection{
     display: flex;
     flex-direction: column;
@@ -48,8 +52,12 @@
     gap: 2rem;
 }
 
+hr{
+    width: 88%;
+}
+
 .termsConditionsCheckbox{
-    width: 28%;
+    width: 86%;
     display: flex;
     align-items: center;
     text-align: justify;
@@ -74,6 +82,15 @@ input[type="text"],
 input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
+    flex-shrink: 0;
+}
+
+.buttonContainer{
+    width: 88%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
 }
 
 .submitBtn{
@@ -85,6 +102,5 @@ input[type="checkbox"] {
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: .5rem;
-    margin-left: 2rem;
     font-size: clamp(.8rem, 1.25vw, 1.5rem);
 }

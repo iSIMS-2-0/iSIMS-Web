@@ -1,3 +1,16 @@
+<?php
+session_start();
+require_once $_SERVER["DOCUMENT_ROOT"] . "/src/Models/User.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/config.php";
+
+$config = require $_SERVER["DOCUMENT_ROOT"] . "/config.php";
+$dsn = "mysql:host={$config['host']};dbname={$config['db']};charset=utf8mb4";
+$pdo = new PDO($dsn, $config['user'], $config['pass']);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$userModel = new User($pdo);
+$user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make sure you have this method in your User model
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,24 +38,24 @@
                         <div class="studentDetails">
                             <div class="field">
                                 <label for="studentNumber">Student Number</label>
-                                <input type="text" id="studentNumber" name="studentNumber" readonly>
+                                <input type="text" id="studentNumber" name="studentNumber" readonly value="<?php echo htmlspecialchars($user['student_number'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="studentName">Name</label>
-                                <input type="text" id="studentName" name="studentName" readonly>
+                                <input type="text" id="studentName" name="studentName" readonly value="<?php echo htmlspecialchars($user['name'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="studentProgram">Program</label>
-                                <input type="text" id="studentProgram" name="studentProgram" readonly>
+                                <input type="text" id="studentProgram" name="studentProgram" readonly value="<?php echo htmlspecialchars($user['program'] ?? ''); ?>">
                             </div>
                         </div>
 
                         <div class="studentDetails">
                             <div class="field">
-                                <label for="studentNumber">Sex</label>
-                                <input type="text" id="studentSex" name="studentSex" readonly>
+                                <label for="studentSex">Sex</label>
+                                <input type="text" id="studentSex" name="studentSex" readonly value="<?php echo htmlspecialchars($user['sex'] ?? ''); ?>">
                             </div>
 
                             <div class="genderField">
@@ -55,48 +68,48 @@
                         <div class="studentDetails">
                             <div class="field">
                                 <label for="studentMobileNumber">Mobile Number</label>
-                                <input type="text" id="studentMobileNumber" name="studentMobileNumber" readonly>
+                                <input type="text" id="studentMobileNumber" name="studentMobileNumber" readonly value="<?php echo htmlspecialchars($user['mobile'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="studentLandline">Landline</label>
-                                <input type="text" id="studentLandline" name="studentLandline" readonly>
+                                <input type="text" id="studentLandline" name="studentLandline" readonly value="<?php echo htmlspecialchars($user['landline'] ?? ''); ?>">
                             </div>
                         </div>
 
                         <div class="studentDetails">
                             <div class="field">
                                 <label for="studentEmailAddress">Email Address</label>
-                                <input type="text" id="studentEmailAddress" name="studentEmailAddress" readonly>
+                                <input type="text" id="studentEmailAddress" name="studentEmailAddress" readonly value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>">
                             </div>
                         </div>
 
                         <div class="studentDetails">
                             <div class="field">
                                 <label for="lotBlkNo">Lot/Blk No.</label>
-                                <input type="text" id="lotBlkNo" name="lotBlkNo" readonly>
+                                <input type="text" id="lotBlkNo" name="lotBlkNo" readonly value="<?php echo htmlspecialchars($user['lot_blk'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="street">Street</label>
-                                <input type="text" id="street" name="street" readonly>
+                                <input type="text" id="street" name="street" readonly value="<?php echo htmlspecialchars($user['street'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="zipCode">Zip Code</label>
-                                <input type="text" id="zipCode" name="zipCode" readonly>
+                                <input type="text" id="zipCode" name="zipCode" readonly value="<?php echo htmlspecialchars($user['zip_code'] ?? ''); ?>">
                             </div>
                         </div>
 
                         <div class="studentDetails">
                             <div class="field">
                                 <label for="cityMuniciplaity">City/Municipality</label>
-                                <input type="text" id="cityMuniciplaity" name="cityMuniciplaity" readonly>
+                                <input type="text" id="cityMuniciplaity" name="cityMuniciplaity" readonly value="<?php echo htmlspecialchars($user['city_municipality'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="country">Country</label>
-                                <input type="text" id="country" name="country" readonly>
+                                <input type="text" id="country" name="country" readonly value="<?php echo htmlspecialchars($user['country'] ?? ''); ?>">
                             </div>
                         </div>
                     </div>

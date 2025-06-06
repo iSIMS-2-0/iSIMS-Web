@@ -6,28 +6,28 @@ class AuthController {
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
-    public function login() {
-        $error = '';
-        $message = '';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            sleep(2); // Add a 2-second delay for realism
-            $id = (int)$_POST['username'];
-            $password = $_POST['password'];
-            $userModel = new User($this->pdo);
-            $user = $userModel->findById($id);
 
-            if ($user && password_verify($password, $user['password_hash'])) {
-                session_start(); 
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['name'];
-                $_SESSION['last_activity'] = time(); // Set the last activity time
-                header("Location: /src/Views/HomePage.php"); // Redirect to HomePage.php
-                exit(); 
-            } else {
-                $error = "Invalid ID or password.";
-            }
+ public function login() {
+    $error = '';
+    $message = '';
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $student_number = $_POST['username'];
+        $password = $_POST['password'];
+        $userModel = new User($this->pdo);
+        $user = $userModel->findByStudentNumber($student_number);
+
+        if ($user && password_verify($password, $user['password_hash'])) {
+            session_start(); 
+            $_SESSION['student_number'] = $user['student_number'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['last_activity'] = time();
+            header("Location: /src/Views/HomePage.php");
+            exit(); 
+        } else {
+            $error = "Invalid ID or password.";
         }
-        require __DIR__ . '/../Views/Login.php';
     }
+    require __DIR__ . '/../Views/Login.php';
+}
 }
 ?>

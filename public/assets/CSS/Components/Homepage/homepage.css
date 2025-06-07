@@ -10,8 +10,8 @@
     align-items: flex-end;         
     border-radius: 10px;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
-    padding: 1rem;
-    font-size: clamp(1rem, 2vw, 2rem);
+    padding: 1.5rem;
+    font-size: clamp(2rem, 2vw, 2rem);
 }
 
 .schoolBulletin{

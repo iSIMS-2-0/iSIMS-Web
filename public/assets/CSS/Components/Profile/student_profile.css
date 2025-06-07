@@ -24,6 +24,7 @@
 /*  Field's Container */
 .field,
 .comorbiditiesField,
+.allergiesField,
 .genderInput{
     display: flex;
     flex-direction: column;
@@ -31,6 +32,7 @@
 }
 
 .comorbiditiesField,
+.allergiesField,
 .genderInput{
     display: none;
 }
@@ -46,7 +48,7 @@
 
 
 /* Medical History Radio Buttons */
-.comorbidityOptions {
+.comorbidityOptions, .allergyOptions{ 
     display: flex;
     align-items: center;
     gap: 2rem;

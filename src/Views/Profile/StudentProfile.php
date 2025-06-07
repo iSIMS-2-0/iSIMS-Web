@@ -233,6 +233,26 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
                             <textarea id="comorbidities" name="comorbidities" rows="4" required></textarea>
                         </div>
 
+                        <div class="field">
+                            <label>Do you have any known allergies?</label>
+                            <div class="allergyOptions">
+                                <div>
+                                    <input type="radio" id="have" name="allergy"  required>
+                                    <label for="yes">Yes</label>
+                                </div>
+
+                                <div>
+                                    <input type="radio" id="n/a" name="allergy"  required>
+                                    <label for="no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="allergiesField">
+                            <label>List all of your allergies</label>
+                            <textarea id="allergy" name="allergy" rows="4" required></textarea>
+                        </div>
+
                         <hr>
                         <div class="termsConditionsCheckbox">
                             <input type="checkbox" id="comorbidityDetails" name="studentDataCheckbox" required>

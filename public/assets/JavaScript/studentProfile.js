@@ -47,4 +47,40 @@ document.addEventListener("DOMContentLoaded", function() {
 
     haveAllergies.addEventListener("change", toggleAllergies);
     noAllergies.addEventListener("change", toggleAllergies);
+
+    const motherRadio = document.getElementById("mothersInformation");
+    const fatherRadio = document.getElementById("fathersInformation");
+    const otherRadio = document.getElementById("otherInformation");
+
+    const otherName = document.getElementById("otherName");
+    const otherMobile = document.getElementById("otherMobileNumber");
+    const otherEmail = document.getElementById("otherEmailAddress");
+
+    const mothersName = document.getElementById("mothersName");
+    const mothersMobile = document.getElementById("mothersMobileNumber");
+    const mothersEmail = document.getElementById("mothersEmailAddress");
+
+    const fathersName = document.getElementById("fathersName");
+    const fathersMobile = document.getElementById("fathersMobileNumber");
+    const fathersEmail = document.getElementById("fathersEmailAddress");
+
+    function setEmergencyContactRadio() {
+        if (
+            otherName.value === mothersName.value &&
+            otherMobile.value === mothersMobile.value &&
+            otherEmail.value === mothersEmail.value
+        ) {
+            motherRadio.checked = true;
+        } else if (
+            otherName.value === fathersName.value &&
+            otherMobile.value === fathersMobile.value &&
+            otherEmail.value === fathersEmail.value
+        ) {
+            fatherRadio.checked = true;
+        } else {
+            otherRadio.checked = true;
+        }
+    }
+
+    setEmergencyContactRadio();
 });

@@ -9,7 +9,26 @@ $pdo = new PDO($dsn, $config['user'], $config['pass']);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $userModel = new User($pdo);
-$user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make sure you have this method in your User model
+$user = $userModel->findByStudentNumber($_SESSION['student_number']);
+$family = $userModel->findFamilyInfoByID($user['family_info_id']);
+$medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
+
+$emergency = [
+    'name' => $family['emergency_contact'] ?? '',
+    'mobile' => $family['other_contact_mobilenum'] ?? '',
+    'email' => $family['other_contact_email'] ?? ''
+];
+$isMother = (
+    $emergency['name'] === ($family['mother_name'] ?? '') &&
+    $emergency['mobile'] === ($family['mother_mobile_number'] ?? '') &&
+    $emergency['email'] === ($family['mother_email'] ?? '')
+);
+$isFather = (
+    $emergency['name'] === ($family['father_name'] ?? '') &&
+    $emergency['mobile'] === ($family['father_mobile_number'] ?? '') &&
+    $emergency['email'] === ($family['father_email'] ?? '')
+);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -139,69 +158,69 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
                         <div class="parentsDetails">
                             <div class="field">
                                 <label for="mothersName">Mother's name</label>
-                                <input type="text" id="mothersName" name="mothersName" readonly>
+                                <input type="text" id="mothersName" name="mothersName" readonly value="<?php echo htmlspecialchars($family['mother_name'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="mothersMobileNumber">Mobile Number</label>
-                                <input type="text" id="mothersMobileNumber" name="mothersMobileNumber" readonly>
+                               <input type="text" id="mothersMobileNumber" name="mothersMobileNumber" readonly value="<?php echo htmlspecialchars($family['mother_mobile_number'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="mothersEmailAddress">Email Address</label>
-                                <input type="text" id="mothersEmailAddress" name="mothersEmailAddress" readonly>
+                                <input type="text" id="mothersEmailAddress" name="mothersEmailAddress" readonly value="<?php echo htmlspecialchars($family['mother_email'] ?? ''); ?>">
                             </div>
                         </div>
 
                         <div class="parentsDetails">
                             <div class="field">
                                 <label for="fathersName">Father's name</label>
-                                <input type="text" id="fathersName" name="fathersName" readonly>
+                                <input type="text" id="fathersName" name="fathersName" readonly value="<?php echo htmlspecialchars($family['father_name'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="fathersMobileNumber">Mobile Number</label>
-                                <input type="text" id="fathersMobileNumber" name="fathersMobileNumber" readonly>
+                                <input type="text" id="fathersMobileNumber" name="fathersMobileNumber" readonly value="<?php echo htmlspecialchars($family['father_mobile_number'] ?? ''); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="fathersEmailAddress">Email Address</label>
-                                <input type="text" id="fathersEmailAddress" name="fathersEmailAddress" readonly>
+                               <input type="text" id="fathersEmailAddress" name="fathersEmailAddress" readonly value="<?php echo htmlspecialchars($family['father_email'] ?? ''); ?>">
                             </div>
                         </div>
 
                         <h2>Emergency Contact</h2>
                         <div class="emergencyContactDetails">
                             <div class="emergencyContactField">
-                                <input type="radio" id="mothersInformation" name="contactInformation" required>
+                                <input type="radio" id="mothersInformation" name="contactInformation" <?php if($isMother) echo 'checked'; ?>>
                                 <label for="mothersInformation">Same as Mother's Information</label>
                             </div>
 
                             <div class="emergencyContactField">
-                                <input type="radio" id="fathersInformation" name="contactInformation" required>
-                                <label for="fathersInformation">Same as Fathers's Information</label>
+                                <input type="radio" id="fathersInformation" name="contactInformation" <?php if($isFather) echo 'checked'; ?>>
+                                <label for="fathersInformation">Same as Father's Information</label>
                             </div>
 
                             <div class="emergencyContactField">
-                                <input type="radio" id="otherInformation" name="contactInformation" required>
-                                <label for="otherInformation">Other Information</label>
+                                <input type="radio" id="otherInformation" name="contactInformation" <?php if(!$isMother && !$isFather) echo 'checked'; ?>>
+                               <label for="otherInformation">Other Information</label>
                             </div>
                         </div>
 
                         <div class="emergencyContactDetails">
                             <div class="field">
                                 <label for="otherName">Name</label>
-                                <input type="text" id="otherName" name="otherName" readonly>
+                                <input type="text" id="otherName" name="otherName" readonly value="<?php echo htmlspecialchars($emergency['name']); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="otherMobileNumber">Mobile Number</label>
-                                <input type="text" id="otherMobileNumber" name="otherMobileNumber" readonly>
+                                <input type="text" id="otherMobileNumber" name="otherMobileNumber" readonly value="<?php echo htmlspecialchars($emergency['mobile']); ?>">
                             </div>
 
                             <div class="field">
                                 <label for="otherEmailAddress">Email Address</label>
-                                <input type="text" id="otherEmailAddress" name="otherEmailAddress" readonly>
+                                <input type="text" id="otherEmailAddress" name="otherEmailAddress" readonly value="<?php echo htmlspecialchars($emergency['email']); ?>">
                             </div>
                         </div>
                     </div>
@@ -211,38 +230,39 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
                     <div class="sectionTitle">
                         <h1>Medical History</h1>
                     </div>
-
+                    <?php
+                    $hasMedical = !empty($medical['comorb']) || !empty($medical['allergies']);
+                    ?>
                     <div class="informationSection">
                         <div class="field">
                             <label>Do you have any comorbidities/medical conditions?</label>
                             <div class="comorbidityOptions">
                                 <div>
-                                    <input type="radio" id="yes" name="comorbidity"  required>
+                                    <input type="radio" id="yes" name="comorbidity" <?php if($hasMedical) echo 'checked'; ?>>
                                     <label for="yes">Yes</label>
                                 </div>
 
                                 <div>
-                                    <input type="radio" id="no" name="comorbidity"  required>
+                                    <input type="radio" id="no" name="comorbidity" <?php if(!$hasMedical) echo 'checked'; ?>>
                                     <label for="no">No</label>
                                 </div>
                             </div>
                         </div>
-
                         <div class="comorbiditiesField">
                             <label>Comorbidities/Medical Conditions</label>
-                            <textarea id="comorbidities" name="comorbidities" rows="4" required></textarea>
+                            <textarea id="comorbidities" name="comorbidities" rows="4"><?php echo htmlspecialchars($medical['comorb'] ?? ''); ?></textarea>
                         </div>
 
                         <div class="field">
                             <label>Do you have any known allergies?</label>
                             <div class="allergyOptions">
                                 <div>
-                                    <input type="radio" id="have" name="allergy"  required>
+                                    <input type="radio" id="have" name="allergy" <?php if(!empty($medical['allergies'])) echo 'checked'; ?>>
                                     <label for="yes">Yes</label>
                                 </div>
 
                                 <div>
-                                    <input type="radio" id="n/a" name="allergy"  required>
+                                    <input type="radio" id="n/a" name="allergy" <?php if(empty($medical['allergies'])) echo 'checked'; ?>>
                                     <label for="no">No</label>
                                 </div>
                             </div>
@@ -250,7 +270,7 @@ $user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make su
 
                         <div class="allergiesField">
                             <label>List all of your allergies</label>
-                            <textarea id="allergy" name="allergy" rows="4" required></textarea>
+                            <textarea id="allergy" name="allergy" rows="4"><?php echo htmlspecialchars($medical['allergies'] ?? ''); ?></textarea>
                         </div>
 
                         <hr>

@@ -19,6 +19,7 @@ class AuthController {
         if ($user && password_verify($password, $user['password_hash'])) {
             session_start(); 
             $_SESSION['student_number'] = $user['student_number'];
+            $_SESSION['student_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['last_activity'] = time();
             header("Location: /src/Views/HomePage.php");

@@ -11,13 +11,13 @@ class Schedule {
         $stmt->execute(['student_number' => $student_number]);
         return $stmt->fetch();
     }
-
-    public function findScheduleByStudentNumber($student_number) {
-        $stmt = $this->pdo->prepare('SELECT * FROM schedules WHERE id = :student_number');
-        $stmt->execute(['student_number' => $student_number]);
+    
+    public function getStudentScheduleById($student_id) {
+        // fetches from students_schedule table
+        $stmt = $this->pdo->prepare('SELECT * FROM students_schedule WHERE student_id = :student_id');
+        $stmt->execute(['student_id' => $student_id]);
         return $stmt->fetchAll();
     }
-
     
 }
 ?>

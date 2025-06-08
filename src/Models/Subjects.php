@@ -7,13 +7,6 @@ class Subjects {
         $this->pdo = $pdo;
     }
 
-    public function findByStudentNumber($student_number) {
-        $stmt = $this->pdo->prepare('SELECT * FROM students WHERE student_number = :student_number');
-        $stmt->execute(['student_number' => $student_number]);
-        return $stmt->fetch();
-    }
-
-
     public function addNewSubject($subjectData) {
         $stmt = $this->pdo->prepare("INSERT INTO subjects (grade_id, code, name, units) VALUES (?, ?, ?, ?)");
         $stmt->execute([
@@ -23,6 +16,18 @@ class Subjects {
             $subjectData['units']
         ]);
         return $this->pdo->lastInsertId();
+    }
+
+    public function findSubjectByCode($code) {
+        $stmt = $this->pdo->prepare('SELECT * FROM subjects WHERE code = :code');
+        $stmt->execute(['code' => $code]);
+        return $stmt->fetch();
+    }
+
+    public function findSubjectById($id) {
+        $stmt = $this->pdo->prepare('SELECT * FROM subjects WHERE id = :id');
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch();
     }
 
 }

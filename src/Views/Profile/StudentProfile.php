@@ -9,7 +9,6 @@ $pdo = new PDO($dsn, $config['user'], $config['pass']);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $userModel = new User($pdo);
-<<<<<<< Updated upstream
 $user = $userModel->findByStudentNumber($_SESSION['student_number']);
 $family = $userModel->findFamilyInfoByID($user['family_info_id']);
 $medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
@@ -31,12 +30,6 @@ $isFather = (
 );
 
 ?>
-=======
-$user = $userModel->findByStudentNumber($_SESSION['student_number']); // Make sure you have this method in your User model
-
-?>
-
->>>>>>> Stashed changes
 <!DOCTYPE html>
 <html lang="en">
 <head>

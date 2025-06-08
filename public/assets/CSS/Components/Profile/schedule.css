@@ -5,6 +5,7 @@
 }
 
 Table{
+    table-layout: fixed;
     border-collapse: collapse;
     width:95%;
     text-align: center;
@@ -12,9 +13,18 @@ Table{
 
 th, td {
     border: 1px solid var(--dark-gray);
-    padding: 0.8rem; 
+    padding: 0.8rem;
     width: 7rem;
-    height: 3rem;
+    height: 3.5rem;
+    min-height: 3.5rem;
+    line-height: 1.2;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.emptyCellPlaceholder{
+    height: 3.5rem;
+    min-height: 3.5rem;
 }
 
 th{

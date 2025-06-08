@@ -101,9 +101,17 @@ $display_blocks = [
             <tbody>
                 <?php foreach ($time_blocks as $i => $block): $blockKey = $block[0].'-'.$block[1]; ?>
                 <tr>
-                    <td><?= htmlspecialchars($display_blocks[$i][0] . '-' . $display_blocks[$i][1]) ?></td>
+                    <td><?= htmlspecialchars($display_blocks[$i][0] . ' - ' . $display_blocks[$i][1]) ?></td>
                     <?php foreach ($days as $day): ?>
-                        <td><?php if (!empty($scheduleTable[$blockKey][$day])) echo implode('<hr>', $scheduleTable[$blockKey][$day]); ?></td>
+                        <td>
+                            <?php 
+                            if (!empty($scheduleTable[$blockKey][$day])) {
+                                echo implode('<hr>', $scheduleTable[$blockKey][$day]); 
+                            } else {
+                                echo '<div class="emptyCellPlaceholder"></div>';
+                            }
+                            ?>
+                        </td>
                     <?php endforeach; ?>
                 </tr>
                 <?php endforeach; ?>

@@ -14,7 +14,6 @@ body{
     width: 100%;
     height: calc(100vh - 100px);
     padding-left: 130px;
-    flex-wrap: wrap;
 }
 
 .contents{

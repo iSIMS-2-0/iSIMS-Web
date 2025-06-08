@@ -1,5 +1,4 @@
 .sidebar{
-    display: none;
     position:fixed;
     width: 130px;
     height:calc(100vh - 100px);
@@ -17,6 +16,11 @@
     height: 85%;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.navList a{
+    text-decoration: none;
+    color: var(--white);
 }
 
 .navItem a {

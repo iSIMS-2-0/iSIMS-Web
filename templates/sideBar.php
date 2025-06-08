@@ -1,11 +1,9 @@
 <aside id="sidebar" class="sidebar">
     <div class="navList">
-        <div class="navItem">
-            <a href="/src/Views/HomePage.php">
+        <a href="/src/Views/HomePage.php" class="navItem">
             <i class="fa-solid fa-house fa-lg"></i>
             <p>HOME</p>
-                </a>
-        </div>
+        </a>
 
         <!-- PROFILE -->
         <div class="navItem" onclick="toggleDropdown('profile', this)">

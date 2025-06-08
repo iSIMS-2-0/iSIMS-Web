@@ -79,7 +79,7 @@ $isFather = (
                             </div>
 
                             <div class="genderField">
-                                <input type="checkbox" id="studentGender" name="studentGender" >
+                                <input type="checkbox" id="studentGender" name="studentGender"<?php echo (!empty($user['gender_disclosure']) && strtolower($user['gender_disclosure']) === 'yes') ? 'checked' : ''; ?>>
                                 <label for="studentGender">I hereby agree to disclose my gender</label>
                             </div>
                             
@@ -90,7 +90,7 @@ $isFather = (
                                     <option value="" hidden> Select Gender </option>
                                     <option value="male">He/Him/His</option>
                                     <option value="female">She/Her/Hers</option>
-                                    <option value="they">They/Them/Theris</option>
+                                    <option value="they">They/Them/Theirs</option>
                                     <option value="zie">Zie/Zir/Zirs</option>
                                 </select>
                             </div>

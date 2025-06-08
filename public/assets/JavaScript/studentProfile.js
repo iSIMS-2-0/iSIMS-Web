@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     discloseGender.addEventListener("change", toggleGender);
-
+     toggleGender();
 
     //Comorbidities
     const yesRadio = document.getElementById("yes");

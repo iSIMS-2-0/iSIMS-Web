@@ -101,7 +101,7 @@ $display_blocks = [
             <tbody>
                 <?php foreach ($time_blocks as $i => $block): $blockKey = $block[0].'-'.$block[1]; ?>
                 <tr>
-                    <td><?= htmlspecialchars($display_blocks[$i][0] . ' - ' . $display_blocks[$i][1]) ?></td>
+                    <td><?= htmlspecialchars($display_blocks[$i][0] . '-' . $display_blocks[$i][1]) ?></td>
                     <?php foreach ($days as $day): ?>
                         <td>
                             <?php 

@@ -73,8 +73,14 @@ hr{
     gap: 1.5rem
 }
 
-input[type="text"],
 #gender{
+    width: 100%;
+    padding: .45rem;
+    border-radius: 3px;
+    border: gray 1px solid;
+}
+
+input[type="text"]{
     width: 100%;
     padding: .5rem;
     border-radius: 3px;

@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     yesRadio.addEventListener("change", toggleComorbidities);
     noRadio.addEventListener("change", toggleComorbidities);
+    toggleComorbidities(); 
 
     //Allergies
     const haveAllergies = document.getElementById("have");
@@ -47,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     haveAllergies.addEventListener("change", toggleAllergies);
     noAllergies.addEventListener("change", toggleAllergies);
+    toggleAllergies();
 
     const motherRadio = document.getElementById("mothersInformation");
     const fatherRadio = document.getElementById("fathersInformation");

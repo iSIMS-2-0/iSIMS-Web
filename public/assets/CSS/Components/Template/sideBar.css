@@ -1,4 +1,5 @@
 .sidebar{
+    display: none;
     position:fixed;
     width: 130px;
     height:calc(100vh - 100px);

@@ -1,6 +1,6 @@
 .backgroundImage{
     width: 100vw;
-    height: calc(100vh - 100px);
+    height: 100vh;
     background-image: url('https://i.ibb.co/gbq3hzGm/Background.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -10,10 +10,10 @@
 }
 
 .loginContainer{
+    width: clamp(300px, 90vw, 500px);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: clamp(300px, 60%, 500px);    
     background-color: var(--white);
     border: var(--deep-navy) 1px solid;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -23,8 +23,6 @@
     position: absolute;
 }
 
-
-/* Login Heading */
 .title{
     background-color: var(--deep-navy);
     color: var(--white);
@@ -32,8 +30,6 @@
     font-size: clamp(.8rem, 1vw, 1.5rem);
 }
 
-
-/* Login Container */
 .userCredentials{
     display: flex;
     flex-direction: column;
@@ -42,15 +38,13 @@
 
 .usernameField,
 .passwordField{
-    margin: 1.3rem 0; 
+    margin: clamp(.8rem, 1.2vw, 1.5rem) 0;
 }
 
-
-/* Login Features */
 .loginOptions{
     display: flex;
     justify-content: space-between;
-    margin: 1.3rem 0;
+    margin: clamp(.8rem, 1.2vw, 1.5rem) 0;
 }
 
 .rememberMe{

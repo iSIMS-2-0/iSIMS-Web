@@ -87,7 +87,7 @@ $isFather = (
                             <div class="genderInput">
                                 <label for="gender">Gender</label>
                                 <select id="gender" name="gender" required>
-                                    <option value="" hidden>-- Select Gender --</option>
+                                    <option value="" hidden> Select Gender </option>
                                     <option value="male">He/Him/His</option>
                                     <option value="female">She/Her/Hers</option>
                                     <option value="they">They/Them/Theris</option>

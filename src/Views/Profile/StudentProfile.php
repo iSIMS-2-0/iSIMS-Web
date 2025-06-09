@@ -192,17 +192,32 @@ $isFather = (
                         <h2>Emergency Contact</h2>
                         <div class="emergencyContactDetails">
                             <div class="emergencyContactField">
-                                <input type="radio" id="mothersInformation" name="contactInformation" <?php if($isMother) echo 'checked'; ?>>
+                                <input type="radio" id="mothersInformation" name="contactInformation" 
+                                  <?php if ($isMother) {
+                                        echo 'checked';
+                                    } else {
+                                        echo 'disabled';
+                                    } ?>>
                                 <label for="mothersInformation">Same as Mother's Information</label>
                             </div>
 
                             <div class="emergencyContactField">
-                                <input type="radio" id="fathersInformation" name="contactInformation" <?php if($isFather) echo 'checked'; ?>>
+                                <input type="radio" id="fathersInformation" name="contactInformation" 
+                                    <?php if ($isFather) {
+                                            echo 'checked';
+                                        } else {
+                                            echo 'disabled';
+                                        } ?>>
                                 <label for="fathersInformation">Same as Father's Information</label>
                             </div>
 
                             <div class="emergencyContactField">
-                                <input type="radio" id="otherInformation" name="contactInformation" <?php if(!$isMother && !$isFather) echo 'checked'; ?>>
+                                <input type="radio" id="otherInformation" name="contactInformation"
+                                     <?php if (!$isMother && !$isFather) {
+                                            echo 'checked';
+                                        } else {
+                                            echo 'disabled';
+                                        } ?>>
                                <label for="otherInformation">Other Information</label>
                             </div>
                         </div>

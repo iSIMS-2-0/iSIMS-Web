@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'program' => $_POST['program'] ?? '',
         'sex' => $_POST['sex'] ?? '',
         'gender_disclosure' => $_POST['gender_disclosure'] ?? 'No',
+        'pronouns' => $_POST['pronouns'] ?? '',
         'mobile' => $_POST['mobile'] ?? '',
         'landline' => $_POST['landline'] ?? '',
         'email' => $_POST['email'] ?? '',
@@ -33,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'father_mobile_number' => $_POST['father_mobile_number'] ?? '',
         'mother_email' => $_POST['mother_email'] ?? '',
         'father_email' => $_POST['father_email'] ?? '',
-        'emergency_contact' => $_POST['emergency_contact'] ?? '',
         'other_contact_name' => $_POST['other_contact_name'] ?? '',
         'other_contact_mobilenum' => $_POST['other_contact_mobilenum'] ?? '',
         'other_contact_email' => $_POST['other_contact_email'] ?? ''
@@ -47,6 +47,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = "<span style='color:green'>Account created! Student Number: $student_number</span>";
     } catch (Exception $e) {
         $message = "<span style='color:red'>Error: " . htmlspecialchars($e->getMessage()) . "</span>";
+    }
+}
+
+if (isset($_POST['drop_student']) && !empty($_POST['drop_student_number'])) {
+    $drop_student_number = $_POST['drop_student_number'];
+    try {
+        // Find student by student_number
+        $stmt = $pdo->prepare('SELECT id, family_info_id, medical_historyid FROM students WHERE student_number = ?');
+        $stmt->execute([$drop_student_number]);
+        $student = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($student) {
+            $student_id = $student['id'];
+            $family_info_id = $student['family_info_id'];
+            $medical_historyid = $student['medical_historyid'];
+            // Delete grades (by student_class)
+            $pdo->prepare('DELETE g FROM grades g JOIN student_class sc ON g.student_class_id = sc.id WHERE sc.student_id = ?')->execute([$student_id]);
+            // Delete student_class
+            $pdo->prepare('DELETE FROM student_class WHERE student_id = ?')->execute([$student_id]);
+            // Delete students_schedule
+            $pdo->prepare('DELETE FROM students_schedule WHERE student_id = ?')->execute([$student_id]);
+            // Delete family_info
+            if ($family_info_id) {
+                $pdo->prepare('DELETE FROM family_info WHERE id = ?')->execute([$family_info_id]);
+            }
+            // Delete medical_history
+            if ($medical_historyid) {
+                $pdo->prepare('DELETE FROM medical_history WHERE id = ?')->execute([$medical_historyid]);
+            }
+            // Delete student
+            $pdo->prepare('DELETE FROM students WHERE id = ?')->execute([$student_id]);
+            $message = "<span style='color:green'>Student $drop_student_number and all related records dropped.</span>";
+        } else {
+            $message = "<span style='color:red'>Student not found.</span>";
+        }
+    } catch (Exception $e) {
+        $message = "<span style='color:red'>Error: ".htmlspecialchars($e->getMessage())."</span>";
     }
 }
 ?>
@@ -64,7 +100,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         Name: <input name="name" required><br>
         Program: <input name="program" required><br>
         Sex: <select name="sex"><option>Male</option><option>Female</option></select><br>
-        Gender Disclosure: <select name="gender_disclosure"><option value="Yes">Yes</option><option value="No">No</option></select><br>
+        Gender Disclosure: <select name="gender_disclosure" id="gender_disclosure_select">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br>
+        <div id="pronoun_field" style="display:none;">
+            Pronoun:
+            <select name="pronouns" id="pronoun_select">
+                <option value="" hidden selected>Select Pronoun</option>
+                <option value="male">He/Him/His</option>
+                <option value="female">She/Her/Hers</option>
+                <option value="they">They/Them/Theirs</option>
+                <option value="zie">Zie/Zir/Zirs</option>
+            </select>
+        </div>
         Mobile: <input name="mobile"><br>
         Landline: <input name="landline"><br>
         Email: <input name="email"><br>
@@ -152,10 +201,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             updateEmergencyFields(); // initial
         });
         </script>
+        <script>
+        // Gender disclosure/pronoun logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const disclosureSelect = document.getElementById('gender_disclosure_select');
+            const pronounField = document.getElementById('pronoun_field');
+            const pronounSelect = document.getElementById('pronoun_select');
+            function togglePronounField() {
+                if (disclosureSelect.value === 'Yes') {
+                    pronounField.style.display = 'block';
+                } else {
+                    pronounField.style.display = 'none';
+                    pronounSelect.selectedIndex = 0;
+                }
+            }
+            disclosureSelect.addEventListener('change', togglePronounField);
+            togglePronounField();
+        });
+        </script>
         <h2>Medical Info</h2>
         Comorbidities: <input name="comorb"><br>
         Allergies: <input name="allergies"><br>
         <br><button type="submit">Create Account</button>
+    </form>
+    <form method="post" style="margin-top:2em;">
+        <h2>Drop Student (and all related data)</h2>
+        Student Number: <input name="drop_student_number" required>
+        <button type="submit" name="drop_student">Drop Student</button>
     </form>
 </body>
 </html>

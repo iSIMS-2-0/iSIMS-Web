@@ -1,4 +1,3 @@
-
 <?php
 class User {
     private $pdo;
@@ -48,7 +47,7 @@ class User {
     $this->pdo->beginTransaction();
     try {
         // Insert family info
-        $stmt = $this->pdo->prepare("INSERT INTO family_info (mother_name, father_name, mother_mobile_number, father_mobile_number, mother_email, father_email, emergency_contact, other_contact_name, other_contact_mobilenum, other_contact_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $this->pdo->prepare("INSERT INTO family_info (mother_name, father_name, mother_mobile_number, father_mobile_number, mother_email, father_email, other_contact_name, other_contact_mobilenum, other_contact_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $familyData['mother_name'],
             $familyData['father_name'],
@@ -56,7 +55,6 @@ class User {
             $familyData['father_mobile_number'],
             $familyData['mother_email'],
             $familyData['father_email'],
-            $familyData['emergency_contact'],
             $familyData['other_contact_name'],
             $familyData['other_contact_mobilenum'],
             $familyData['other_contact_email']
@@ -78,13 +76,14 @@ class User {
         $studentData['password_hash'] = password_hash($studentData['password_hash'], PASSWORD_BCRYPT);
 
         // Insert student
-        $stmt = $this->pdo->prepare("INSERT INTO students (student_number, name, program, sex, gender_disclosure, mobile, landline, email, lot_blk, street, zip_code, city_municipality, country, password_hash, family_info_id, medical_historyid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $this->pdo->prepare("INSERT INTO students (student_number, name, program, sex, gender_disclosure, pronouns, mobile, landline, email, lot_blk, street, zip_code, city_municipality, country, password_hash, family_info_id, medical_historyid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $studentData['student_number'],
             $studentData['name'],
             $studentData['program'],
             $studentData['sex'],
             $studentData['gender_disclosure'],
+            $studentData['pronouns'],
             $studentData['mobile'],
             $studentData['landline'],
             $studentData['email'],

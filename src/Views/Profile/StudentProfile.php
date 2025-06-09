@@ -246,19 +246,19 @@ $isFather = (
                         <h1>Medical History</h1>
                     </div>
                     <?php
-                    $hasMedical = !empty($medical['comorb']) || !empty($medical['allergies']);
+                    //$hasMedical = !empty($medical['comorb']) || !empty($medical['allergies']);
                     ?>
                     <div class="informationSection">
                         <div class="field">
                             <label>Do you have any comorbidities/medical conditions?</label>
                             <div class="comorbidityOptions">
                                 <div>
-                                    <input type="radio" id="yes" name="comorbidity" <?php if($hasMedical) echo 'checked'; ?>>
+                                    <input type="radio" id="yes" name="comorbidity" <?php if(!empty($medical['comorb'])) echo 'checked'; ?>>
                                     <label for="yes">Yes</label>
                                 </div>
 
                                 <div>
-                                    <input type="radio" id="no" name="comorbidity" <?php if(!$hasMedical) echo 'checked'; ?>>
+                                    <input type="radio" id="no" name="comorbidity" <?php if(empty($medical['comorb'])) echo 'checked'; ?>>
                                     <label for="no">No</label>
                                 </div>
                             </div>
@@ -273,12 +273,12 @@ $isFather = (
                             <div class="allergyOptions">
                                 <div>
                                     <input type="radio" id="have" name="allergy" <?php if(!empty($medical['allergies'])) echo 'checked'; ?>>
-                                    <label for="yes">Yes</label>
+                                    <label for="have">Yes</label>
                                 </div>
 
                                 <div>
                                     <input type="radio" id="n/a" name="allergy" <?php if(empty($medical['allergies'])) echo 'checked'; ?>>
-                                    <label for="no">No</label>
+                                    <label for="n/a">No</label>
                                 </div>
                             </div>
                         </div>

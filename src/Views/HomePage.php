@@ -42,12 +42,26 @@ session_start();
             <div class="schoolBulletin">
                 <div class="announcements">
                     <h2>Announcements</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit, harum. Numquam cupiditate ipsum, quae minima autem amet rem perspiciatis veritatis natus aspernatur doloribus magni. Ex sed dicta laboriosam magni maxime?</p>
+                    <div class="announcement">
+                        <h4>STEVAL FOR TERM 3</h4>
+                        <p>It's time for Term 3’s Student Evaluation of Teaching (STEVAL). Your feedback is invaluable to us as we strive to improve your learning experience. Please take a few moments to complete the STEVAL form. Please note that we now have one form for each of your teachers. Forms will be available until JULY 31 5:00 PM ONLY</p>
+                    </div>
+
+                    <div class="announcement">
+                        <h4>REPLACEMENT OF 10TH FLOOR MONITORS</h4>
+                        <p>We would like to inform you that some of the monitors on the 10th floor have been found to be not in a best condition. While we await the arrival of new replacement units, we have installed service monitors to ensure minimal disruption to your work and classes.</p>
+                    </div>
+
                 </div>
 
                 <div class="remarks">
                     <h2>Remarks</h2>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus officiis quam in nulla debitis aliquid! Veniam cumque rerum quo nobis reprehenderit laudantium explicabo. Dignissimos iure nam fugiat suscipit a exercitationem?</p>
+                    <div class="remark">
+                        <h4>DEFICIENCY</h4>
+                        <p>Your enrollment is currently on hold due to a missing document. Please upload your proof of payment to complete your enrollment and become officially enrolled.</p>
+                    </div>
+
+
                 </div>
 
                 <div class="calendar">

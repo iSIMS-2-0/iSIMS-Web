@@ -32,3 +32,9 @@
     overflow: hidden;
     padding: 1.5rem;
 }
+
+.announcement,
+.remark{
+    margin-top: 1rem;
+    text-align: justify;
+}

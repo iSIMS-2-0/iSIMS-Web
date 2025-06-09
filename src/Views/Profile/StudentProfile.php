@@ -14,7 +14,7 @@ $family = $userModel->findFamilyInfoByID($user['family_info_id']);
 $medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
 
 $emergency = [
-    'name' => $family['emergency_contact'] ?? '',
+    'name' => $family['other_contact_name'] ?? '',
     'mobile' => $family['other_contact_mobilenum'] ?? '',
     'email' => $family['other_contact_email'] ?? ''
 ];
@@ -112,7 +112,7 @@ $isFather = (
                         <div class="studentDetails">
                             <div class="field">
                                 <label for="studentEmailAddress">Email Address</label>
-                                <input type="text" id="studentEmailAddress" name="studentEmailAddress" readonly value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>">
+                                <input type="text" id="studentEmailAddress" name="studentEmailAddress" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>">
                             </div>
                         </div>
 
@@ -168,7 +168,7 @@ $isFather = (
 
                             <div class="field">
                                 <label for="mothersEmailAddress">Email Address</label>
-                                <input type="text" id="mothersEmailAddress" name="mothersEmailAddress" readonly value="<?php echo htmlspecialchars($family['mother_email'] ?? ''); ?>">
+                                <input type="text" id="mothersEmailAddress" name="mothersEmailAddress" value="<?php echo htmlspecialchars($family['mother_email'] ?? ''); ?>">
                             </div>
                         </div>
 
@@ -185,7 +185,7 @@ $isFather = (
 
                             <div class="field">
                                 <label for="fathersEmailAddress">Email Address</label>
-                               <input type="text" id="fathersEmailAddress" name="fathersEmailAddress" readonly value="<?php echo htmlspecialchars($family['father_email'] ?? ''); ?>">
+                               <input type="text" id="fathersEmailAddress" name="fathersEmailAddress" value="<?php echo htmlspecialchars($family['father_email'] ?? ''); ?>">
                             </div>
                         </div>
 
@@ -220,7 +220,7 @@ $isFather = (
 
                             <div class="field">
                                 <label for="otherEmailAddress">Email Address</label>
-                                <input type="text" id="otherEmailAddress" name="otherEmailAddress" readonly value="<?php echo htmlspecialchars($emergency['email']); ?>">
+                                <input type="text" id="otherEmailAddress" name="otherEmailAddress" value="<?php echo htmlspecialchars($emergency['email']); ?>">
                             </div>
                         </div>
                     </div>

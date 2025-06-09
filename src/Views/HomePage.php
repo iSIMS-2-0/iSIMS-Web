@@ -25,6 +25,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/assets/CSS/main.css">
     <link rel="stylesheet" href="/public/assets/CSS/Components/Homepage/homepage.css">
+    <link rel="stylesheet" href="/public/assets/CSS/Components/Homepage/calendar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script defer src="/public/assets/JavaScript/sidebar.js"></script>
     <title>Home</title>
@@ -64,8 +65,85 @@ session_start();
 
                 </div>
 
-                <div class="calendar">
+                <div class="calendarCont">
                     <h2>Calendar</h2>
+                    <div class ="calendar">
+                        <ul>
+                            <li class="prev">&#10094;</li>
+                            <li class="next">&#10095;</li>
+                            <li style="text-align: left; padding-left: 30px;">
+                            June <br> 2025
+                            </li>
+                        </ul>
+                        </div>
+                        <ul class="days">
+                        <li>Mon</li>
+                        <li>Tue</li>
+                        <li>Wed</li>
+                        <li>Thu</li>
+                        <li>Fri</li>
+                        <li>Sat</li>
+                        <li>Sun</li>
+                        </ul>
+
+                        <ul class="weekdays">
+                            <li><span class="inactive">26</span></li>
+                            <li><span class="inactive">27</span></li>
+                            <li><span class="inactive">28</span></li>
+                            <li><span class="inactive">29</span></li>
+                            <li><span class="inactive">30</span></li>
+                            <li><span class="inactive">31</span></li>
+                            <li><span class="weekends">1</span></li>
+                            <li><span class="weekends">2</span></li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li><span class="events">6</span>
+                            <div class="hide">Eid'l Adha</div></li>
+                            <li>7</li>
+                            <li><span class="weekends">8</span></li>
+                            <li><span class="events">9</span>
+                            <div class="hide">Midterm Week</div></li>
+                            <li><span class="events">10</span>
+                            <div class="hide">Midterm Week</div></li>
+                            <li><span class="events">11</span>
+                            <div class="hide">Midterm Week</div></li>
+                            <li><span class="events">12</span>
+                            <div class="hide">Independence Day</div></li>
+                            <li><span class="events">13</span>
+                            <div class="hide">Midterm Week</div></li>
+                            <li><span class="events">14</span>
+                            <div class="hide">Midterm Week</div></li>
+                            <li><span class="weekends">15</span></li>
+                            <li><span class="weekends">16</span></li>
+                            <li>17</li>
+                            <li>18</li>
+                            <li>19</li>
+                            <li>20</li>
+                            <li>21</li>
+                            <li><span class="weekends">22</span></li>
+                            <li><span class="events">23</span>
+                            <div class="hide">School of Computing Week</div></li>
+                            <li><span class="events">24</span>
+                            <div class="hide">School of Computing Week</div></li>
+                            <li><span class="events">25</span>
+                            <div class="hide">School of Computing Week</div></li>
+                            <li><span class="events">26</span>
+                            <div class="hide">School of Computing Week</div></li>
+                            <li><span class="events">27</span>
+                            <div class="hide">School of Computing Week</div></li>
+                            <li><span class="events">28</span>
+                            <div class="hide">School of Computing Week</div></li>
+                            <li><span class="weekends">29</span></li>
+                            <li><span class="weekends">30</span></li>
+                            <li><span class="inactive">1</span></li>
+                            <li><span class="inactive">2</span></li>
+                            <li><span class="inactive">3</span></li>
+                            <li><span class="inactive">4</span></li>
+                            <li><span class="inactive">5</span></li>
+                            <li><span class="inactive">6</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

@@ -24,7 +24,7 @@
 
 .announcements, 
 .remarks, 
-.calendar{
+.calendarCont{
     width: 32%;
     background-color: var(--white);
     border-radius: 10px;

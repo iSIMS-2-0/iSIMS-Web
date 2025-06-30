@@ -1,0 +1,60 @@
+.contents{
+    margin-left: 1rem;
+}
+
+
+.selection{
+    margin: 1rem 0;
+    display: flex;
+    gap: 4rem;
+}
+
+select{
+    padding: 0.2rem;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    margin-left: 0.5rem;
+}
+
+.tables{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.curriculum-table{
+    border-collapse: collapse;
+    width: 70%;
+}
+
+.curriculum-table__body{
+    text-align: center;
+}
+
+.legend-table{
+    border-collapse: collapse;
+    width: 15%;
+}
+
+.box-color{
+    width: 20%;
+}
+
+th, td {
+    border: 1px solid var(--dark-gray);
+    padding: 0.5rem; 
+ 
+}
+
+th{
+    background-color: var(--dark-blue);
+    color: var(--white);
+}
+
+.passed{background-color: #006EFF;}
+.not-taken{background-color: #363636;}
+.enrolled{background-color: #5FD855;}
+.failed{background-color: #EE0202;}

@@ -70,12 +70,12 @@ function calculateGwa($studentGrades) {
             <h1>Student Grades</h1>
             <form method="get">  
                 <div class="selection">
-                <div class="syDiv">
+                    <div class="syDiv">
                         <label for="schoolYear">School Year:</label>
                         <select name="schoolYear" id="schoolYear" onchange="this.form.submit()">
                             <option value="<?= htmlspecialchars($selected_sy) ?>"><?= htmlspecialchars($selected_sy) ?></option>
                         </select>
-                </div>
+                    </div>
                     <div class="termDiv">
                         <label for="term">Term:</label>
                         <select name="term" id="term" onchange="this.form.submit()">

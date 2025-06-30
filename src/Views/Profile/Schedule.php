@@ -6,10 +6,6 @@ session_start();
 // Assume student_id is stored in session after login
 $student_id = $_SESSION['student_id'] ?? null;
 
-// Get selected school year and term from GET or default
-$selected_sy = $_GET['schoolYear'] ?? date('Y') . '-' . (date('Y')+1);
-$selected_term = $_GET['term'] ?? '1st Term';
-
 $scheduleData = [];
 if ($student_id) {
     $config = require $_SERVER["DOCUMENT_ROOT"] . "/config.php";
@@ -17,10 +13,19 @@ if ($student_id) {
     $pdo = new PDO($dsn, $config['user'], $config['pass']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $scheduleModel = new Schedule($pdo);
-    // Get all schedule_ids for this student
-    $studentSchedules = $pdo->prepare("SELECT s.*, sc.term, sc.school_year, sub.code AS subject_code, sub.name AS subject_name, sec.name AS section_name FROM students_schedule ss JOIN schedules s ON ss.schedule_id = s.id JOIN student_class sc ON sc.student_id = ss.student_id AND sc.subject_id = s.subject_id AND sc.section_id = s.section_id JOIN subjects sub ON s.subject_id = sub.id JOIN sections sec ON s.section_id = sec.id WHERE ss.student_id = ? AND sc.term = ? AND sc.school_year = ?");
-    $studentSchedules->execute([$student_id, $selected_term, $selected_sy]);
-    $scheduleData = $studentSchedules->fetchAll(PDO::FETCH_ASSOC);
+    // Get the latest/current term and school year for this student
+    $stmt = $pdo->prepare("SELECT sc.term, sc.school_year FROM student_class sc WHERE sc.student_id = ? ORDER BY sc.school_year DESC, FIELD(sc.term, '1st Term', '2nd Term', '3rd Term') DESC LIMIT 1");
+    $stmt->execute([$student_id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $current_term = $row['term'] ?? null;
+    $current_sy = $row['school_year'] ?? null;
+    if ($current_term && $current_sy) {
+        $studentSchedules = $pdo->prepare("SELECT s.*, sc.term, sc.school_year, sub.code AS subject_code, sub.name AS subject_name, sec.name AS section_name FROM students_schedule ss JOIN schedules s ON ss.schedule_id = s.id JOIN student_class sc ON sc.student_id = ss.student_id AND sc.subject_id = s.subject_id AND sc.section_id = s.section_id JOIN subjects sub ON s.subject_id = sub.id JOIN sections sec ON s.section_id = sec.id WHERE ss.student_id = ? AND sc.term = ? AND sc.school_year = ?");
+        $studentSchedules->execute([$student_id, $current_term, $current_sy]);
+        $scheduleData = $studentSchedules->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $scheduleData = [];
+    }
 }
 // Helper: organize by day and time block
 $days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
@@ -70,29 +75,11 @@ $display_blocks = [
    <div class="mainContainer">
      <div class="contents">
         <h1>Schedule</h1>
-        <form method="get">  
-            <div class="selection">
-            <div class="syDiv">
-                    <label for="schoolYear">School Year:</label>
-                    <select name="schoolYear" id="schoolYear" onchange="this.form.submit()">
-                        <option value="<?= htmlspecialchars($selected_sy) ?>"><?= htmlspecialchars($selected_sy) ?></option>
-                    </select>
-            </div>
-                <div class="termDiv">
-                    <label for="term">Term:</label>
-                    <select name="term" id="term" onchange="this.form.submit()">
-                        <option value="1st Term"<?= $selected_term=='1st Term'?' selected':''; ?>>1st Term</option>
-                        <option value="2nd Term"<?= $selected_term=='2nd Term'?' selected':''; ?>>2nd Term</option>
-                        <option value="3rd Term"<?= $selected_term=='3rd Term'?' selected':''; ?>>3rd Term</option>
-                    </select>
-                </div>
-            </div>
-        </form>
         <div class="scheduleTable">
             <table>
             <thead>
                 <tr>
-                    <th></th>
+                    <th>Schedule</th>
                     <?php foreach ($days as $day): ?>
                         <th><?= htmlspecialchars($day) ?></th>
                     <?php endforeach; ?>

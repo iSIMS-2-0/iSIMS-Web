@@ -2,50 +2,69 @@ document.addEventListener("DOMContentLoaded", function() {
     // Gender Disclosure
     const discloseGender = document.getElementById("studentGender");
     const genderInput = document.querySelector(".genderInput");
+    const genderSelect = document.getElementById("gender");
+    const dbPronoun = genderSelect ? genderSelect.getAttribute("data-pronoun") : "";
 
     function toggleGender(){
         if(discloseGender.checked){
-            genderInput.style.display = "flex";
+            genderInput.style.display = "block";
+            // Auto-select pronoun if present in DB
+            if (dbPronoun && genderSelect) {
+                let found = false;
+                for (let i = 0; i < genderSelect.options.length; i++) {
+                    if (genderSelect.options[i].value === dbPronoun) {
+                        genderSelect.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    genderSelect.selectedIndex = 0; // placeholder
+                }
+            } else if (genderSelect) {
+                genderSelect.selectedIndex = 0; // placeholder
+            }
         } else {
             genderInput.style.display = "none";
+            if (genderSelect) {
+                genderSelect.selectedIndex = 0; // reset to placeholder
+            }
         }
     }
 
     discloseGender.addEventListener("change", toggleGender);
-     toggleGender();
+    toggleGender();
 
-    //Comorbidities
+    // Comorbidities radio logic
     const yesRadio = document.getElementById("yes");
     const noRadio = document.getElementById("no");
     const comorbiditiesField = document.querySelector(".comorbiditiesField");
-
-    function toggleComorbidities(){
-        if(yesRadio.checked) {
+    const comorbiditiesTextarea = document.getElementById("comorbidities");
+    function toggleComorbidities() {
+        if (yesRadio.checked) {
             comorbiditiesField.style.display = "flex";
-
         } else {
             comorbiditiesField.style.display = "none";
+            comorbiditiesTextarea.value = "";
         }
     }
-
     yesRadio.addEventListener("change", toggleComorbidities);
     noRadio.addEventListener("change", toggleComorbidities);
-    toggleComorbidities(); 
+    toggleComorbidities();
 
-    //Allergies
+    // Allergies radio logic
     const haveAllergies = document.getElementById("have");
     const noAllergies = document.getElementById("n/a");
     const allergiesField = document.querySelector(".allergiesField");
-
-    function toggleAllergies(){
-        if(haveAllergies.checked) {
+    const allergiesTextarea = document.getElementById("allergy");
+    function toggleAllergies() {
+        if (haveAllergies.checked) {
             allergiesField.style.display = "flex";
-
         } else {
             allergiesField.style.display = "none";
+            allergiesTextarea.value = "";
         }
     }
-
     haveAllergies.addEventListener("change", toggleAllergies);
     noAllergies.addEventListener("change", toggleAllergies);
     toggleAllergies();
@@ -85,4 +104,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     setEmergencyContactRadio();
+
+    
 });

@@ -29,6 +29,32 @@ $isFather = (
     $emergency['email'] === ($family['father_email'] ?? '')
 );
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $new_email = $_POST['studentEmailAddress'] ?? '';
+    $new_mother_email = $_POST['mothersEmailAddress'] ?? '';
+    $new_father_email = $_POST['fathersEmailAddress'] ?? '';
+    $new_other_email = $_POST['otherEmailAddress'] ?? '';
+    $new_comorb = trim($_POST['comorbidities'] ?? '');
+    $new_allergies = trim($_POST['allergy'] ?? '');
+    $new_gender_disclosure = isset($_POST['studentGender']) ? 'yes' : 'no';
+    $new_pronoun = $_POST['gender'] ?? '';
+    // If comorbidities or allergies are empty, set to null for DB
+    $new_comorb = ($new_comorb === '') ? null : $new_comorb;
+    $new_allergies = ($new_allergies === '') ? null : $new_allergies;
+    // Update student email
+    $stmt = $pdo->prepare("UPDATE students SET email = ?, gender_disclosure = ?, pronouns = ? WHERE id = ?");
+    $stmt->execute([$new_email, $new_gender_disclosure, $new_pronoun, $user['id']]);
+    // Update family_info emails
+    $stmt = $pdo->prepare("UPDATE family_info SET mother_email = ?, father_email = ?, other_contact_email = ? WHERE id = ?");
+    $stmt->execute([$new_mother_email, $new_father_email, $new_other_email, $user['family_info_id']]);
+    // Update medical history
+    $stmt = $pdo->prepare("UPDATE medical_history SET comorb = ?, allergies = ? WHERE id = ?");
+    $stmt->execute([$new_comorb, $new_allergies, $user['medical_historyid']]);
+    // Refresh data after update
+    $user = $userModel->findByStudentNumber($_SESSION['student_number']);
+    $family = $userModel->findFamilyInfoByID($user['family_info_id']);
+    $medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,19 +105,18 @@ $isFather = (
                             </div>
 
                             <div class="genderField">
-                                <input type="checkbox" id="studentGender" name="studentGender"<?php echo (!empty($user['gender_disclosure']) && strtolower($user['gender_disclosure']) === 'yes') ? 'checked' : ''; ?>>
+                                <input type="checkbox" id="studentGender" name="studentGender" <?php echo (!empty($user['gender_disclosure']) && strtolower($user['gender_disclosure']) === 'yes') ? 'checked' : ''; ?>>
                                 <label for="studentGender">I hereby agree to disclose my gender</label>
                             </div>
-                            
-                            
-                            <div class="genderInput">
+
+                            <div class="genderInput" style="display:<?php echo (!empty($user['gender_disclosure']) && strtolower($user['gender_disclosure']) === 'yes') ? 'block' : 'none'; ?>;">
                                 <label for="gender">Gender</label>
-                                <select id="gender" name="gender" required>
-                                    <option value="" hidden> Select Gender </option>
-                                    <option value="male">He/Him/His</option>
-                                    <option value="female">She/Her/Hers</option>
-                                    <option value="they">They/Them/Theirs</option>
-                                    <option value="zie">Zie/Zir/Zirs</option>
+                                <select id="gender" name="gender" data-pronoun="<?php echo htmlspecialchars($user['pronouns'] ?? ''); ?>">
+                                    <option value="" hidden <?php echo (empty($user['pronouns'])) ? 'selected' : ''; ?>> Select Gender </option>
+                                    <option value="male" <?php echo (isset($user['pronouns']) && $user['pronouns'] === 'male') ? 'selected' : ''; ?>>He/Him/His</option>
+                                    <option value="female" <?php echo (isset($user['pronouns']) && $user['pronouns'] === 'female') ? 'selected' : ''; ?>>She/Her/Hers</option>
+                                    <option value="they" <?php echo (isset($user['pronouns']) && $user['pronouns'] === 'they') ? 'selected' : ''; ?>>They/Them/Theirs</option>
+                                    <option value="zie" <?php echo (isset($user['pronouns']) && $user['pronouns'] === 'zie') ? 'selected' : ''; ?>>Zie/Zir/Zirs</option>
                                 </select>
                             </div>
                         </div>
@@ -245,9 +270,6 @@ $isFather = (
                     <div class="sectionTitle">
                         <h1>Medical History</h1>
                     </div>
-                    <?php
-                    //$hasMedical = !empty($medical['comorb']) || !empty($medical['allergies']);
-                    ?>
                     <div class="informationSection">
                         <div class="field">
                             <label>Do you have any comorbidities/medical conditions?</label>
@@ -308,5 +330,6 @@ $isFather = (
             </form>
         </div>
     </div>
+
 </body>
 </html>

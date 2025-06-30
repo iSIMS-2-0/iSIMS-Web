@@ -1,3 +1,7 @@
+.contents{
+    margin: 0 1rem;
+}
+
 .scheduleTable{
     display: flex;
     justify-content: center;

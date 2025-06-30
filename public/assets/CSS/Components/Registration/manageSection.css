@@ -1,0 +1,68 @@
+.contents{
+    margin: 0 1rem;
+}
+
+.myInfo{
+    margin: 1rem 0;
+    border: var(--dark-blue) 1.5px solid;
+}
+
+.infoTitle{
+    display: flex;
+    background-color: var(--dark-blue);
+    width: 100%;
+    color: var(--white);
+    padding: 1rem;
+}
+
+.infoContent{
+    display: flex;
+    padding: 1rem;
+}
+
+.content{
+    margin-bottom: .5rem;
+}
+
+.infoCont1, .infoCont2{
+    width: 50%;
+}
+
+.infoLabel{
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.registeredSubTable{
+    table-layout: fixed;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+th, td {
+    border: 1px solid var(--dark-gray);
+    padding: 0.5rem; 
+    font-size: 1rem;
+}
+
+th{
+    background-color: var(--dark-blue);
+    color: var(--white);
+    font-weight: normal;
+}
+
+.button {
+    text-align: right;
+    margin: 1rem 0;
+}
+
+.viewBttn {
+    padding: .5rem 1rem;
+    background-color: var(--dark-blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}

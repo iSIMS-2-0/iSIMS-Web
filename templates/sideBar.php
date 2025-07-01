@@ -28,8 +28,8 @@
             </div>
         </div>
         <div id="registration" class="dropdown">
-            <a href="#"><p>Curriculum</p></a>
-            <a href="#"><p>Manage Section</p></a>
+            <a href="/src/Views/Registration/curriculum.php"><p>Curriculum</p></a>
+            <a href="/src/Views/Registration/manageSection.php"><p>Manage Section</p></a>
         </div>
 
         <!-- PAYMENT -->

@@ -18,6 +18,5 @@ class Schedule {
         $stmt->execute(['student_id' => $student_id]);
         return $stmt->fetchAll();
     }
-    
 }
 ?>

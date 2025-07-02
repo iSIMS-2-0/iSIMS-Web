@@ -52,8 +52,6 @@
                             <a href="https://tinyurl.com/Card-Online-Payment" class="cardPayment">
                                 <i class="fas fa-credit-card"></i> Credit Card Payment
                             </a>
-
-                            <p>Note: upload proof of payment on Online Payment Page</p>
                     </div>
                 </div>
             </div>

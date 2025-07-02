@@ -64,9 +64,3 @@ select{
     font-size: 1.2rem;
     font-weight: normal;
 }
-
-p{ // mababago p
-    font-size: .8rem;
-    color: red; // palitan k to
-    font-weight: normal;
-}

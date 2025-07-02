@@ -1,0 +1,62 @@
+.contents{
+    margin-left: 1rem;
+}
+
+.student-information{
+    display: flex;
+    margin: 1rem 0;
+    gap: 4rem;
+}
+
+.student-name,
+.student-number{
+    display: flex;
+    gap: .5rem;
+}
+
+.payment-history-table{
+    border-collapse: collapse;
+}
+
+.payment-history-table__body{
+    text-align: center;
+}
+
+
+th, td {
+    border: 1px solid var(--dark-gray);
+    padding: 0.5rem; 
+    
+}
+
+th{
+    background-color: var(--dark-blue);
+    color: var(--white);
+}
+
+.pending-upload-button,
+.received-upload-button{
+    width: 95%;
+    height: 4vh;
+    border: none;
+    border-radius: 8px;
+    color: white;
+}
+
+.pending-upload-button{
+    background-color: var(--vivid-medium-blue);
+    cursor: pointer;
+}
+
+.pending-upload-button:hover{
+    background-color: #013A7D;
+}
+
+.pending-upload-button:active{
+    background-color: #012A5B;
+}
+
+.received-upload-button{
+    background-color: #7E7E7E;
+    cursor: not-allowed;
+}

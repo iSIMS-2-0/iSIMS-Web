@@ -1,0 +1,35 @@
+.contents{
+    margin-left: 1rem;
+}
+
+.student-information{
+    display: flex;
+    margin: 1rem 0;
+    gap: 4rem;
+}
+
+.student-name,
+.student-number{
+    display: flex;
+    gap: .5rem;
+}
+
+.payment-history-table{
+    border-collapse: collapse;
+}
+
+.payment-history-table__body{
+    text-align: center;
+}
+
+
+th, td {
+    border: 1px solid var(--dark-gray);
+    padding: 0.5rem; 
+    
+}
+
+th{
+    background-color: var(--dark-blue);
+    color: var(--white);
+}

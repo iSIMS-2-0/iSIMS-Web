@@ -75,8 +75,27 @@ $display_blocks = [
    <div class="mainContainer">
      <div class="contents">
         <h1>Schedule</h1>
+        <form method="get">
+            <div class="selection">
+                <div class="syDiv">
+                    <label for="schoolYear">School Year:</label>  
+                    <select name="schoolYear" id="schoolYear" onchange="this.form.submit()">
+                        <option value="<?= htmlspecialchars($selected_sy) ?>"><?= htmlspecialchars($selected_sy) ?></option>
+                    </select>
+                </div>
+            
+                <div class="termDiv">
+                    <label for="term">Term:</label>
+                    <select name="term" id="term" onchange="this.form.submit()">
+                        <option value="1st Term"<?= $selected_term=='1st Term'?' selected':''; ?>>1st Term</option>
+                        <option value="2nd Term"<?= $selected_term=='2nd Term'?' selected':''; ?>>2nd Term</option>
+                        <option value="3rd Term"<?= $selected_term=='3rd Term'?' selected':''; ?>>3rd Term</option>
+                    </select>
+                </div>
+            </div>
+        </form>
         <div class="scheduleTable">
-            <table>
+        <table>
             <thead>
                 <tr>
                     <th>Schedule</th>

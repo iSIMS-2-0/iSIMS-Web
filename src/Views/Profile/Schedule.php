@@ -84,6 +84,8 @@ $display_blocks = [
                     </select>
                 </div>
             
+               <!-- <form method="get"> removed because it was unneces
+                <input type="hidden" name="page" value="schedule">
                 <div class="termDiv">
                     <label for="term">Term:</label>
                     <select name="term" id="term" onchange="this.form.submit()">
@@ -92,6 +94,7 @@ $display_blocks = [
                         <option value="3rd Term"<?= $selected_term=='3rd Term'?' selected':''; ?>>3rd Term</option>
                     </select>
                 </div>
+               </form> -->
             </div>
         </form>
         <div class="scheduleTable">

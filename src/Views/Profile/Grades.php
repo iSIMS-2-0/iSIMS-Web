@@ -76,14 +76,17 @@ function calculateGwa($studentGrades) {
                             <option value="<?= htmlspecialchars($selected_sy) ?>"><?= htmlspecialchars($selected_sy) ?></option>
                         </select>
                     </div>
-                    <div class="termDiv">
-                        <label for="term">Term:</label>
-                        <select name="term" id="term" onchange="this.form.submit()">
-                            <option value="1st Term"<?= $selected_term=='1st Term'?' selected':''; ?>>1st Term</option>
-                            <option value="2nd Term"<?= $selected_term=='2nd Term'?' selected':''; ?>>2nd Term</option>
-                            <option value="3rd Term"<?= $selected_term=='3rd Term'?' selected':''; ?>>3rd Term</option>
-                        </select>
-                    </div>
+                        <form method="get">
+                        <input type="hidden" name="page" value="grades">
+                        <div class="termDiv">
+                            <label for="term">Term:</label>
+                            <select name="term" id="term" onchange="this.form.submit()">
+                                <option value="1st Term"<?= $selected_term=='1st Term'?' selected':''; ?>>1st Term</option>
+                                <option value="2nd Term"<?= $selected_term=='2nd Term'?' selected':''; ?>>2nd Term</option>
+                                <option value="3rd Term"<?= $selected_term=='3rd Term'?' selected':''; ?>>3rd Term</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
             </form>
             <table class = "gradesTable">

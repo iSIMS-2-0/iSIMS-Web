@@ -14,9 +14,9 @@
             </div>
         </div>
         <div id="profile" class="dropdown">
-            <a href="/src/Views/Profile/StudentProfile.php"><p>Student Profile</p></a>
-            <a href="/src/Views/Profile//Grades.php"><p>Grades </p></a>
-            <a href="/src/Views//Profile//Schedule.php"><p>Schedule</p></a>
+            <a href="/public/index.php?page=student_profile"><p>Student Profile</p></a>
+            <a href="/public/index.php?page=grades"><p>Grades </p></a>
+            <a href="/public/index.php?page=schedule"><p>Schedule</p></a>
         </div>
 
         <!-- REGISTRATION -->

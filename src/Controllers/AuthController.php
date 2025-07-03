@@ -22,7 +22,7 @@ class AuthController {
             $_SESSION['student_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['last_activity'] = time();
-            header("Location: /src/Views/HomePage.php");
+            header("Location: /public/index.php?page=home");
             exit(); 
         } else {
             $error = "Invalid ID or password.";

@@ -38,7 +38,7 @@
 
             <div class="erfAndTable">
                 <div class="erfFrame">
-                    .
+                    <iframe src="/public/assets/pdfFile/erf.pdf#toolbar=0"></iframe>
                 </div>
                 <div class="paymentMethods">
                     <div class="paymentTitle">
@@ -52,6 +52,10 @@
                             <a href="https://tinyurl.com/Card-Online-Payment" class="cardPayment">
                                 <i class="fas fa-credit-card"></i> Credit Card Payment
                             </a>
+
+                            <div class="note">
+                                <p><strong>Note:</strong> upload proof of payment in <a href="onlinePayment.php">Online Payment</a> section.</p>
+                            </div>
                     </div>
                 </div>
             </div>

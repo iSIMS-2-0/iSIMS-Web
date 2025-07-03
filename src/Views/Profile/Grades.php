@@ -1,55 +1,5 @@
-<?php
-require_once $_SERVER["DOCUMENT_ROOT"] . "/src/Models/Grades.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/src/Models/Schedule.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/config.php";
-session_start();
-$student_id = $_SESSION['student_id'] ?? null;
-$selected_sy = $_GET['schoolYear'] ?? date('Y') . '-' . (date('Y')+1);
-$selected_term = $_GET['term'] ?? '1st Term';
-$studentGrades = [];
-$program = 'N/A';
-if ($student_id) {
-    $config = require $_SERVER["DOCUMENT_ROOT"] . "/config.php";
-    $dsn = "mysql:host={$config['host']};dbname={$config['db']};charset=utf8mb4";
-    $pdo = new PDO($dsn, $config['user'], $config['pass']);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // Get all student_class records for this student, term, and school year
-    $stmt = $pdo->prepare("SELECT sc.*, sub.code AS subject_code, sub.name AS subject_name, sec.name AS section_name, sub.units, g.grade FROM student_class sc JOIN subjects sub ON sc.subject_id = sub.id JOIN sections sec ON sc.section_id = sec.id LEFT JOIN grades g ON g.student_class_id = sc.id WHERE sc.student_id = ? AND sc.term = ? AND sc.school_year = ?");
-    $stmt->execute([$student_id, $selected_term, $selected_sy]);
-    $studentGrades = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // Fetch program from students table
-    $stmt2 = $pdo->prepare("SELECT program FROM students WHERE id = ?");
-    $stmt2->execute([$student_id]);
-    $program = $stmt2->fetchColumn() ?: 'N/A';
-}
-function gradeDisplay($studentGrades){
-    foreach ($studentGrades as $grade) {
-        echo "<tr>
-            <td>{$grade['subject_code']}</td>
-            <td>{$grade['subject_name']}</td>
-            <td>{$grade['section_name']}</td>
-            <td>{$grade['units']}</td>
-            <td>" . (isset($grade['grade']) && $grade['grade'] !== null ? number_format($grade['grade'], 2) : 'NGS') . "</td>
-        </tr>";
-    }
-}
-function calculateGwa($studentGrades) {
-    $totalUnits = 0;
-    $totalGrade = 0;
-    foreach ($studentGrades as $subject) {
-        if (!isset($subject['grade']) || $subject['grade'] === null) continue;
-        $units = $subject['units'];
-        $grade = $subject['grade'];
-        $totalUnits += $units;
-        $totalGrade += $units * $grade;
-    }
-    if ($totalUnits > 0) {
-        $gwa = $totalGrade / $totalUnits;
-        echo number_format($gwa, 2);
-    } else {
-        echo 'N/A';
-    }
-}
+<?php   
+    require_once $_SERVER["DOCUMENT_ROOT"] . "/src/Helpers/GradeHelpers.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">

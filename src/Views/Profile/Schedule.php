@@ -83,8 +83,7 @@ $display_blocks = [
                         <option value="<?= htmlspecialchars($selected_sy) ?>"><?= htmlspecialchars($selected_sy) ?></option>
                     </select>
                 </div>
-            
-               <!-- <form method="get"> removed because it was unneces
+               <form method="get">
                 <input type="hidden" name="page" value="schedule">
                 <div class="termDiv">
                     <label for="term">Term:</label>
@@ -94,7 +93,7 @@ $display_blocks = [
                         <option value="3rd Term"<?= $selected_term=='3rd Term'?' selected':''; ?>>3rd Term</option>
                     </select>
                 </div>
-               </form> -->
+               </form>
             </div>
         </form>
         <div class="scheduleTable">

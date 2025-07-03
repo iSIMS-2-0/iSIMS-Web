@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../Models/Schedule.php';
 require_once __DIR__ . '/../Models/Grades.php';
+require_once __DIR__ . '/../Models/User.php';
 class ProfileController {
     private $pdo;
 
@@ -17,14 +18,71 @@ class ProfileController {
         require __DIR__ . '/../Views/Profile.php';
     }
 
-    public function showStudentProfile() {
-        session_start();
-        if (!isset($_SESSION['student_id'])) {
-            header("Location: /public/index.php?page=login");
-            exit();
-        }
-        require __DIR__ . '/../Views/Profile/StudentProfile.php';
+public function showStudentProfile() {
+    session_start();
+    if (!isset($_SESSION['student_id'])) {
+        header("Location: /public/index.php?page=login");
+        exit();
     }
+
+    $userModel = new User($this->pdo);
+    $user = $userModel->findByStudentNumber($_SESSION['student_number']);
+    $family = $userModel->findFamilyInfoByID($user['family_info_id']);
+    $medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
+
+    $emergency = [
+        'name' => $family['other_contact_name'] ?? '',
+        'mobile' => $family['other_contact_mobilenum'] ?? '',
+        'email' => $family['other_contact_email'] ?? ''
+    ];
+    $isMother = (
+        $emergency['name'] === ($family['mother_name'] ?? '') &&
+        $emergency['mobile'] === ($family['mother_mobile_number'] ?? '') &&
+        $emergency['email'] === ($family['mother_email'] ?? '')
+    );
+    $isFather = (
+        $emergency['name'] === ($family['father_name'] ?? '') &&
+        $emergency['mobile'] === ($family['father_mobile_number'] ?? '') &&
+        $emergency['email'] === ($family['father_email'] ?? '')
+    );
+
+    $success = '';
+    $error = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Sanitize input here!
+        $new_email = trim($_POST['studentEmailAddress'] ?? '');
+        $new_mother_email = trim($_POST['mothersEmailAddress'] ?? '');
+        $new_father_email = trim($_POST['fathersEmailAddress'] ?? '');
+        $new_other_email = trim($_POST['otherEmailAddress'] ?? '');
+        $new_comorb = trim($_POST['comorbidities'] ?? '');
+        $new_allergies = trim($_POST['allergy'] ?? '');
+        $new_gender_disclosure = isset($_POST['studentGender']) ? 'yes' : 'no';
+        $new_pronoun = $_POST['gender'] ?? '';
+
+        $new_comorb = ($new_comorb === '') ? null : $new_comorb;
+        $new_allergies = ($new_allergies === '') ? null : $new_allergies;
+
+        try {
+            $stmt = $this->pdo->prepare("UPDATE students SET email = ?, gender_disclosure = ?, pronouns = ? WHERE id = ?");
+            $stmt->execute([$new_email, $new_gender_disclosure, $new_pronoun, $user['id']]);
+            $stmt = $this->pdo->prepare("UPDATE family_info SET mother_email = ?, father_email = ?, other_contact_email = ? WHERE id = ?");
+            $stmt->execute([$new_mother_email, $new_father_email, $new_other_email, $user['family_info_id']]);
+            $stmt = $this->pdo->prepare("UPDATE medical_history SET comorb = ?, allergies = ? WHERE id = ?");
+            $stmt->execute([$new_comorb, $new_allergies, $user['medical_historyid']]);
+            $success = "Profile updated successfully.";
+        } catch (Exception $e) {
+            $error = "Failed to update profile.";
+        }
+
+        // Refresh data after update
+        $user = $userModel->findByStudentNumber($_SESSION['student_number']);
+        $family = $userModel->findFamilyInfoByID($user['family_info_id']);
+        $medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
+    }
+
+    require __DIR__ . '/../Views/Profile/StudentProfile.php';
+}
     
     public function showGrades() {
         session_start();

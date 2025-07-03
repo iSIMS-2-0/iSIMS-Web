@@ -1,6 +1,6 @@
 <aside id="sidebar" class="sidebar">
     <div class="navList">
-        <a href="/src/Views/HomePage.php" class="navItem">
+        <a href="/public/index.php?page=home" class="navItem">
             <i class="fa-solid fa-house fa-lg"></i>
             <p>HOME</p>
         </a>

@@ -91,15 +91,13 @@ public function showStudentProfile() {
         $student_id = $_SESSION['student_id'];
         $selected_sy = $_GET['schoolYear'] ?? date('Y') . '-' . (date('Y')+1);
         $selected_term = $_GET['term'] ?? '1st Term';
-        // Fetch grades
-        $stmt = $this->pdo->prepare("SELECT sc.*, sub.code AS subject_code, sub.name AS subject_name, sec.name AS section_name, sub.units, g.grade FROM student_class sc JOIN subjects sub ON sc.subject_id = sub.id JOIN sections sec ON sc.section_id = sec.id LEFT JOIN grades g ON g.student_class_id = sc.id WHERE sc.student_id = ? AND sc.term = ? AND sc.school_year = ?");
-        $stmt->execute([$student_id, $selected_term, $selected_sy]);
-        $studentGrades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Fetch grades using Grades model
+        $gradesModel = new Grades($this->pdo);
+        $studentGrades = $gradesModel->getStudentGrades($student_id, $selected_term, $selected_sy);
 
         // Fetch program
-        $stmt2 = $this->pdo->prepare("SELECT program FROM students WHERE id = ?");
-        $stmt2->execute([$student_id]);
-        $program = $stmt2->fetchColumn() ?: 'N/A';
+        $userModel = new User($this->pdo);
+        $program = $userModel->findProgramById($student_id);
 
         // Pass data to view
         require __DIR__ . '/../Views/Profile/Grades.php';

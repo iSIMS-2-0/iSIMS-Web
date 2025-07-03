@@ -43,6 +43,12 @@ class User {
         return $stmt->fetch();
     }
 
+    public function findProgramById($student_id) {
+        $stmt2 = $this->pdo->prepare("SELECT program FROM students WHERE id = ?");
+        $stmt2->execute([$student_id]);
+        $program = $stmt2->fetchColumn() ?: 'N/A';
+    }
+
     /**
      * Update student, family, and medical info in a modular way
      */
@@ -76,6 +82,7 @@ class User {
             return false;
         }
     }
+
 
     public function createCompleteUser($studentData, $familyData, $medicalData) {
         $this->pdo->beginTransaction();

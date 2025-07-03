@@ -43,65 +43,99 @@ class User {
         return $stmt->fetch();
     }
 
-   public function createCompleteUser($studentData, $familyData, $medicalData) {
-    $this->pdo->beginTransaction();
-    try {
-        // Insert family info
-        $stmt = $this->pdo->prepare("INSERT INTO family_info (mother_name, father_name, mother_mobile_number, father_mobile_number, mother_email, father_email, other_contact_name, other_contact_mobilenum, other_contact_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([
-            $familyData['mother_name'],
-            $familyData['father_name'],
-            $familyData['mother_mobile_number'],
-            $familyData['father_mobile_number'],
-            $familyData['mother_email'],
-            $familyData['father_email'],
-            $familyData['other_contact_name'],
-            $familyData['other_contact_mobilenum'],
-            $familyData['other_contact_email']
-        ]);
-        $family_info_id = $this->pdo->lastInsertId();
-
-        // Insert medical history
-        $stmt = $this->pdo->prepare("INSERT INTO medical_history (comorb, allergies) VALUES (?, ?)");
-        $stmt->execute([
-            $medicalData['comorb'],
-            $medicalData['allergies']
-        ]);
-        $medical_historyid = $this->pdo->lastInsertId();
-
-        // Generate student number
-        $studentData['student_number'] = $this->generateStudentNumber();
-
-        // Hash password
-        $studentData['password_hash'] = password_hash($studentData['password_hash'], PASSWORD_BCRYPT);
-
-        // Insert student
-        $stmt = $this->pdo->prepare("INSERT INTO students (student_number, name, program, sex, gender_disclosure, pronouns, mobile, landline, email, lot_blk, street, zip_code, city_municipality, country, password_hash, family_info_id, medical_historyid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([
-            $studentData['student_number'],
-            $studentData['name'],
-            $studentData['program'],
-            $studentData['sex'],
-            $studentData['gender_disclosure'],
-            $studentData['pronouns'],
-            $studentData['mobile'],
-            $studentData['landline'],
-            $studentData['email'],
-            $studentData['lot_blk'],
-            $studentData['street'],
-            $studentData['zip_code'],
-            $studentData['city_municipality'],
-            $studentData['country'],
-            $studentData['password_hash'],
-            $family_info_id,
-            $medical_historyid
-        ]);
-
-        $this->pdo->commit();
-        return $studentData['student_number'];
-    } catch (Exception $e) {
-        $this->pdo->rollBack();
-        throw $e;
+    /**
+     * Update student, family, and medical info in a modular way
+     */
+    public function updateProfileInfo($userId, $familyInfoId, $medicalHistoryId, $studentData, $familyData, $medicalData) {
+        try {
+            // Update students table
+            $stmt = $this->pdo->prepare("UPDATE students SET email = ?, gender_disclosure = ?, pronouns = ? WHERE id = ?");
+            $stmt->execute([
+                $studentData['email'],
+                $studentData['gender_disclosure'],
+                $studentData['pronouns'],
+                $userId
+            ]);
+            // Update family_info table
+            $stmt = $this->pdo->prepare("UPDATE family_info SET mother_email = ?, father_email = ?, other_contact_email = ? WHERE id = ?");
+            $stmt->execute([
+                $familyData['mother_email'],
+                $familyData['father_email'],
+                $familyData['other_contact_email'],
+                $familyInfoId
+            ]);
+            // Update medical_history table
+            $stmt = $this->pdo->prepare("UPDATE medical_history SET comorb = ?, allergies = ? WHERE id = ?");
+            $stmt->execute([
+                $medicalData['comorb'],
+                $medicalData['allergies'],
+                $medicalHistoryId
+            ]);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
-}
+
+    public function createCompleteUser($studentData, $familyData, $medicalData) {
+        $this->pdo->beginTransaction();
+        try {
+            // Insert family info
+            $stmt = $this->pdo->prepare("INSERT INTO family_info (mother_name, father_name, mother_mobile_number, father_mobile_number, mother_email, father_email, other_contact_name, other_contact_mobilenum, other_contact_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([
+                $familyData['mother_name'],
+                $familyData['father_name'],
+                $familyData['mother_mobile_number'],
+                $familyData['father_mobile_number'],
+                $familyData['mother_email'],
+                $familyData['father_email'],
+                $familyData['other_contact_name'],
+                $familyData['other_contact_mobilenum'],
+                $familyData['other_contact_email']
+            ]);
+            $family_info_id = $this->pdo->lastInsertId();
+
+            // Insert medical history
+            $stmt = $this->pdo->prepare("INSERT INTO medical_history (comorb, allergies) VALUES (?, ?)");
+            $stmt->execute([
+                $medicalData['comorb'],
+                $medicalData['allergies']
+            ]);
+            $medical_historyid = $this->pdo->lastInsertId();
+
+            // Generate student number
+            $studentData['student_number'] = $this->generateStudentNumber();
+
+            // Hash password
+            $studentData['password_hash'] = password_hash($studentData['password_hash'], PASSWORD_BCRYPT);
+
+            // Insert student
+            $stmt = $this->pdo->prepare("INSERT INTO students (student_number, name, program, sex, gender_disclosure, pronouns, mobile, landline, email, lot_blk, street, zip_code, city_municipality, country, password_hash, family_info_id, medical_historyid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([
+                $studentData['student_number'],
+                $studentData['name'],
+                $studentData['program'],
+                $studentData['sex'],
+                $studentData['gender_disclosure'],
+                $studentData['pronouns'],
+                $studentData['mobile'],
+                $studentData['landline'],
+                $studentData['email'],
+                $studentData['lot_blk'],
+                $studentData['street'],
+                $studentData['zip_code'],
+                $studentData['city_municipality'],
+                $studentData['country'],
+                $studentData['password_hash'],
+                $family_info_id,
+                $medical_historyid
+            ]);
+
+            $this->pdo->commit();
+            return $studentData['student_number'];
+        } catch (Exception $e) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
+    }
 }

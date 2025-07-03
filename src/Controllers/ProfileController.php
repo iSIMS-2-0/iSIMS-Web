@@ -50,31 +50,29 @@ public function showStudentProfile() {
     $error = '';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Sanitize input here!
-        $new_email = trim($_POST['studentEmailAddress'] ?? '');
-        $new_mother_email = trim($_POST['mothersEmailAddress'] ?? '');
-        $new_father_email = trim($_POST['fathersEmailAddress'] ?? '');
-        $new_other_email = trim($_POST['otherEmailAddress'] ?? '');
-        $new_comorb = trim($_POST['comorbidities'] ?? '');
-        $new_allergies = trim($_POST['allergy'] ?? '');
-        $new_gender_disclosure = isset($_POST['studentGender']) ? 'yes' : 'no';
-        $new_pronoun = $_POST['gender'] ?? '';
-
-        $new_comorb = ($new_comorb === '') ? null : $new_comorb;
-        $new_allergies = ($new_allergies === '') ? null : $new_allergies;
-
-        try {
-            $stmt = $this->pdo->prepare("UPDATE students SET email = ?, gender_disclosure = ?, pronouns = ? WHERE id = ?");
-            $stmt->execute([$new_email, $new_gender_disclosure, $new_pronoun, $user['id']]);
-            $stmt = $this->pdo->prepare("UPDATE family_info SET mother_email = ?, father_email = ?, other_contact_email = ? WHERE id = ?");
-            $stmt->execute([$new_mother_email, $new_father_email, $new_other_email, $user['family_info_id']]);
-            $stmt = $this->pdo->prepare("UPDATE medical_history SET comorb = ?, allergies = ? WHERE id = ?");
-            $stmt->execute([$new_comorb, $new_allergies, $user['medical_historyid']]);
+        $studentData = [
+            'email' => trim($_POST['studentEmailAddress'] ?? ''),
+            'gender_disclosure' => isset($_POST['studentGender']) ? 'yes' : 'no',
+            'pronouns' => $_POST['gender'] ?? ''
+        ];
+        $familyData = [
+            'mother_email' => trim($_POST['mothersEmailAddress'] ?? ''),
+            'father_email' => trim($_POST['fathersEmailAddress'] ?? ''),
+            'other_contact_email' => trim($_POST['otherEmailAddress'] ?? '')
+        ];
+        $medicalData = [
+            'comorb' => ($c = trim($_POST['comorbidities'] ?? '')) === '' ? null : $c,
+            'allergies' => ($a = trim($_POST['allergy'] ?? '')) === '' ? null : $a
+        ];
+        
+        $success = '';
+        $error = '';
+        $result = $userModel->updateProfileInfo($user['id'], $user['family_info_id'], $user['medical_historyid'], $studentData, $familyData, $medicalData);
+        if ($result) {
             $success = "Profile updated successfully.";
-        } catch (Exception $e) {
+        } else {
             $error = "Failed to update profile.";
         }
-
         // Refresh data after update
         $user = $userModel->findByStudentNumber($_SESSION['student_number']);
         $family = $userModel->findFamilyInfoByID($user['family_info_id']);

@@ -1,61 +1,4 @@
-<?php
-session_start();
-require_once $_SERVER["DOCUMENT_ROOT"] . "/src/Models/User.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/config.php";
 
-$config = require $_SERVER["DOCUMENT_ROOT"] . "/config.php";
-$dsn = "mysql:host={$config['host']};dbname={$config['db']};charset=utf8mb4";
-$pdo = new PDO($dsn, $config['user'], $config['pass']);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-$userModel = new User($pdo);
-$user = $userModel->findByStudentNumber($_SESSION['student_number']);
-$family = $userModel->findFamilyInfoByID($user['family_info_id']);
-$medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
-
-$emergency = [
-    'name' => $family['other_contact_name'] ?? '',
-    'mobile' => $family['other_contact_mobilenum'] ?? '',
-    'email' => $family['other_contact_email'] ?? ''
-];
-$isMother = (
-    $emergency['name'] === ($family['mother_name'] ?? '') &&
-    $emergency['mobile'] === ($family['mother_mobile_number'] ?? '') &&
-    $emergency['email'] === ($family['mother_email'] ?? '')
-);
-$isFather = (
-    $emergency['name'] === ($family['father_name'] ?? '') &&
-    $emergency['mobile'] === ($family['father_mobile_number'] ?? '') &&
-    $emergency['email'] === ($family['father_email'] ?? '')
-);
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $new_email = $_POST['studentEmailAddress'] ?? '';
-    $new_mother_email = $_POST['mothersEmailAddress'] ?? '';
-    $new_father_email = $_POST['fathersEmailAddress'] ?? '';
-    $new_other_email = $_POST['otherEmailAddress'] ?? '';
-    $new_comorb = trim($_POST['comorbidities'] ?? '');
-    $new_allergies = trim($_POST['allergy'] ?? '');
-    $new_gender_disclosure = isset($_POST['studentGender']) ? 'yes' : 'no';
-    $new_pronoun = $_POST['gender'] ?? '';
-    // If comorbidities or allergies are empty, set to null for DB
-    $new_comorb = ($new_comorb === '') ? null : $new_comorb;
-    $new_allergies = ($new_allergies === '') ? null : $new_allergies;
-    // Update student email
-    $stmt = $pdo->prepare("UPDATE students SET email = ?, gender_disclosure = ?, pronouns = ? WHERE id = ?");
-    $stmt->execute([$new_email, $new_gender_disclosure, $new_pronoun, $user['id']]);
-    // Update family_info emails
-    $stmt = $pdo->prepare("UPDATE family_info SET mother_email = ?, father_email = ?, other_contact_email = ? WHERE id = ?");
-    $stmt->execute([$new_mother_email, $new_father_email, $new_other_email, $user['family_info_id']]);
-    // Update medical history
-    $stmt = $pdo->prepare("UPDATE medical_history SET comorb = ?, allergies = ? WHERE id = ?");
-    $stmt->execute([$new_comorb, $new_allergies, $user['medical_historyid']]);
-    // Refresh data after update
-    $user = $userModel->findByStudentNumber($_SESSION['student_number']);
-    $family = $userModel->findFamilyInfoByID($user['family_info_id']);
-    $medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="field">
                                 <label for="studentProgram">Program</label>
-                                <input type="text" id="studentProgram" name="studentProgram" readonly value="<?php echo htmlspecialchars($user['program'] ?? ''); ?>">
+                                <input type="text" id="studentProgram" name="studentProgram" readonly value="<?php echo htmlspecialchars($program ?? 'N/A'); ?>">
                             </div>
                         </div>
 
@@ -105,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
 
                             <div class="genderField">
-                                <input type="checkbox" id="studentGender" name="studentGender" <?php echo (!empty($user['gender_disclosure']) && strtolower($user['gender_disclosure']) === 'yes') ? 'checked' : ''; ?>>
+                                <input type="checkbox" id="studentGender" name="studentGender" <?php echo (!empty($user['gender_disclosure']) && ($user['gender_disclosure'] == 1 || $user['gender_disclosure'] === true)) ? 'checked' : ''; ?>>
                                 <label for="studentGender">I hereby agree to disclose my gender</label>
                             </div>
 
-                            <div class="genderInput" style="display:<?php echo (!empty($user['gender_disclosure']) && strtolower($user['gender_disclosure']) === 'yes') ? 'block' : 'none'; ?>;">
+                            <div class="genderInput" style="display:<?php echo (!empty($user['gender_disclosure']) && ($user['gender_disclosure'] == 1 || $user['gender_disclosure'] === true)) ? 'block' : 'none'; ?>;">
                                 <label for="gender">Gender</label>
                                 <select id="gender" name="gender" data-pronoun="<?php echo htmlspecialchars($user['pronouns'] ?? ''); ?>">
                                     <option value="" hidden <?php echo (empty($user['pronouns'])) ? 'selected' : ''; ?>> Select Gender </option>

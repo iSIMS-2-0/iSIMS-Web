@@ -18,7 +18,8 @@
    <div class="mainContainer">
         <div class="contents">
             <h1>Student Grades</h1>
-            <form method="get">  
+            <form method="get">
+                <input type="hidden" name="page" value="grades">
                 <div class="selection">
                     <div class="syDiv">
                         <label for="schoolYear">School Year:</label>
@@ -26,17 +27,14 @@
                             <option value="<?= htmlspecialchars($selected_sy) ?>"><?= htmlspecialchars($selected_sy) ?></option>
                         </select>
                     </div>
-                        <form method="get">
-                        <input type="hidden" name="page" value="grades">
-                        <div class="termDiv">
-                            <label for="term">Term:</label>
-                            <select name="term" id="term" onchange="this.form.submit()">
-                                <option value="1st Term"<?= $selected_term=='1st Term'?' selected':''; ?>>1st Term</option>
-                                <option value="2nd Term"<?= $selected_term=='2nd Term'?' selected':''; ?>>2nd Term</option>
-                                <option value="3rd Term"<?= $selected_term=='3rd Term'?' selected':''; ?>>3rd Term</option>
-                            </select>
-                        </div>
-                    </form>
+                    <div class="termDiv">
+                        <label for="term">Term:</label>
+                        <select name="term" id="term" onchange="this.form.submit()">
+                            <option value="1st Term"<?= $selected_term=='1st Term'?' selected':''; ?>>1st Term</option>
+                            <option value="2nd Term"<?= $selected_term=='2nd Term'?' selected':''; ?>>2nd Term</option>
+                            <option value="3rd Term"<?= $selected_term=='3rd Term'?' selected':''; ?>>3rd Term</option>
+                        </select>
+                    </div>
                 </div>
             </form>
             <table class = "gradesTable">
@@ -50,17 +48,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php gradeDisplay($studentGrades); ?>
+                    <?php if (isset($studentGrades) && !empty($studentGrades)): ?>
+                        <?php gradeDisplay($studentGrades); ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5">No grades available for this term</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
             <table class = "gradeSummary">
                 <tr>
                     <th>PROGRAM</th>
-                    <td><?= htmlspecialchars($program) ?></td>
+                    <td><?= htmlspecialchars($program ?? 'N/A') ?></td>
                 </tr>
                 <tr>
                     <th>GWA</th>
-                    <td><?php calculateGwa($studentGrades); ?></td>
+                    <td><?php if (isset($studentGrades)) { calculateGwa($studentGrades); } else { echo 'N/A'; } ?></td>
                 </tr>
                 <tr>
                     <th>ENROLLMENT STATUS</th>

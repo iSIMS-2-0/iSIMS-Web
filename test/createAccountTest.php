@@ -10,12 +10,16 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $userModel = new User($pdo);
 $message = '';
 
+// Fetch available programs for the dropdown
+$programStmt = $pdo->query('SELECT id, program_name, course_code FROM program ORDER BY program_name');
+$programs = $programStmt->fetchAll(PDO::FETCH_ASSOC);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $student = [
         'name' => $_POST['name'] ?? '',
-        'program' => $_POST['program'] ?? '',
+        'program_id' => $_POST['program_id'] ?? '',
         'sex' => $_POST['sex'] ?? '',
-        'gender_disclosure' => $_POST['gender_disclosure'] ?? 'No',
+        'gender_disclosure' => ($_POST['gender_disclosure'] ?? 'No') === 'Yes' ? 1 : 0,
         'pronouns' => $_POST['pronouns'] ?? '',
         'mobile' => $_POST['mobile'] ?? '',
         'landline' => $_POST['landline'] ?? '',
@@ -98,7 +102,13 @@ if (isset($_POST['drop_student']) && !empty($_POST['drop_student_number'])) {
     <form method="post">
         <h2>Student Info</h2>
         Name: <input name="name" required><br>
-        Program: <input name="program" required><br>
+        Program:
+        <select name="program_id" required>
+            <option value="" hidden selected>Select Program</option>
+            <?php foreach ($programs as $program): ?>
+                <option value="<?= $program['id'] ?>"><?= htmlspecialchars($program['program_name'] . ' (' . $program['course_code'] . ')') ?></option>
+            <?php endforeach; ?>
+        </select><br>
         Sex: <select name="sex"><option>Male</option><option>Female</option></select><br>
         Gender Disclosure: <select name="gender_disclosure" id="gender_disclosure_select">
             <option value="Yes">Yes</option>

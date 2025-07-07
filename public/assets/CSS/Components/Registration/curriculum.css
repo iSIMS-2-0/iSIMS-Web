@@ -54,6 +54,15 @@ th{
     color: var(--white);
 }
 
+.year-term-header td {
+    background-color: #f0f0f0 !important;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px !important;
+    color: var(--dark-blue);
+    border-bottom: 2px solid var(--dark-blue);
+}
+
 .passed{background-color: #006EFF;}
 .not-taken{background-color: #363636;}
 .enrolled{background-color: #5FD855;}

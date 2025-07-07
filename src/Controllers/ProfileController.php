@@ -29,6 +29,7 @@ public function showStudentProfile() {
     $user = $userModel->findByStudentNumber($_SESSION['student_number']);
     $family = $userModel->findFamilyInfoByID($user['family_info_id']);
     $medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
+    $program = $userModel->findProgramById($user['id']);
 
     $emergency = [
         'name' => $family['other_contact_name'] ?? '',
@@ -52,7 +53,7 @@ public function showStudentProfile() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $studentData = [
             'email' => trim($_POST['studentEmailAddress'] ?? ''),
-            'gender_disclosure' => isset($_POST['studentGender']) ? 'yes' : 'no',
+            'gender_disclosure' => isset($_POST['studentGender']) ? 1 : 0,
             'pronouns' => $_POST['gender'] ?? ''
         ];
         $familyData = [
@@ -109,7 +110,10 @@ public function showStudentProfile() {
             header("Location: /public/index.php?page=login");
             exit();
         }
+        
         $student_id = $_SESSION['student_id'] ?? null;
+        $selected_sy = $_GET['schoolYear'] ?? date('Y') . '-' . (date('Y')+1);
+        $selected_term = $_GET['term'] ?? '1st Term';
 
         $scheduleModel = new Schedule($this->pdo);
         $scheduleData = $scheduleModel->getStudentScheduleForCurrentTerm($student_id);
@@ -121,28 +125,34 @@ public function showStudentProfile() {
             ['11:00','14:30'],
             ['14:30','18:00'],
         ];
+        
         $scheduleTable = [];
         foreach ($days as $day) {
             foreach ($time_blocks as $block) {
                 $scheduleTable[$block[0].'-'.$block[1]][$day] = [];
             }
         }
-        foreach ($scheduleData as $sched) {
-            $start = date('g:i A', strtotime($sched['start_time']));
-            $end = date('g:i A', strtotime($sched['end_time']));
-            $blockKey = date('H:i', strtotime($sched['start_time'])) . '-' . date('H:i', strtotime($sched['end_time']));
-            $day = $sched['day_of_week'];
-            $info = $sched['subject_code'] . "<br>" . $sched['section_name'] . "<br>" . $sched['room'];
-            if (isset($scheduleTable[$blockKey][$day])) {
-                $scheduleTable[$blockKey][$day][] = $info;
+        
+        if ($scheduleData) {
+            foreach ($scheduleData as $sched) {
+                $start = date('g:i A', strtotime($sched['start_time']));
+                $end = date('g:i A', strtotime($sched['end_time']));
+                $blockKey = date('H:i', strtotime($sched['start_time'])) . '-' . date('H:i', strtotime($sched['end_time']));
+                $day = $sched['day_of_week'];
+                $info = $sched['subject_code'] . "<br>" . $sched['section_name'] . "<br>" . $sched['room'];
+                if (isset($scheduleTable[$blockKey][$day])) {
+                    $scheduleTable[$blockKey][$day][] = $info;
+                }
             }
         }
+        
         // For display, use AM/PM format for block labels
         $display_blocks = [
             ['07:30 AM','11:00 AM'],
             ['11:00 AM','2:30 PM'],
             ['2:30 PM','6:00 PM'],
         ];
+        
         require __DIR__ . '/../Views/Profile/Schedule.php';
     }
 

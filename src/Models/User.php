@@ -44,9 +44,10 @@ class User {
     }
 
     public function findProgramById($student_id) {
-        $stmt2 = $this->pdo->prepare("SELECT program FROM students WHERE id = ?");
+        $stmt2 = $this->pdo->prepare("SELECT p.program_name FROM students s JOIN program p ON s.program_id = p.id WHERE s.id = ?");
         $stmt2->execute([$student_id]);
         $program = $stmt2->fetchColumn() ?: 'N/A';
+        return $program;
     }
 
     /**
@@ -55,10 +56,10 @@ class User {
     public function updateProfileInfo($userId, $familyInfoId, $medicalHistoryId, $studentData, $familyData, $medicalData) {
         try {
             // Update students table
-            $stmt = $this->pdo->prepare("UPDATE students SET email = ?, gender_disclosure = ?, pronouns = ? WHERE id = ?");
+            $stmt = $this->pdo->prepare("UPDATE students SET email = ?, gender_disclosure = CAST(? AS UNSIGNED), pronouns = ? WHERE id = ?");
             $stmt->execute([
                 $studentData['email'],
-                $studentData['gender_disclosure'],
+                (int)$studentData['gender_disclosure'],
                 $studentData['pronouns'],
                 $userId
             ]);
@@ -117,13 +118,13 @@ class User {
             $studentData['password_hash'] = password_hash($studentData['password_hash'], PASSWORD_BCRYPT);
 
             // Insert student
-            $stmt = $this->pdo->prepare("INSERT INTO students (student_number, name, program, sex, gender_disclosure, pronouns, mobile, landline, email, lot_blk, street, zip_code, city_municipality, country, password_hash, family_info_id, medical_historyid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $this->pdo->prepare("INSERT INTO students (student_number, name, program_id, sex, gender_disclosure, pronouns, mobile, landline, email, lot_blk, street, zip_code, city_municipality, country, password_hash, family_info_id, medical_historyid, created_at) VALUES (?, ?, ?, ?, CAST(? AS UNSIGNED), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
             $stmt->execute([
                 $studentData['student_number'],
                 $studentData['name'],
-                $studentData['program'],
+                $studentData['program_id'],
                 $studentData['sex'],
-                $studentData['gender_disclosure'],
+                (int)$studentData['gender_disclosure'],
                 $studentData['pronouns'],
                 $studentData['mobile'],
                 $studentData['landline'],

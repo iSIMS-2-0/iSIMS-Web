@@ -17,24 +17,22 @@
      <div class="contents">
         <h1>Schedule</h1>
         <form method="get">
+            <input type="hidden" name="page" value="schedule">
             <div class="selection">
                 <div class="syDiv">
                     <label for="schoolYear">School Year:</label>  
                     <select name="schoolYear" id="schoolYear" onchange="this.form.submit()">
-                        <option value="<?= htmlspecialchars($selected_sy) ?>"><?= htmlspecialchars($selected_sy) ?></option>
+                        <option value="<?= htmlspecialchars($selected_sy ?? '') ?>"><?= htmlspecialchars($selected_sy ?? 'Current Year') ?></option>
                     </select>
                 </div>
-               <form method="get">
-                <input type="hidden" name="page" value="schedule">
                 <div class="termDiv">
                     <label for="term">Term:</label>
                     <select name="term" id="term" onchange="this.form.submit()">
-                        <option value="1st Term"<?= $selected_term=='1st Term'?' selected':''; ?>>1st Term</option>
-                        <option value="2nd Term"<?= $selected_term=='2nd Term'?' selected':''; ?>>2nd Term</option>
-                        <option value="3rd Term"<?= $selected_term=='3rd Term'?' selected':''; ?>>3rd Term</option>
+                        <option value="1st Term"<?= ($selected_term ?? '')=='1st Term'?' selected':''; ?>>1st Term</option>
+                        <option value="2nd Term"<?= ($selected_term ?? '')=='2nd Term'?' selected':''; ?>>2nd Term</option>
+                        <option value="3rd Term"<?= ($selected_term ?? '')=='3rd Term'?' selected':''; ?>>3rd Term</option>
                     </select>
                 </div>
-               </form>
             </div>
         </form>
         <div class="scheduleTable">
@@ -42,28 +40,38 @@
             <thead>
                 <tr>
                     <th>Schedule</th>
-                    <?php foreach ($days as $day): ?>
-                        <th><?= htmlspecialchars($day) ?></th>
-                    <?php endforeach; ?>
+                    <?php if (isset($days)): ?>
+                        <?php foreach ($days as $day): ?>
+                            <th><?= htmlspecialchars($day) ?></th>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <th>No schedule available</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($time_blocks as $i => $block): $blockKey = $block[0].'-'.$block[1]; ?>
-                <tr>
-                    <td><?= htmlspecialchars($display_blocks[$i][0] . '-' . $display_blocks[$i][1]) ?></td>
-                    <?php foreach ($days as $day): ?>
-                        <td>
-                            <?php 
-                            if (!empty($scheduleTable[$blockKey][$day])) {
-                                echo implode('<hr>', $scheduleTable[$blockKey][$day]); 
-                            } else {
-                                echo '<div class="emptyCellPlaceholder"></div>';
-                            }
-                            ?>
-                        </td>
+                <?php if (isset($time_blocks) && isset($display_blocks) && isset($days) && isset($scheduleTable)): ?>
+                    <?php foreach ($time_blocks as $i => $block): $blockKey = $block[0].'-'.$block[1]; ?>
+                    <tr>
+                        <td><?= htmlspecialchars($display_blocks[$i][0] . '-' . $display_blocks[$i][1]) ?></td>
+                        <?php foreach ($days as $day): ?>
+                            <td>
+                                <?php 
+                                if (!empty($scheduleTable[$blockKey][$day])) {
+                                    echo implode('<hr>', $scheduleTable[$blockKey][$day]); 
+                                } else {
+                                    echo '<div class="emptyCellPlaceholder"></div>';
+                                }
+                                ?>
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
                     <?php endforeach; ?>
-                </tr>
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="8">No schedule data available</td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
         </div>

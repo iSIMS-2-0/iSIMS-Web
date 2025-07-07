@@ -65,7 +65,11 @@ foreach ($schedules as $sched) {
 $year = date('Y');
 $next_year = $year + 1;
 $school_year = "$year-$next_year";
-$terms = ['1st Term', '2nd Term', '3rd Term'];
+$terms = [
+    1 => '1st Term',
+    2 => '2nd Term', 
+    3 => '3rd Term'
+];
 
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_student_class'])) {
@@ -78,9 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_student_class']))
     if ($student_id && $subject_id && $section_id && $term && $school_year_post && $schedule_id) {
         $pdo->beginTransaction();
         try {
-            $stmt = $pdo->prepare("INSERT INTO student_class (student_id, subject_id, section_id, term, school_year) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO students_class (student_id, subject_id, section_id, term, school_year) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$student_id, $subject_id, $section_id, $term, $school_year_post]);
-            $stmt2 = $pdo->prepare("INSERT INTO students_schedule (student_id, schedule_id) VALUES (?, ?)");
+            $stmt2 = $pdo->prepare("INSERT INTO student_schedule (studentid, scheduleid) VALUES (?, ?)");
             $stmt2->execute([$student_id, $schedule_id]);
             $pdo->commit();
             $message = "<span style='color:green'>Student enrolled in class and added to schedule.</span>";
@@ -94,18 +98,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_student_class']))
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['drop_student_class'])) {
     try {
-        $pdo->exec("DELETE FROM student_class");
-        $message = "<span style='color:green'>All records dropped from student_class.</span>";
+        $pdo->exec("DELETE FROM students_class");
+        $message = "<span style='color:green'>All records dropped from students_class.</span>";
     } catch (Exception $e) {
-        $message = "<span style='color:red'>Error dropping student_class: ".htmlspecialchars($e->getMessage())."</span>";
+        $message = "<span style='color:red'>Error dropping students_class: ".htmlspecialchars($e->getMessage())."</span>";
     }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['drop_students_schedule'])) {
     try {
-        $pdo->exec("DELETE FROM students_schedule");
-        $message = "<span style='color:green'>All records dropped from students_schedule.</span>";
+        $pdo->exec("DELETE FROM student_schedule");
+        $message = "<span style='color:green'>All records dropped from student_schedule.</span>";
     } catch (Exception $e) {
-        $message = "<span style='color:red'>Error dropping students_schedule: ".htmlspecialchars($e->getMessage())."</span>";
+        $message = "<span style='color:red'>Error dropping student_schedule: ".htmlspecialchars($e->getMessage())."</span>";
     }
 }
 ?>
@@ -149,8 +153,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['drop_students_schedul
         <label>Term:</label>
         <select name="term" required>
             <option value="">Select term</option>
-            <?php foreach ($terms as $t): ?>
-                <option value="<?= htmlspecialchars($t) ?>"><?= htmlspecialchars($t) ?></option>
+            <?php foreach ($terms as $termNum => $termLabel): ?>
+                <option value="<?= htmlspecialchars($termNum) ?>"><?= htmlspecialchars($termLabel) ?></option>
             <?php endforeach; ?>
         </select><br>
         <label>School Year:</label>

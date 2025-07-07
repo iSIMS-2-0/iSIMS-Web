@@ -43,7 +43,7 @@ class Grades {
      * Get all grades for a student for a specific term and school year, including subject and section info
      */
     public function getStudentGrades($student_id, $term, $school_year) {
-        $stmt = $this->pdo->prepare("SELECT sc.*, sub.code AS subject_code, sub.name AS subject_name, sec.name AS section_name, sub.units, g.grade FROM student_class sc JOIN subjects sub ON sc.subject_id = sub.id JOIN sections sec ON sc.section_id = sec.id LEFT JOIN grades g ON g.student_class_id = sc.id WHERE sc.student_id = ? AND sc.term = ? AND sc.school_year = ?");
+        $stmt = $this->pdo->prepare("SELECT sc.*, sub.code AS subject_code, sub.name AS subject_name, sec.name AS section_name, sub.units, g.grade FROM students_class sc JOIN subjects sub ON sc.subject_id = sub.id JOIN sections sec ON sc.section_id = sec.id LEFT JOIN grades g ON g.students_class_id = sc.id WHERE sc.student_id = ? AND sc.term = ? AND sc.school_year = ?");
         $stmt->execute([$student_id, $term, $school_year]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

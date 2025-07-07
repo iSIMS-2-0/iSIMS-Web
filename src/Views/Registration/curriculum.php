@@ -1,75 +1,31 @@
 <?php
-session_start();
-if (!isset($_SESSION['student_id'])) {
-    header("Location: /public/index.php?page=login");
-    exit();
-}
+// This view should only contain presentation logic
+// All business logic is handled in the CurriculumController
 
-require_once $_SERVER["DOCUMENT_ROOT"] . "/config.php";
-$config = require $_SERVER["DOCUMENT_ROOT"] . "/config.php";
-$dsn = "mysql:host={$config['host']};dbname={$config['db']};charset=utf8mb4";
-$pdo = new PDO($dsn, $config['user'], $config['pass']);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-// Get student's program
-$stmt = $pdo->prepare("SELECT program_id FROM students WHERE id = ?");
-$stmt->execute([$_SESSION['student_id']]);
-$student = $stmt->fetch(PDO::FETCH_ASSOC);
-$program_id = $student['program_id'];
-
-// Get curriculum subjects for the student's program with year and term info
-$curriculumStmt = $pdo->prepare("
-    SELECT s.code, s.name, s.units, c.year_level, c.term_number
-    FROM curriculum c 
-    JOIN subjects s ON c.subjectid = s.id 
-    WHERE c.programid = ? 
-    ORDER BY c.year_level ASC, c.term_number ASC, s.code ASC
-");
-$curriculumStmt->execute([$program_id]);
-$curriculumSubjects = $curriculumStmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Organize subjects by year and term dynamically from database
-$subjectsByYearTerm = [];
-foreach ($curriculumSubjects as $subject) {
-    $year = $subject['year_level'] ?? 1;
-    $term = $subject['term_number'] ?? 1;
-    
-    $yearText = getYearText($year);
-    $termText = getTermText($term);
-    
-    if (!isset($subjectsByYearTerm[$yearText])) {
-        $subjectsByYearTerm[$yearText] = [];
-    }
-    if (!isset($subjectsByYearTerm[$yearText][$termText])) {
-        $subjectsByYearTerm[$yearText][$termText] = [];
-    }
-    
-    $subjectsByYearTerm[$yearText][$termText][] = $subject;
-}
-
-// Create a lookup array for quick subject access
-$subjectLookup = [];
-foreach ($curriculumSubjects as $subject) {
-    $subjectLookup[$subject['code']] = $subject;
-}
-
-// Get selected filters
-$selectedYear = $_GET['school-year'] ?? '';
-$selectedTerm = $_GET['year-term'] ?? '';
-
-// Helper functions
-function getYearText($yearNumber) {
-    $years = [1 => '1st Year', 2 => '2nd Year', 3 => '3rd Year', 4 => '4th Year'];
-    return $years[$yearNumber] ?? "{$yearNumber}th Year";
-}
-
-function getTermText($termNumber) {
-    $terms = [1 => '1st Term', 2 => '2nd Term', 3 => '3rd Term'];
-    return $terms[$termNumber] ?? "{$termNumber}th Term";
-}
-
+// Helper functions for presentation
 function getTermNumber($termText) {
     return str_replace(['1st Term', '2nd Term', '3rd Term'], ['1st term', '2nd term', '3rd term'], $termText);
+}
+
+function getSubjectStatus($subjectCode, $enrolledLookup, $completedLookup) {
+    // Priority 1: Check if subject has been completed with a grade
+    if (isset($completedLookup[$subjectCode])) {
+        $grade = $completedLookup[$subjectCode]['grade'];
+        // Assuming passing grade is 3.0 or below (Filipino grading system where 1.0 is highest, 5.0 is fail)
+        if ($grade <= 3.0) {
+            return 'passed'; // Already passed
+        } else {
+            return 'failed'; // Failed
+        }
+    }
+    
+    // Priority 2: Check if subject is currently enrolled
+    if (isset($enrolledLookup[$subjectCode])) {
+        return 'enrolled'; // Currently enrolled
+    }
+    
+    // Priority 3: Default to not taken
+    return 'not-taken'; // Not yet taken
 }
 ?>
 <!DOCTYPE html>
@@ -153,7 +109,14 @@ function getTermNumber($termText) {
                                     
                                     // Display subjects for this year/term
                                     foreach ($subjects as $subject) {
-                                        echo "<tr>";
+                                        // Determine subject status for CSS class
+                                        $statusClass = getSubjectStatus(
+                                            $subject['code'], 
+                                            $enrolledLookup, 
+                                            $completedLookup
+                                        );
+                                        
+                                        echo "<tr class='subject-row {$statusClass}'>";
                                         echo "<td>" . htmlspecialchars($subject['code']) . "</td>";
                                         echo "<td>" . htmlspecialchars($subject['name']) . "</td>";
                                         echo "<td></td>"; // Pre-requisite column (empty for now)

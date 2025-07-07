@@ -34,6 +34,11 @@ switch ($page) {
         $ProfileController = new ProfileController($pdo);
         $ProfileController->showSchedule();
         break;
+    case 'curriculum':
+        require_once __DIR__ . '/../src/Controllers/CurriculumController.php';
+        $CurriculumController = new CurriculumController($pdo);
+        $CurriculumController->showCurriculum();
+        break;
     default:
         require_once __DIR__ . '/../src/Controllers/AuthController.php';
         $LoginController = new AuthController($pdo);

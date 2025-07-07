@@ -67,3 +67,24 @@ th{
 .not-taken{background-color: #363636;}
 .enrolled{background-color: #5FD855;}
 .failed{background-color: #EE0202;}
+
+/* Subject row status colors */
+.subject-row.passed {
+    background-color: #006EFF;
+    color: white;
+}
+
+.subject-row.not-taken {
+    background-color: #363636;
+    color: white;
+}
+
+.subject-row.enrolled {
+    background-color: #5FD855;
+    color: white;
+}
+
+.subject-row.failed {
+    background-color: #EE0202;
+    color: white;
+}

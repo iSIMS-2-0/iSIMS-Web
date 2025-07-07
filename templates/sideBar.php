@@ -28,7 +28,7 @@
             </div>
         </div>
         <div id="registration" class="dropdown">
-            <a href="/src/Views/Registration/curriculum.php"><p>Curriculum</p></a>
+            <a href="/public/index.php?page=curriculum"><p>Curriculum</p></a>
             <a href="/src/Views/Registration/manageSection.php"><p>Manage Section</p></a>
         </div>
 

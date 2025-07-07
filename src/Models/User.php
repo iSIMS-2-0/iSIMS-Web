@@ -50,6 +50,13 @@ class User {
         return $program;
     }
 
+    public function getStudentCreationYear($student_id) {
+        $stmt = $this->pdo->prepare('SELECT YEAR(created_at) as creation_year FROM students WHERE id = :student_id');
+        $stmt->execute(['student_id' => $student_id]);
+        $result = $stmt->fetchColumn();
+        return $result ?: date('Y'); // fallback to current year if not found
+    }
+
     /**
      * Update student, family, and medical info in a modular way
      */

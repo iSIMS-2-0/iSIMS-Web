@@ -1,3 +1,27 @@
+<?php
+// This view should only contain presentation logic
+// All business logic is handled in the RegistrationController
+
+// Helper functions for presentation
+function getYearLevelText($yearLevel) {
+    $yearTexts = [
+        1 => '1st Year',
+        2 => '2nd Year', 
+        3 => '3rd Year',
+        4 => '4th Year'
+    ];
+    return $yearTexts[$yearLevel] ?? "{$yearLevel}th Year";
+}
+
+function getTermText($termNumber) {
+    $termTexts = [
+        1 => '1st Term',
+        2 => '2nd Term',
+        3 => '3rd Term'
+    ];
+    return $termTexts[$termNumber] ?? "{$termNumber}th Term";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,43 +48,43 @@
                     <div class="infoCont1">
                         <div class="content">
                             <span class="infoLabel">Name: </span>
-                            <span>Student Name</span>
+                            <span><?= htmlspecialchars($student['name'] ?? 'N/A') ?></span>
                         </div>
                         
                         <div class="content">
                             <span class="infoLabel">Program: </span>
-                            <span>Student Program</span>
+                            <span><?= htmlspecialchars($programName ?? 'N/A') ?></span>
                         </div>
 
                         <div class="content">
                             <span class="infoLabel">Academic Year: </span>
-                            <span>2024-2025</span>
+                            <span><?= htmlspecialchars($currentSchoolYear ?? 'N/A') ?></span>
                         </div>
 
                         <div class="content">
                             <span class="infoLabel">Status: </span>
-                            <span>Status</span>
+                            <span><?= htmlspecialchars($studentStatus ?? 'N/A') ?></span>
                         </div>
                     </div>
                     <div class="infoCont2">
                          <div class="content">
                             <span class="infoLabel">Student Number: </span>
-                            <span>202400000</span>
+                            <span><?= htmlspecialchars($student['student_number'] ?? 'N/A') ?></span>
                         </div>
                         
                         <div class="content">
                             <span class="infoLabel">Year Level: </span>
-                            <span>Student Program</span>
+                            <span><?= htmlspecialchars(getYearLevelText($yearLevel ?? 1)) ?></span>
                         </div>
 
                         <div class="content">
-                            <span class="infoLabel">Semester: </span>
-                            <span>3rd Semester</span>
+                            <span class="infoLabel">Term: </span>
+                            <span><?= htmlspecialchars(getTermText($currentTerm ?? 1)) ?></span>
                         </div>
 
                         <div class="content">
                             <span class="infoLabel">Section: </span>
-                            <span>Section</span>
+                            <span><?= htmlspecialchars($sectionInfo ?? 'Not Assigned') ?></span>
                         </div>
                     </div>
                 </div>
@@ -79,27 +103,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                        <td>1</td>
-                        <td>CSELEC05</td>
-                        <td>Enterprise Java 1</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>3.0</td>
-                        <td>S 07:30 AM - 11:00 AM 1006-N</td>
-                </tbody>
-                <tbody>
-                        <td>2</td>
-                        <td>SOFTENG2</td>
-                        <td>Software Engineering 2</td>
-                        <td>3</td>
-                        <td>0</td>
-                        <td>3.0</td>
-                        <td>T 07:30 AM - 11:00 AM 9011-N</td>
+                    <?php if (!empty($registeredSubjects)): ?>
+                        <?php foreach ($registeredSubjects as $index => $subject): ?>
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td><?= htmlspecialchars($subject['code']) ?></td>
+                                <td><?= htmlspecialchars($subject['name']) ?></td>
+                                <td>-</td> <!-- Lect Hours - not in current schema -->
+                                <td>-</td> <!-- Lab Hours - not in current schema -->
+                                <td><?= htmlspecialchars($subject['units']) ?></td>
+                                <td><?= htmlspecialchars($subject['schedule'] ?? 'TBA') ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <!-- Total Units Row -->
+                        <tr style="font-weight: bold; background-color: #f0f0f0;">
+                            <td colspan="5" style="text-align: right;">Total Units:</td>
+                            <td><?= htmlspecialchars($totalUnits ?? 0) ?></td>
+                            <td>-</td>
+                        </tr>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: #666; font-style: italic; padding: 20px;">
+                                No subjects registered for the current term.
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
 
             <div class="button">
-                <button class="viewBttn">VIEW ASSESSMENT</button>
+                <a href="/public/index.php?page=erf" class="viewBttn" style="text-decoration: none; display: inline-block; text-align: center;">VIEW ASSESSMENT</a>
             </div>
         </div>
     </div>

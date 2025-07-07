@@ -92,13 +92,23 @@ public function showStudentProfile() {
         $student_id = $_SESSION['student_id'];
         $selected_sy = $_GET['schoolYear'] ?? date('Y') . '-' . (date('Y')+1);
         $selected_term = $_GET['term'] ?? '1st Term';
+        
         // Fetch grades using Grades model
         $gradesModel = new Grades($this->pdo);
         $studentGrades = $gradesModel->getStudentGrades($student_id, $selected_term, $selected_sy);
 
-        // Fetch program
+        // Fetch program and creation year
         $userModel = new User($this->pdo);
         $program = $userModel->findProgramById($student_id);
+        $creationYear = $userModel->getStudentCreationYear($student_id);
+        
+        // Generate available school years based on account creation year
+        $availableSchoolYears = [];
+        $currentYear = date('Y');
+        for ($year = $creationYear; $year <= $currentYear; $year++) {
+            $schoolYear = $year . '-' . ($year + 1);
+            $availableSchoolYears[] = $schoolYear;
+        }
 
         // Pass data to view
         require __DIR__ . '/../Views/Profile/Grades.php';

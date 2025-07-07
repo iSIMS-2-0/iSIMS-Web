@@ -63,28 +63,28 @@ th{
     border-bottom: 2px solid var(--dark-blue);
 }
 
-.passed{background-color: #006EFF;}
-.not-taken{background-color: #363636;}
-.enrolled{background-color: #5FD855;}
-.failed{background-color: #EE0202;}
+/* Legend box colors for reference table only */
+.box-color.passed{background-color: #006EFF;}
+.box-color.not-taken{background-color: #363636;}
+.box-color.enrolled{background-color: #5FD855;}
+.box-color.failed{background-color: #EE0202;}
 
-/* Subject row status colors */
 .subject-row.passed {
-    background-color: #006EFF;
-    color: white;
+    color: #006EFF;
+    font-weight: bold;
 }
 
 .subject-row.not-taken {
-    background-color: #363636;
-    color: white;
+    color: #363636;
+    font-weight: bold;
 }
 
 .subject-row.enrolled {
-    background-color: #5FD855;
-    color: white;
+    color: #5FD855;
+    font-weight: bold;
 }
 
 .subject-row.failed {
-    background-color: #EE0202;
-    color: white;
+    color: #EE0202;
+    font-weight: bold;
 }

@@ -1,5 +1,4 @@
 <?php
-// This view should only contain presentation logic
 // All business logic is handled in the CurriculumController
 
 // Helper functions for presentation
@@ -48,6 +47,8 @@ function getSubjectStatus($subjectCode, $enrolledLookup, $completedLookup) {
             <h1>Curriculum</h1>
 
             <form method="get">
+                <!-- Hidden field to preserve the page parameter -->
+                <input type="hidden" name="page" value="curriculum">
                 <div class="selection">
                     <div class="school-year">
                         <label for="school-year">School Year:</label>

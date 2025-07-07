@@ -39,6 +39,14 @@ switch ($page) {
         $CurriculumController = new CurriculumController($pdo);
         $CurriculumController->showCurriculum();
         break;
+    case 'manage_section':
+        require_once __DIR__ . '/../src/Controllers/RegistrationController.php';
+        $RegistrationController = new RegistrationController($pdo);
+        $RegistrationController->showManageSection();
+        break;
+    case 'erf':
+        require __DIR__ . '/../src/Views/Payment/erf.php';
+        break;
     default:
         require_once __DIR__ . '/../src/Controllers/AuthController.php';
         $LoginController = new AuthController($pdo);

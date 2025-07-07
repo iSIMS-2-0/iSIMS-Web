@@ -17,6 +17,7 @@
         <div class="contents">
             <h1>Electronic Registration Form
             <form method="get">
+                <input type="hidden" name="page" value="erf">
                 <div class="selection">
                     <div class="syDiv">
                         <label for="schoolYear">School Year:</label>  

@@ -24,7 +24,15 @@
                     <div class="syDiv">
                         <label for="schoolYear">School Year:</label>
                         <select name="schoolYear" id="schoolYear" onchange="this.form.submit()">
-                            <option value="<?= htmlspecialchars($selected_sy) ?>"><?= htmlspecialchars($selected_sy) ?></option>
+                            <?php if (isset($availableSchoolYears) && !empty($availableSchoolYears)): ?>
+                                <?php foreach ($availableSchoolYears as $schoolYear): ?>
+                                    <option value="<?= htmlspecialchars($schoolYear) ?>"<?= $schoolYear == $selected_sy ? ' selected' : '' ?>>
+                                        <?= htmlspecialchars($schoolYear) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <option value="<?= htmlspecialchars($selected_sy) ?>"><?= htmlspecialchars($selected_sy) ?></option>
+                            <?php endif; ?>
                         </select>
                     </div>
                     <div class="termDiv">

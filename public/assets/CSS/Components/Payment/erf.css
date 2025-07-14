@@ -166,7 +166,7 @@ iframe{
     flex-direction: column;
     text-align: start;
     color: var(--vivid-medium-blue);
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .details {

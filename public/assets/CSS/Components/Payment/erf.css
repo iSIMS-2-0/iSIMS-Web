@@ -89,3 +89,119 @@ iframe{
     margin-bottom: 1rem;
     font-weight: normal;
 }
+
+.popUpContainer {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    display: none;;
+}
+
+.popUpContainer.active {
+    display: flex;
+}
+
+.bankDetails {
+    width: clamp(400px, 80vw, 550px); 
+    padding: 1.5rem; 
+    gap: 1rem; 
+    background-color: var(--light-gray);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+   
+}
+
+.bankHeader {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.closeBttn {
+    font-size: 1.5rem;
+    color: var(--black);
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.bankTitle h2 {
+    color: var(--deep-navy);
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.bankInfo {
+    width: 100%;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    text-align: center;
+}
+
+.accName h3{
+    font-size: 1rem;
+}
+
+.accName p {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--dark-blue);
+}
+
+.bank {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    color: var(--vivid-medium-blue);
+    font-size: 1.2rem;
+}
+
+.details {
+    width: 100%;
+    display: flex;
+    font-size: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1.5rem;
+}
+
+.bank, .accountNum, .swiftCode {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.accountNum p, .swiftCode p {
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    font-size: .9rem; /*overflows if 1rem*/
+    margin-top: .4rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

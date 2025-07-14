@@ -94,7 +94,7 @@ iframe{
     position: fixed;
     z-index: 9999;
     left: 0;
-    top: 50px;
+    top: 0;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.4);
@@ -119,11 +119,9 @@ iframe{
 }
 
 .bankHeader {
-    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
+    align-items: center;
+    width: 100%;
 }
 
 .closeBttn {
@@ -133,10 +131,12 @@ iframe{
     align-self: flex-start;
 }
 
-.bankTitle h2 {
+.bankTitle {
+    flex: 1;
+    text-align: center;
+    font-size: 1.5rem;
     color: var(--deep-navy);
     margin: 0;
-    font-size: 1.6rem;
 }
 
 .bankInfo {

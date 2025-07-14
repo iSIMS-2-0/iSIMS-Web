@@ -94,7 +94,7 @@ iframe{
     position: fixed;
     z-index: 9999;
     left: 0;
-    top: 0;
+    top: 50px;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.4);
@@ -166,7 +166,7 @@ iframe{
     flex-direction: column;
     text-align: start;
     color: var(--vivid-medium-blue);
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .details {
@@ -175,7 +175,7 @@ iframe{
     font-size: 1rem;
     justify-content: space-between;
     align-items: center;
-    padding-left: 1.5rem;
+    padding-left: 1rem;
 }
 
 .bank, .accountNum, .swiftCode {

@@ -11,6 +11,7 @@
 }
 
 .payment-history-table{
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -28,6 +29,10 @@ th, td {
 th{
     background-color: var(--dark-blue);
     color: var(--white);
+}
+
+form{
+    width: 100%;
 }
 
 .pending-upload-button,
@@ -54,5 +59,4 @@ th{
 
 .received-upload-button{
     background-color: #7E7E7E;
-    cursor: not-allowed;
 }

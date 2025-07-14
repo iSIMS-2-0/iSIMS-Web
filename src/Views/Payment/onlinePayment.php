@@ -29,54 +29,51 @@
                 </div>
             </div>
 
-            <table class="payment-history-table">
-                <thead>
-                    <tr>
-                        <th>School Year</th>
-                        <th>Term</th>
-                        <th>Year Level</th>
-                        <th>Scholarship</th>
-                        <th>Description</th>
-                        <th>Payment Date</th>
-                        <th>Amount</th>
-                        <th>Balance</th>
-                        <th>Upload</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
+            <form method="post" enctype="multipart/form-data">
+                <table class="payment-history-table">
+                    <thead>
+                        <tr>
+                            <th>School Year</th>
+                            <th>Term</th>
+                            <th>Year Level</th>
+                            <th>Scholarship</th>
+                            <th>Description</th>
+                            <th>Payment Date</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
+                            <th>Upload</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
 
-                <tbody class="payment-history-table__body">
-                    <tr>
-                        <td>2024 - 2025</td>
-                        <td>2nd</td>
-                        <td>2</td>
-                        <td></td>
-                        <td>MATRICULATION FEE</td>
-                        <td>12/17/2024</td>
-                        <td>85932.00</td>
-                        <td>85932.00</td>
-                        <td><button type="button" class="pending-upload-button">Upload</button></td>
-                        <td>Pending</td>
-                    </tr>
-                </tbody>
-
-                <tbody class="payment-history-table__body">
-                    <tr>
-                        <td>2024 - 2025</td>
-                        <td>2nd</td>
-                        <td>2</td>
-                        <td></td>
-                        <td>CERTIFICATE OF ENROLLMENT</td>
-                        <td>11/29/2024</td>
-                        <td>100.00</td>
-                        <td>100.00</td>
-                        <td><button type="button" class="received-upload-button">Upload</button></td>
-                        <td>Received</td>
-                    </tr>
-                </tbody>
-
-
-            </table>
+                    <tbody class="payment-history-table__body">
+                        <tr>
+                            <td>2024 - 2025</td>
+                            <td>2nd</td>
+                            <td>2</td>
+                            <td></td>
+                            <td>MATRICULATION FEE</td>
+                            <td>12/17/2024</td>
+                            <td>85,932.00</td>
+                            <td>85,932.00</td>
+                            <td><button type="button" class="pending-upload-button">Upload</button></td>
+                            <td>Pending</td>
+                        </tr>
+                        <tr>
+                            <td>2024 - 2025</td>
+                            <td>2nd</td>
+                            <td>2</td>
+                            <td></td>
+                            <td>CERTIFICATE OF ENROLLMENT</td>
+                            <td>11/29/2024</td>
+                            <td>100.00</td>
+                            <td>100.00</td>
+                            <td><button type="button" class="received-upload-button">Upload</button></td>
+                            <td>Received</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 </body>

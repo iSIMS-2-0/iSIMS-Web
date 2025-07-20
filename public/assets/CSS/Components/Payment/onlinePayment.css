@@ -35,28 +35,29 @@ form{
     width: 100%;
 }
 
-.pending-upload-button,
-.received-upload-button{
-    width: 95%;
-    height: 4vh;
-    border: none;
-    border-radius: 8px;
-    color: white;
+.pending-file-upload__custom,
+.received-file-upload__custom {
+    width: 90%;
+    display: inline-block;
+    padding: .25rem .25rem;
+    border-radius: 10px;
+    color: var(--white);
 }
 
-.pending-upload-button{
+.pending-file-upload__custom{
     background-color: var(--vivid-medium-blue);
     cursor: pointer;
 }
 
-.pending-upload-button:hover{
+.pending-file-upload__custom:hover {
     background-color: #013A7D;
 }
 
-.pending-upload-button:active{
+.pending-file-upload__custom:active {
     background-color: #012A5B;
 }
 
-.received-upload-button{
-    background-color: #7E7E7E;
+.received-file-upload__custom{
+    background-color:  #7E7E7E;
+    pointer-events: none;
 }

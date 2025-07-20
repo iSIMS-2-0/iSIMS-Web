@@ -56,9 +56,13 @@
                             <td>12/17/2024</td>
                             <td>85,932.00</td>
                             <td>85,932.00</td>
-                            <td><button type="button" class="pending-upload-button">Upload</button></td>
+                            <td> 
+                                <input type="file" id="pending-file-upload" accept=".jpg, .jpeg, .png, .pdf" hidden> 
+                                <label for="pending-file-upload" class="pending-file-upload__custom">Upload</label></input>
+                            </td>
                             <td>Pending</td>
                         </tr>
+                        
                         <tr>
                             <td>2024 - 2025</td>
                             <td>2nd</td>
@@ -68,7 +72,10 @@
                             <td>11/29/2024</td>
                             <td>100.00</td>
                             <td>100.00</td>
-                            <td><button type="button" class="received-upload-button">Upload</button></td>
+                            <td> 
+                                <input type="file" id="received-file-upload" accept=".jpg, .jpeg, .png, .pdf" hidden> 
+                                <label for="received-file-upload" class="received-file-upload__custom">Upload</label></input>
+                            </td>
                             <td>Received</td>
                         </tr>
                     </tbody>

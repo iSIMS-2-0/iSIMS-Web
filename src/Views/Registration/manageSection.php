@@ -1,7 +1,4 @@
 <?php
-// This view should only contain presentation logic
-// All business logic is handled in the RegistrationController
-
 // Helper functions for presentation
 function getYearLevelText($yearLevel) {
     $yearTexts = [

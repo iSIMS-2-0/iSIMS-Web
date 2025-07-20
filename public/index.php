@@ -45,7 +45,24 @@ switch ($page) {
         $RegistrationController->showManageSection();
         break;
     case 'erf':
-        require __DIR__ . '/../src/Views/Payment/erf.php';
+        require_once __DIR__ . '/../src/Controllers/PaymentController.php';
+        $ERFController = new PaymentController($pdo);
+        $ERFController->showERF();
+        break;
+    case 'onlinepayment':
+        require_once __DIR__ . '/../src/Controllers/PaymentController.php';
+        $OnlinePaymentController = new PaymentController($pdo);
+        $OnlinePaymentController->showOnlinePayment();
+        break;
+    case 'paymenthistory':
+        require_once __DIR__ . '/../src/Controllers/PaymentController.php';
+        $PaymentHistoryController = new PaymentController($pdo);
+        $PaymentHistoryController->showPaymentHistory();
+        break;
+    case 'concerns':
+        require_once __DIR__ . '/../src/Controllers/ConcernsController.php';
+        $ConcernsController = new ConcernsController($pdo);
+        $ConcernsController->showConcerns();
         break;
     default:
         require_once __DIR__ . '/../src/Controllers/AuthController.php';

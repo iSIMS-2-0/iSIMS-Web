@@ -41,15 +41,15 @@
             </div>
         </div>
         <div id="payment" class="dropdown">
-            <a href="#"><p>Electronic Registration Form</p></a>
-            <a href="#"><p>Online payment</p></a>
-            <a href="#"><p>Payment History</p></a>
+            <a href="/public/index.php?page=erf"><p>Electronic Registration Form</p></a>
+            <a href="/public/index.php?page=onlinepayment"><p>Online payment</p></a>
+            <a href="/public/index.php?page=paymenthistory"><p>Payment History</p></a>
         </div>
                 
         <!-- CONCERNS/FEEDBACK -->
         <div class="navItem">
             <i class="fa-solid fa-circle-exclamation fa-lg"></i>
-            <p>CONCERNS/<br>FEEDBACK</p>
+            <a href="/public/index.php?page=concerns"><p>CONCERNS<br>FEEDBACK</p>
         </div>
     </div>
 

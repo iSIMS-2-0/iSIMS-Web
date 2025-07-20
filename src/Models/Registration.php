@@ -37,7 +37,10 @@ class Registration {
             FROM students_class sc
             JOIN subjects s ON sc.subject_id = s.id
             JOIN sections sec ON sc.section_id = sec.id
-            LEFT JOIN schedules sch ON sch.subject_id = s.id AND sch.section_id = sec.id
+            LEFT JOIN student_schedule ss ON ss.studentid = sc.student_id
+            LEFT JOIN schedules sch ON sch.id = ss.scheduleid 
+                AND sch.subject_id = s.id 
+                AND sch.section_id = sec.id
             WHERE sc.student_id = ?
             AND sc.school_year = (
                 SELECT school_year 

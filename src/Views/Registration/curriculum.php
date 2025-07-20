@@ -1,13 +1,9 @@
 <?php
-// All business logic is handled in the CurriculumController
-
-// Helper functions for presentation
 function getTermNumber($termText) {
     return str_replace(['1st Term', '2nd Term', '3rd Term'], ['1st term', '2nd term', '3rd term'], $termText);
 }
 
 function getSubjectStatus($subjectCode, $enrolledLookup, $completedLookup) {
-    // Priority 1: Check if subject has been completed with a grade
     if (isset($completedLookup[$subjectCode])) {
         $grade = $completedLookup[$subjectCode]['grade'];
         // Assuming passing grade is 3.0 or below (Filipino grading system where 1.0 is highest, 5.0 is fail)
@@ -17,13 +13,10 @@ function getSubjectStatus($subjectCode, $enrolledLookup, $completedLookup) {
             return 'failed'; // Failed
         }
     }
-    
-    // Priority 2: Check if subject is currently enrolled
     if (isset($enrolledLookup[$subjectCode])) {
         return 'enrolled'; // Currently enrolled
     }
     
-    // Priority 3: Default to not taken
     return 'not-taken'; // Not yet taken
 }
 ?>

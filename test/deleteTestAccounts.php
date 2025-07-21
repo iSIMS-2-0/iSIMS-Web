@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $confirmDelete) {
         
     } catch (Exception $e) {
         $pdo->rollBack();
-        $message = "<div style='color: red; font-weight: bold; margin: 20px 0;'>❌ Error: " . htmlspecialchars($e->getMessage()) . "</div>";
+        $message = "<div style='color: red; font-weight: bold; margin: 20px 0;'>\u274c Error: " . htmlspecialchars($e->getMessage()) . "</div>";
     }
 }
 

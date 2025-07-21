@@ -24,6 +24,7 @@ class Registration {
                 s.code,
                 s.name,
                 s.units,
+                s.is_laboratory,
                 sec.name as section_name,
                 sc.term,
                 sc.school_year,
@@ -61,14 +62,12 @@ class Registration {
         ");
         $stmt->execute([$student_id, $student_id, $student_id]);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
         // Clean up schedule formatting
         foreach ($result as &$subject) {
             if (empty($subject['schedule']) || $subject['schedule'] === null) {
                 $subject['schedule'] = 'TBA';
             }
         }
-        
         return $result;
     }
 

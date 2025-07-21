@@ -20,12 +20,12 @@
             <div class="student-information">
                 <div class="student-name">
                     <h4>Student Name:</h4>
-                    <p>Last Name, First Name</p>
+                    <p><?= htmlspecialchars($student['name'] ?? 'N/A') ?></p>
                 </div>
 
                 <div class="student-number">
                     <h4>Student Number:</h4>
-                    <p>Student Number</p>
+                    <p><?= htmlspecialchars($student['student_number'] ?? 'N/A') ?></p>
                 </div>
             </div>
 
@@ -47,37 +47,53 @@
                     </thead>
 
                     <tbody class="payment-history-table__body">
+                        <!-- Tuition Calculation Row -->
                         <tr>
-                            <td>2024 - 2025</td>
-                            <td>2nd</td>
-                            <td>2</td>
+                            <td><?= htmlspecialchars($currentSchoolYear ?? '') ?></td>
+                            <td><?= htmlspecialchars($currentTerm ?? '') ?></td>
+                            <td><?= htmlspecialchars($yearLevel ?? '') ?></td>
                             <td></td>
-                            <td>MATRICULATION FEE</td>
-                            <td>12/17/2024</td>
-                            <td>85,932.00</td>
-                            <td>85,932.00</td>
-                            <td> 
-                                <input type="file" id="pending-file-upload" accept=".jpg, .jpeg, .png, .pdf" hidden> 
-                                <label for="pending-file-upload" class="pending-file-upload__custom">Upload</label></input>
-                            </td>
-                            <td>Pending</td>
-                        </tr>
-                        
-                        <tr>
-                            <td>2024 - 2025</td>
-                            <td>2nd</td>
-                            <td>2</td>
+                            <td>TOTAL AMOUNT DUE</td>
                             <td></td>
-                            <td>CERTIFICATE OF ENROLLMENT</td>
-                            <td>11/29/2024</td>
-                            <td>100.00</td>
-                            <td>100.00</td>
-                            <td> 
-                                <input type="file" id="received-file-upload" accept=".jpg, .jpeg, .png, .pdf" hidden> 
-                                <label for="received-file-upload" class="received-file-upload__custom">Upload</label></input>
+                            <td><?= number_format($totalTuition, 2) ?></td>
+                            <td><?= number_format($totalTuition, 2) ?></td>
+                            <td>
+                                <?php 
+                                    $isPending = (strtolower($paymentProofStatus ?? '') === 'pending');
+                                    $isReceived = (strtolower($paymentProofStatus ?? '') === 'received');
+                                    $disableUpload = $isPending || $isReceived;
+                                ?>
+                                <input type="file" name="tuition_due_upload" id="tuition-due-upload" accept=".jpg, .jpeg, .png, .pdf" style="display:none;" onchange="this.form.submit()" <?= $disableUpload ? 'disabled' : '' ?>>
+                                <label for="tuition-due-upload" class="<?= $isReceived ? 'received-file-upload__custom' : 'pending-file-upload__custom' ?>" style="cursor:pointer;<?= $disableUpload ? 'opacity:0.5;pointer-events:none;' : '' ?>">Upload</label>
                             </td>
-                            <td>Received</td>
+                            <td>
+                                <?php if (!empty($paymentProofStatus)) echo htmlspecialchars($paymentProofStatus); ?>
+                            </td>
                         </tr>
+
+                        <!-- Previous Payments Rows (from paymentHistory) -->
+                        <?php if (!empty($paymentHistory)): ?>
+                            <?php foreach ($paymentHistory as $row): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($row['school_year']) ?></td>
+                                    <td><?= htmlspecialchars($row['term']) ?></td>
+                                    <td><?= htmlspecialchars($row['year_level'] ?? '') ?></td>
+                                    <td></td>
+                                    <td><?= htmlspecialchars($row['payment_description']) ?></td>
+                                    <td><?= htmlspecialchars(date('m/d/Y', strtotime($row['upload_date']))) ?></td>
+                                    <td><?= isset($row['amount']) ? number_format($row['amount'], 2) : '' ?></td>
+                                    <td></td>
+                                    <td>
+                                        <?php 
+                                            $rowStatus = strtolower($row['status']);
+                                            $uploadClass = $rowStatus === 'received' ? 'received-file-upload__custom' : 'pending-file-upload__custom';
+                                        ?>
+                                        <label class="<?= $uploadClass ?>" style="opacity:0.5;pointer-events:none;cursor:not-allowed;">Upload</label>
+                                    </td>
+                                    <td><?= htmlspecialchars(ucfirst($row['status'])) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </form>

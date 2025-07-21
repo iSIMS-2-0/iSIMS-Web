@@ -11,12 +11,12 @@ $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $program_name = $_POST['program_name'] ?? '';
     $course_code = $_POST['course_code'] ?? '';
-    
     if (!empty($program_name) && !empty($course_code)) {
         try {
             $stmt = $pdo->prepare("INSERT INTO program (program_name, course_code) VALUES (?, ?)");
             $stmt->execute([$program_name, $course_code]);
-            $message = "<span style='color:green'>Program added successfully!</span>";
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
         } catch (Exception $e) {
             $message = "<span style='color:red'>Error: " . htmlspecialchars($e->getMessage()) . "</span>";
         }

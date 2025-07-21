@@ -99,21 +99,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_subject'])) {
     $program_id = $_POST['program_id'] ?? '';
     $year_level = $_POST['year_level'] ?? '';
     $term_number = $_POST['term_number'] ?? '';
-    
+    $is_laboratory = isset($_POST['is_laboratory']) ? 1 : 0;
+
     if ($code && $name && $units && $program_id && $year_level && $term_number) {
         $pdo->beginTransaction();
         try {
             // Insert into subjects table
-            $stmt = $pdo->prepare("INSERT INTO subjects (code, name, units) VALUES (?, ?, ?)");
-            $stmt->execute([$code, $name, $units]);
+            $stmt = $pdo->prepare("INSERT INTO subjects (code, name, units, is_laboratory) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$code, $name, $units, $is_laboratory]);
             $subject_id = $pdo->lastInsertId();
-            
             // Insert into curriculum table with year and term
             $curriculumStmt = $pdo->prepare("INSERT INTO curriculum (programid, subjectid, year_level, term_number) VALUES (?, ?, ?, ?)");
             $curriculumStmt->execute([$program_id, $subject_id, $year_level, $term_number]);
-            
             $pdo->commit();
-            echo "<span style='color:green'>Subject added: $code - $name ($units units) and linked to curriculum (Year $year_level, Term $term_number)</span><br>";
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
         } catch (Exception $e) {
             $pdo->rollBack();
             echo "<span style='color:red'>Error: ".htmlspecialchars($e->getMessage())."</span><br>";
@@ -131,89 +131,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_all_subjects
         echo "<span style='color:red'>Please select a program for bulk generation.</span><br>";
     } else {
         // Predefined subjects array with year and term organization
+        // [code, name, units, year_level, term_number, is_laboratory]
         $predefinedSubjects = [
             // 1st Year, 1st Term
-            ['FUNDPROG', 'Fundamentals of Programming', 3, 1, 1],
-            ['INTROICT', 'Introduction to ICT', 3, 1, 1],
-            ['PHYEDU01', 'Physical Education 1', 2.0, 1, 1],
-            ['STECHSOC', 'Science, Technology, and Society', 3, 1, 1],
-            ['CONWORLD', 'Contemporary World', 3, 1, 1],
-            ['UNDESELF', 'Understanding the Self', 3, 1, 1],
-            ['EUTENICS', 'Euthenics', 1.0, 1, 1],
+            ['FUNDPROG', 'Fundamentals of Programming', 3, 1, 1, 1],
+            ['INTROICT', 'Introduction to ICT', 3, 1, 1, 0],
+            ['PHYEDU01', 'Physical Education 1', 2.0, 1, 1, 0],
+            ['STECHSOC', 'Science, Technology, and Society', 3, 1, 1, 0],
+            ['CONWORLD', 'Contemporary World', 3, 1, 1, 0],
+            ['UNDESELF', 'Understanding the Self', 3, 1, 1, 0],
+            ['EUTENICS', 'Euthenics', 1.0, 1, 1, 0],
             // 1st Year, 2nd Term
-            ['ADVAPROG', 'Advanced Programming', 3, 1, 2],
-            ['LOGICDES', 'Digital Logic Design', 3, 1, 2],
-            ['ETHIPROF', 'Ethics and Professionalism', 3, 1, 2],
-            ['FILIPIN1', 'Kontekstwalisadong Komunikasyon sa Filipino', 3, 1, 2],
-            ['MATHMODE', 'Mathematics in the Modern World', 3, 1, 2],
-            ['OPERSYST', 'Operating Systems', 3, 1, 2],
-            ['PHYEDU02', 'Physical Education 2 (Rhythmic Activities and Dance)', 2.0, 1, 2],
+            ['ADVAPROG', 'Advanced Programming', 3, 1, 2, 1],
+            ['LOGICDES', 'Digital Logic Design', 3, 1, 2, 1],
+            ['ETHIPROF', 'Ethics and Professionalism', 3, 1, 2, 0],
+            ['FILIPIN1', 'Kontekstwalisadong Komunikasyon sa Filipino', 3, 1, 2, 0],
+            ['MATHMODE', 'Mathematics in the Modern World', 3, 1, 2, 0],
+            ['OPERSYST', 'Operating Systems', 3, 1, 2, 1],
+            ['PHYEDU02', 'Physical Education 2 (Rhythmic Activities and Dance)', 2.0, 1, 2, 0],
             // 1st Year, 3rd Term
-            ['ARTAPPRE', 'Art Appreciation', 3, 1, 3],
-            ['DATSTRUC', 'Data Structures and Algorithms', 3, 1, 3],
-            ['OBJECPRG', 'Object Oriented Programming', 3, 1, 3],
-            ['PHYEDU03', 'Physical Education 3 (Individual/Dual Sports)', 2.0, 1, 3],
-            ['PURPCOMM', 'Purposive Communication', 3, 1, 3],
-            ['READHIST', 'Readings in Philippine History', 3, 1, 3],
-            ['NSTPT001', 'National Service Training Program 1', 3, 1, 3],
-            ['COMPARCH', 'Computer Architecture', 3, 1, 3],
+            ['ARTAPPRE', 'Art Appreciation', 3, 1, 3, 0],
+            ['DATSTRUC', 'Data Structures and Algorithms', 3, 1, 3, 1],
+            ['OBJECPRG', 'Object Oriented Programming', 3, 1, 3, 1],
+            ['PHYEDU03', 'Physical Education 3 (Individual/Dual Sports)', 2.0, 1, 3, 0],
+            ['PURPCOMM', 'Purposive Communication', 3, 1, 3, 0],
+            ['READHIST', 'Readings in Philippine History', 3, 1, 3, 0],
+            ['NSTPT001', 'National Service Training Program 1', 3, 1, 3, 0],
+            ['COMPARCH', 'Computer Architecture', 3, 1, 3, 1],
             // 2nd Year, 1st Term
-            ['CSELEC01', 'Core Java Programming 1', 3, 2, 1],
-            ['DISCMATH', 'Discrete Mathematics', 3, 2, 1],
-            ['INFORMAN', 'Information Management and Database Systems', 3, 2, 1],
-            ['PHYEDU04', 'Physical Education 4 (Team Sports)', 2.0, 2, 1],
-            ['NSTPT002', 'National Service Training Program 2', 3, 2, 1],
+            ['CSELEC01', 'Core Java Programming 1', 3, 2, 1, 1],
+            ['DISCMATH', 'Discrete Mathematics', 3, 2, 1, 0],
+            ['INFORMAN', 'Information Management and Database Systems', 3, 2, 1, 1],
+            ['PHYEDU04', 'Physical Education 4 (Team Sports)', 2.0, 2, 1, 0],
+            ['NSTPT002', 'National Service Training Program 2', 3, 2, 1, 0],
             // 2nd Year, 2nd Term
-            ['CSELEC02', 'Core Java Programming 2', 3, 2, 2],
-            ['FILIPIN2', 'Filipino sa Iba\'t Ibang Disiplina', 3, 2, 2],
-            ['CSELEC03', 'Fundamentals of Web Programming', 3, 2, 2],
-            ['RIZALIFE', 'Rizal\'s Life, Works, and Writings', 3, 2, 2],
-            ['SOFTENG1', 'Software Engineering 1', 3, 2, 2],
-            ['CSELEC04', 'Unified Modelling Language', 3, 2, 2],
+            ['CSELEC02', 'Core Java Programming 2', 3, 2, 2, 1],
+            ['FILIPIN2', 'Filipino sa Iba\'t Ibang Disiplina', 3, 2, 2, 0],
+            ['CSELEC03', 'Fundamentals of Web Programming', 3, 2, 2, 1],
+            ['RIZALIFE', 'Rizal\'s Life, Works, and Writings', 3, 2, 2, 0],
+            ['SOFTENG1', 'Software Engineering 1', 3, 2, 2, 1],
+            ['CSELEC04', 'Unified Modelling Language', 3, 2, 2, 1],
             // 2nd Year, 3rd Term
-            ['CSELEC05', 'Enterprise Java Programming 1', 3, 2, 3],
-            ['CSELEC06', 'Advanced Web Programming', 3, 2, 3],
-            ['CSELEC07', 'Mobile Computing 1', 3, 2, 3],
-            ['DATACOMM', 'Data Communications', 3, 2, 3],
-            ['SOFTENG2', 'Software Engineering 2', 3, 2, 3],
+            ['CSELEC05', 'Enterprise Java Programming 1', 3, 2, 3, 1],
+            ['CSELEC06', 'Advanced Web Programming', 3, 2, 3, 1],
+            ['CSELEC07', 'Mobile Computing 1', 3, 2, 3, 1],
+            ['DATACOMM', 'Data Communications', 3, 2, 3, 1],
+            ['SOFTENG2', 'Software Engineering 2', 3, 2, 3, 1],
             // 3rd Year, 1st Term
-            ['AUTOMATA', 'Automata Theory and Formal Languages', 3, 3, 1],
-            ['CSELEC09', 'Enterprise Java Programming 2', 3, 3, 1],
-            ['INFOSECU', 'Information Assurance and Security', 3, 3, 1],
-            ['CSELEC10', 'Introduction to Artificial Intelligence', 3, 3, 1],
-            ['CSELEC08', 'Mobile Computing 2', 3, 3, 1],
+            ['AUTOMATA', 'Automata Theory and Formal Languages', 3, 3, 1, 0],
+            ['CSELEC09', 'Enterprise Java Programming 2', 3, 3, 1, 1],
+            ['INFOSECU', 'Information Assurance and Security', 3, 3, 1, 1],
+            ['CSELEC10', 'Introduction to Artificial Intelligence', 3, 3, 1, 1],
+            ['CSELEC08', 'Mobile Computing 2', 3, 3, 1, 1],
             // 3rd Year, 2nd Term
-            ['ALGORTHM', 'Analysis of Algorithms', 3, 3, 2],
-            ['HUCOMINT', 'Human Computer Interaction', 3, 3, 2],
-            ['LITEFILM', 'Literature and Film', 3, 3, 2],
-            ['CSELEC11', 'Software Design Patterns', 3, 3, 2],
-            ['CSELEC12', 'Software Quality Assurance', 3, 3, 2],
+            ['ALGORTHM', 'Analysis of Algorithms', 3, 3, 2, 1],
+            ['HUCOMINT', 'Human Computer Interaction', 3, 3, 2, 0],
+            ['LITEFILM', 'Literature and Film', 3, 3, 2, 0],
+            ['CSELEC11', 'Software Design Patterns', 3, 3, 2, 1],
+            ['CSELEC12', 'Software Quality Assurance', 3, 3, 2, 1],
             // 3rd Year, 3rd Term
-            ['APPDEVCS', 'Applications Development for Computer Science', 3, 3, 3],
-            ['CSELEC13', 'C#.NET Programming (Windows Form)', 3, 3, 3],
-            ['CSTHES01', 'Computer Science Thesis 1', 3, 3, 3],
-            ['PROFPRAC', 'Social Issues and Professional Practice in Computing', 3, 3, 3],
-            ['PROGLANG', 'Structure of Programming Languages', 3, 3, 3],
+            ['APPDEVCS', 'Applications Development for Computer Science', 3, 3, 3, 1],
+            ['CSELEC13', 'C#.NET Programming (Windows Form)', 3, 3, 3, 1],
+            ['CSTHES01', 'Computer Science Thesis 1', 3, 3, 3, 0],
+            ['PROFPRAC', 'Social Issues and Professional Practice in Computing', 3, 3, 3, 0],
+            ['PROGLANG', 'Structure of Programming Languages', 3, 3, 3, 0],
             // 4th Year, 1st Term
-            ['INTERN-1', 'Internship 1', 3, 4, 1],
+            ['INTERN-1', 'Internship 1', 3, 4, 1, 0],
             // 4th Year, 2nd Term
-            ['CSTHES02', 'Computer Science Thesis 2', 3, 4, 2],
-            ['INTERN-002', 'Internship 2', 3, 4, 2]
-        ];
-        
-        $successCount = 0;
-        $skippedCount = 0;
-        $errorCount = 0;
-        
-        echo "<h3>Bulk Generation Results:</h3>";
-        
-        foreach ($predefinedSubjects as $subject) {
-            list($code, $name, $units, $year_level, $term_number) = $subject;
-            
+            ['CSTHES02', 'Computer Science Thesis 2', 3, 4, 2, 0],
+            ['INTERN-002', 'Internship 2', 3, 4, 2, 0]
+        try {
             $pdo->beginTransaction();
-            try {
-                // Check if subject already exists
-                $checkStmt = $pdo->prepare("SELECT id FROM subjects WHERE code = ?");
+            foreach ($predefinedSubjects as $subj) {
+                $stmt = $pdo->prepare("INSERT INTO subjects (code, name, units, is_laboratory) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$subj[0], $subj[1], $subj[2], $subj[5]]);
+                $subject_id = $pdo->lastInsertId();
+                $curriculumStmt = $pdo->prepare("INSERT INTO curriculum (programid, subjectid, year_level, term_number) VALUES (?, ?, ?, ?)");
+                $curriculumStmt->execute([$program_id_bulk, $subject_id, $subj[3], $subj[4]]);
+            }
+            $pdo->commit();
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            echo "<span style='color:red'>Error: ".htmlspecialchars($e->getMessage())."</span><br>";
+        }
                 $checkStmt->execute([$code]);
                 
                 if ($checkStmt->rowCount() > 0) {
@@ -241,8 +243,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_all_subjects
                     }
                 } else {
                     // Insert new subject
-                    $stmt = $pdo->prepare("INSERT INTO subjects (code, name, units) VALUES (?, ?, ?)");
-                    $stmt->execute([$code, $name, $units]);
+                    $stmt = $pdo->prepare("INSERT INTO subjects (code, name, units, is_laboratory) VALUES (?, ?, ?, ?)");
+                    $stmt->execute([$code, $name, $units, $is_laboratory]);
                     $subject_id = $pdo->lastInsertId();
                     
                     // Insert into curriculum with year and term
@@ -302,7 +304,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_all_subjects
         <option value="3">3rd Year</option>
         <option value="4">4th Year</option>
     </select><br><br>
-    
+
     <label for="term_number">Term:</label><br>
     <select name="term_number" id="term_number" required>
         <option value="">Select Term</option>
@@ -310,7 +312,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_all_subjects
         <option value="2">2nd Term</option>
         <option value="3">3rd Term</option>
     </select><br><br>
-    
+
+    <label for="is_laboratory">
+        <input type="checkbox" name="is_laboratory" id="is_laboratory" value="1">
+        Laboratory Subject (requires computers/lab)
+    </label><br><br>
+
     <button type="submit" name="add_subject">Add Subject & Link to Curriculum</button>
 </form>
 

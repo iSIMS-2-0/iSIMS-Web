@@ -20,12 +20,12 @@
             <div class="student-information">
                 <div class="student-name">
                     <h4>Student Name:</h4>
-                    <p>Last Name, First Name</p>
+                    <p><?= htmlspecialchars($student['name'] ?? '') ?></p>
                 </div>
 
                 <div class="student-number">
                     <h4>Student Number:</h4>
-                    <p>Student Number</p>
+                    <p><?= htmlspecialchars($student['student_number'] ?? '') ?></p>
                 </div>
             </div>
 
@@ -46,31 +46,25 @@
                 </thead>
 
                 <tbody class="payment-history-table__body">
-                    <tr>
-                        <td>2024 - 2025</td>
-                        <td>2nd</td>
-                        <td>2</td>
-                        <td></td>
-                        <td>MATRICULATION FEE</td>
-                        <td>12/17/2024</td>
-                        <td>85932.00</td>
-                        <td>85932.00</td>
-                        <td>0.00</td>
-                    </tr>
-                </tbody>
-
-                <tbody class="payment-history-table__body">
-                    <tr>
-                        <td>2024 - 2025</td>
-                        <td>2nd</td>
-                        <td>2</td>
-                        <td></td>
-                        <td>MATRICULATION FEE</td>
-                        <td>12/17/2024</td>
-                        <td>85932.00</td>
-                        <td>85932.00</td>
-                        <td>0.00</td>
-                    </tr>
+                    <?php if (!empty($paymentHistory)): ?>
+                        <?php foreach ($paymentHistory as $row): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($row['school_year']) ?></td>
+                                <td><?= htmlspecialchars($row['term']) ?></td>
+                                <td><?= htmlspecialchars($row['year_level'] ?? '') ?></td>
+                                <td></td>
+                                <td><?= htmlspecialchars($row['payment_description']) ?></td>
+                                <td><?= htmlspecialchars(date('m/d/Y', strtotime($row['upload_date']))) ?></td>
+                                <td><?= isset($row['amount']) ? number_format($row['amount'], 2) : '' ?></td>
+                                <td></td>
+                                <td><?= htmlspecialchars(ucfirst($row['status'])) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="9" style="text-align:center;">No payment history found.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
 
 

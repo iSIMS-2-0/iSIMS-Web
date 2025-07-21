@@ -48,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['set_grade'])) {
         // Check if grade already exists for this students_class_id
         $checkStmt = $pdo->prepare("SELECT id FROM grades WHERE students_class_id = ?");
         $checkStmt->execute([$student_class_id]);
-        
         if ($checkStmt->rowCount() > 0) {
             // Update existing grade
             $stmt = $pdo->prepare("UPDATE grades SET grade = ? WHERE students_class_id = ?");
@@ -58,14 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['set_grade'])) {
             $stmt = $pdo->prepare("INSERT INTO grades (students_class_id, grade) VALUES (?, ?)");
             $action = "added";
         }
-        
         try {
             if ($action === "updated") {
                 $stmt->execute([$grade, $student_class_id]);
             } else {
                 $stmt->execute([$student_class_id, $grade]);
             }
-            $message = "<span style='color:green'>Grade $action successfully.</span>";
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
         } catch (Exception $e) {
             $message = "<span style='color:red'>Error: ".htmlspecialchars($e->getMessage())."</span>";
         }

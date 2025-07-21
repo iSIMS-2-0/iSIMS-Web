@@ -71,6 +71,7 @@ $terms = [
     3 => '3rd Term'
 ];
 
+// Handle add to class & schedule
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_student_class'])) {
     $student_id = $_POST['student_id'] ?? '';
@@ -87,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_student_class']))
             $stmt2 = $pdo->prepare("INSERT INTO student_schedule (studentid, scheduleid) VALUES (?, ?)");
             $stmt2->execute([$student_id, $schedule_id]);
             $pdo->commit();
-            $message = "<span style='color:green'>Student enrolled in class and added to schedule.</span>";
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
         } catch (Exception $e) {
             $pdo->rollBack();
             $message = "<span style='color:red'>Error: ".htmlspecialchars($e->getMessage())."</span>";
@@ -96,10 +98,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_student_class']))
         $message = "<span style='color:red'>All fields are required.</span>";
     }
 }
+
+// Handle remove from class & schedule
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_student_class'])) {
+    $student_id = $_POST['student_id_remove'] ?? '';
+    $subject_id = $_POST['subject_id_remove'] ?? '';
+    $section_id = $_POST['section_id_remove'] ?? '';
+    $term = $_POST['term_remove'] ?? '';
+    $school_year_post = $_POST['school_year_remove'] ?? '';
+    $schedule_id = $_POST['schedule_id_remove'] ?? '';
+    if ($student_id && $subject_id && $section_id && $term && $school_year_post) {
+        $pdo->beginTransaction();
+        try {
+            $stmt = $pdo->prepare("DELETE FROM students_class WHERE student_id = ? AND subject_id = ? AND section_id = ? AND term = ? AND school_year = ?");
+            $stmt->execute([$student_id, $subject_id, $section_id, $term, $school_year_post]);
+            // Only attempt to remove from student_schedule if schedule_id is provided
+            if (!empty($schedule_id)) {
+                $stmt2 = $pdo->prepare("DELETE FROM student_schedule WHERE studentid = ? AND scheduleid = ?");
+                $stmt2->execute([$student_id, $schedule_id]);
+            }
+            $pdo->commit();
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            $message = "<span style='color:red'>Error: ".htmlspecialchars($e->getMessage())."</span>";
+        }
+    } else {
+        $message = "<span style='color:red'>All fields are required to remove a schedule.</span>";
+    }
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['drop_student_class'])) {
     try {
         $pdo->exec("DELETE FROM students_class");
-        $message = "<span style='color:green'>All records dropped from students_class.</span>";
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit();
     } catch (Exception $e) {
         $message = "<span style='color:red'>Error dropping students_class: ".htmlspecialchars($e->getMessage())."</span>";
     }
@@ -107,7 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['drop_student_class'])
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['drop_students_schedule'])) {
     try {
         $pdo->exec("DELETE FROM student_schedule");
-        $message = "<span style='color:green'>All records dropped from student_schedule.</span>";
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit();
     } catch (Exception $e) {
         $message = "<span style='color:red'>Error dropping student_schedule: ".htmlspecialchars($e->getMessage())."</span>";
     }
@@ -170,6 +204,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['drop_students_schedul
         </select><br>
         <button type="submit" name="add_student_class">Add to Class & Schedule</button>
     </form>
+
+    <!-- Remove from class & schedule by selecting student and then a specific schedule/class -->
+    <form method="get" id="fetchStudentSchedulesForm" style="margin-top:2em;">
+        <h2>Remove Student from Class & Schedule</h2>
+        <label>Student:</label>
+        <select name="student_id_fetch" id="studentIdFetch" required onchange="this.form.submit()">
+            <option value="">Select student</option>
+            <?php foreach ($students as $stu): ?>
+                <option value="<?= htmlspecialchars($stu['id']) ?>" <?= (isset($_GET['student_id_fetch']) && $_GET['student_id_fetch'] == $stu['id']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($stu['student_number']) ?> - <?= htmlspecialchars($stu['name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </form>
+
+    <?php
+    // If a student is selected, fetch their current enrollments
+    if (isset($_GET['student_id_fetch']) && $_GET['student_id_fetch']) {
+        $selected_student_id = $_GET['student_id_fetch'];
+        $enrollments = $pdo->prepare("SELECT sc.*, s.code AS subject_code, s.name AS subject_name, sec.name AS section_name FROM students_class sc JOIN subjects s ON sc.subject_id = s.id JOIN sections sec ON sc.section_id = sec.id WHERE sc.student_id = ? ORDER BY sc.school_year DESC, sc.term DESC");
+        $enrollments->execute([$selected_student_id]);
+        $enrollments = $enrollments->fetchAll(PDO::FETCH_ASSOC);
+        if ($enrollments):
+    ?>
+    <table border="1" cellpadding="5" style="margin-top:1em;">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Section</th>
+                <th>Term</th>
+                <th>School Year</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($enrollments as $enr): ?>
+            <tr>
+                <td><?= htmlspecialchars($enr['subject_code']) ?> - <?= htmlspecialchars($enr['subject_name']) ?></td>
+                <td><?= htmlspecialchars($enr['section_name']) ?></td>
+                <td><?= htmlspecialchars($enr['term']) ?></td>
+                <td><?= htmlspecialchars($enr['school_year']) ?></td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        <input type="hidden" name="student_id_remove" value="<?= htmlspecialchars($selected_student_id) ?>">
+                        <input type="hidden" name="subject_id_remove" value="<?= htmlspecialchars($enr['subject_id']) ?>">
+                        <input type="hidden" name="section_id_remove" value="<?= htmlspecialchars($enr['section_id']) ?>">
+                        <input type="hidden" name="term_remove" value="<?= htmlspecialchars($enr['term']) ?>">
+                        <input type="hidden" name="school_year_remove" value="<?= htmlspecialchars($enr['school_year']) ?>">
+                        <input type="hidden" name="schedule_id_remove" value="">
+                        <button type="submit" name="remove_student_class" style="background:#c00;color:#fff;">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php else: ?>
+        <p>No enrollments found for this student.</p>
+    <?php endif; } ?>
+
     <form method="post" style="margin-top:1em;display:inline;">
         <button type="submit" name="drop_student_class" style="background:#c00;color:#fff;">Drop All student_class</button>
     </form>

@@ -1,5 +1,28 @@
 CREATE TABLE students (id int(10) NOT NULL AUTO_INCREMENT, student_number varchar(20) NOT NULL UNIQUE, name varchar(100) NOT NULL, program_id int(10) NOT NULL, sex varchar(10) NOT NULL, gender_disclosure bit(1) NOT NULL, pronouns varchar(20), mobile varchar(20) NOT NULL, landline varchar(20) NOT NULL, email varchar(100) NOT NULL, lot_blk varchar(50) NOT NULL, street varchar(50) NOT NULL, zip_code int(10) NOT NULL, city_municipality varchar(50) NOT NULL, country varchar(20), created_at timestamp NOT NULL, password_hash varchar(255) NOT NULL, family_info_id int(10) NOT NULL, medical_historyid int(10) NOT NULL, PRIMARY KEY (id));
-CREATE TABLE subjects (id int(10) NOT NULL AUTO_INCREMENT, code varchar(20) NOT NULL UNIQUE, name varchar(100) NOT NULL, units int(10) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE subjects (
+    id int(10) NOT NULL AUTO_INCREMENT,
+    code varchar(20) NOT NULL UNIQUE,
+    name varchar(100) NOT NULL,
+    units int(10) NOT NULL,
+    is_laboratory TINYINT(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE payment_proofs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    payment_description VARCHAR(255) NOT NULL,
+    school_year VARCHAR(20) NOT NULL,
+    term VARCHAR(20) NOT NULL,
+    upload_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    file_name VARCHAR(255) NOT NULL,
+    file_type VARCHAR(50) NOT NULL,
+    file_size INT NOT NULL,
+    file_blob LONGBLOB NOT NULL,
+    status VARCHAR(50) DEFAULT 'Pending',
+    amount decimal(10,2) DEFAULT NULL,
+    FOREIGN KEY (student_id) REFERENCES students(id)
+);
 CREATE TABLE grades (id int(10) NOT NULL AUTO_INCREMENT, students_class_id int(10) NOT NULL, grade decimal(4, 2) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE sections (id int(10) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE schedules (id int(10) NOT NULL AUTO_INCREMENT, subject_id int(10) NOT NULL, section_id int(10) NOT NULL, day_of_week varchar(10), start_time time DEFAULT '6', end_time time DEFAULT '6', room varchar(50), PRIMARY KEY (id));

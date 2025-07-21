@@ -53,7 +53,7 @@
         <h2>Calendar</h2>
         <ul class="calendar-nav">
             <li class="prev">
-                <a href="#" data-month="<?php echo $prev_month; ?>" data-year="<?php echo $prev_year; ?>">&#10094;</a>
+                <a href="" data-month="<?php echo $prev_month; ?>" data-year="<?php echo $prev_year; ?>">&#10094;</a>
             </li>
             
             <li class="month-year">

@@ -5,11 +5,7 @@ document.addEventListener('click', function(e) {
         const month = link.dataset.month;
         const year = link.dataset.year;
 
-        fetch(`calendar.php?month=${month}&year=${year}`)
-            .then(response => response.text())
-            .then(html => { 
-                document.getElementById('calendarContainer').innerHTML = html;
-            })
-            .catch(err => console.error('Error loading calendar:', err));
+        // Redirect to the new calendar page with the correct routing
+        window.location.href = `/public/index.php?page=home&month=${month}&year=${year}`;
     }
 });

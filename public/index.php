@@ -1,16 +1,4 @@
 <?php
-
-echo "<h3>Debug Information:</h3>";
-echo "<strong>Current working directory:</strong> " . getcwd() . "<br>";
-echo "<strong>__DIR__ (current file directory):</strong> " . __DIR__ . "<br>";
-echo "<strong>__FILE__ (current file path):</strong> " . __FILE__ . "<br>";
-echo "<strong>Document Root:</strong> " . $_SERVER['DOCUMENT_ROOT'] . "<br>";
-echo "<strong>Script Name:</strong> " . $_SERVER['SCRIPT_NAME'] . "<br>";
-echo "<strong>Request URI:</strong> " . $_SERVER['REQUEST_URI'] . "<br>";
-echo "<strong>HTTP Host:</strong> " . $_SERVER['HTTP_HOST'] . "<br>";
-echo "<hr>";
-
-
 $config = require __DIR__ . '/../config.php';
 $dsn = "mysql:host={$config['host']};dbname={$config['db']};charset=utf8mb4";
 $pdo = new PDO($dsn, $config['user'], $config['pass']);

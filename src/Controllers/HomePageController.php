@@ -12,7 +12,7 @@ class HomePageController {
         session_start();
         if (!isset($_SESSION['student_number'])) {
             // If not logged in, redirect to the login page
-            header("Location: /iSIMS-Web/public/index.php?page=login");
+            header("Location: /public/index.php?page=login");
             exit();
         }
 

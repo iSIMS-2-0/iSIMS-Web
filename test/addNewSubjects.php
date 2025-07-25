@@ -200,6 +200,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_all_subjects
             // 4th Year, 2nd Term
             ['CSTHES02', 'Computer Science Thesis 2', 3, 4, 2, 0],
             ['INTERN-002', 'Internship 2', 3, 4, 2, 0]
+        ];
+
         try {
             $pdo->beginTransaction();
             foreach ($predefinedSubjects as $subj) {
@@ -215,59 +217,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_all_subjects
         } catch (Exception $e) {
             $pdo->rollBack();
             echo "<span style='color:red'>Error: ".htmlspecialchars($e->getMessage())."</span><br>";
-        }
-                $checkStmt->execute([$code]);
-                
-                if ($checkStmt->rowCount() > 0) {
-                    $subject_id = $checkStmt->fetchColumn();
-                    $skippedCount++;
-                    echo "<span style='color:orange'>⚠ Skipped (already exists): $code - $name</span><br>";
-                    
-                    // Check if curriculum entry exists
-                    $curriculumCheckStmt = $pdo->prepare("SELECT * FROM curriculum WHERE programid = ? AND subjectid = ?");
-                    $curriculumCheckStmt->execute([$program_id_bulk, $subject_id]);
-                    
-                    if ($curriculumCheckStmt->rowCount() == 0) {
-                        // Add to curriculum if not already linked
-                        $curriculumStmt = $pdo->prepare("INSERT INTO curriculum (programid, subjectid, year_level, term_number) VALUES (?, ?, ?, ?)");
-                        $curriculumStmt->execute([$program_id_bulk, $subject_id, $year_level, $term_number]);
-                        echo "<span style='color:blue'>  ➤ Added to curriculum (Year $year_level, Term $term_number)</span><br>";
-                    } else {
-                        // Update existing curriculum entry with year/term if missing
-                        $existingCurriculum = $curriculumCheckStmt->fetch(PDO::FETCH_ASSOC);
-                        if (!$existingCurriculum['year_level'] || !$existingCurriculum['term_number']) {
-                            $updateStmt = $pdo->prepare("UPDATE curriculum SET year_level = ?, term_number = ? WHERE programid = ? AND subjectid = ?");
-                            $updateStmt->execute([$year_level, $term_number, $program_id_bulk, $subject_id]);
-                            echo "<span style='color:blue'>  ➤ Updated curriculum with year/term info</span><br>";
-                        }
-                    }
-                } else {
-                    // Insert new subject
-                    $stmt = $pdo->prepare("INSERT INTO subjects (code, name, units, is_laboratory) VALUES (?, ?, ?, ?)");
-                    $stmt->execute([$code, $name, $units, $is_laboratory]);
-                    $subject_id = $pdo->lastInsertId();
-                    
-                    // Insert into curriculum with year and term
-                    $curriculumStmt = $pdo->prepare("INSERT INTO curriculum (programid, subjectid, year_level, term_number) VALUES (?, ?, ?, ?)");
-                    $curriculumStmt->execute([$program_id_bulk, $subject_id, $year_level, $term_number]);
-                    
-                    $successCount++;
-                    echo "<span style='color:green'>✓ Added: $code - $name ($units units) + curriculum link (Year $year_level, Term $term_number)</span><br>";
-                }
-                
-                $pdo->commit();
-            } catch (Exception $e) {
-                $pdo->rollBack();
-                $errorCount++;
-                echo "<span style='color:red'>✗ Error with $code: " . htmlspecialchars($e->getMessage()) . "</span><br>";
-            }
-        }
-        
-        echo "<br><strong>Summary:</strong><br>";
-        echo "<span style='color:green'>Successfully added: $successCount subjects</span><br>";
-        echo "<span style='color:orange'>Skipped (already exist): $skippedCount subjects</span><br>";
-        if ($errorCount > 0) {
-            echo "<span style='color:red'>Errors: $errorCount subjects</span><br>";
         }
     }
 }

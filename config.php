@@ -2,7 +2,7 @@
 return [
     'host' => '127.0.0.1',
     'db'   => 'isims_new',
-    'user' => 'root',
-    'pass' => ''
+    'user' => 'admin',
+    'pass' => 'StrongPassword123!'
 ];
 ?>

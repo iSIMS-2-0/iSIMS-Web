@@ -1,4 +1,8 @@
-CREATE TABLE students (id int(10) NOT NULL AUTO_INCREMENT, student_number varchar(20) NOT NULL UNIQUE, name varchar(100) NOT NULL, program_id int(10) NOT NULL, sex varchar(10) NOT NULL, gender_disclosure bit(1) NOT NULL, pronouns varchar(20), mobile varchar(20) NOT NULL, landline varchar(20) NOT NULL, email varchar(100) NOT NULL, lot_blk varchar(50) NOT NULL, street varchar(50) NOT NULL, zip_code int(10) NOT NULL, city_municipality varchar(50) NOT NULL, country varchar(20), created_at timestamp NOT NULL, password_hash varchar(255) NOT NULL, family_info_id int(10) NOT NULL, medical_historyid int(10) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE students (
+    id int(10) NOT NULL AUTO_INCREMENT, 
+    student_number varchar(20) NOT NULL UNIQUE,
+     name varchar(100) NOT NULL, program_id int(10) NOT NULL,
+      sex varchar(10) NOT NULL, gender_disclosure bit(1) NOT NULL, pronouns varchar(20), mobile varchar(20) NOT NULL, landline varchar(20) NOT NULL, email varchar(100) NOT NULL, lot_blk varchar(50) NOT NULL, street varchar(50) NOT NULL, zip_code int(10) NOT NULL, city_municipality varchar(50) NOT NULL, country varchar(20), created_at timestamp NOT NULL, password_hash varchar(255) NOT NULL, family_info_id int(10) NOT NULL, medical_historyid int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE subjects (
     id int(10) NOT NULL AUTO_INCREMENT,
     code varchar(20) NOT NULL UNIQUE,
@@ -22,6 +26,12 @@ CREATE TABLE payment_proofs (
     status VARCHAR(50) DEFAULT 'Pending',
     amount decimal(10,2) DEFAULT NULL,
     FOREIGN KEY (student_id) REFERENCES students(id)
+);
+CREATE TABLE school_years (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    school_year VARCHAR(20) NOT NULL,
+    term int(10) NOT NULL,       
+    is_current BOOLEAN DEFAULT 0
 );
 CREATE TABLE grades (id int(10) NOT NULL AUTO_INCREMENT, students_class_id int(10) NOT NULL, grade decimal(4, 2) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE sections (id int(10) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, PRIMARY KEY (id));

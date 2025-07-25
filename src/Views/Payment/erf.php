@@ -63,21 +63,25 @@
             </div>
 
             <!-- pop-up for bank details -->
-            <div class="popUpContainer">
-                <div class="bankDetails">
-                    <div class="bankHeader">
-                        <div class="closeBttn">&times;</div>
-                        <div class="bankTitle"><h2>iACADEMY BANK DETAILS</h2></div>
-                    </div>
+    <div class="mainContainer">
+        <div class="contents">
+            <h1>Electronic Registration Form</h1>
+            <?php 
+                require_once $_SERVER["DOCUMENT_ROOT"] . "/src/Helpers/SchoolYearHelpers.php";
+                $current = getCurrentSchoolYearAndTerm($pdo);
+            ?>
+            <div>
+                <strong>School Year:</strong> <?= htmlspecialchars($current['school_year']) ?>
+                <strong>Term:</strong> <?= htmlspecialchars($current['term']) ?>
+            </div>
+            <div class="erfAndTable">
+            </div>
 
-                    <div class="bankInfo">
-                        <div class="accName">
-                            <h3>Account Name:</h3>
-                            <p>iACADEMY INC.</p>
-                        </div>
-                        <div class="details">
-                            <div class="bank">
-                                <h4>ㅤ</h4>
+            <!-- pop-up for bank details -->
+            <div class="popUpContainer">
+            </div>
+        </div>
+    </div>
                                 <p>SECURITY BANK</p>
                                 <p>METROBANK</p>
                             </div>

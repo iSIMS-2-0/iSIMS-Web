@@ -55,14 +55,11 @@ class RegistrationController {
     }
 
     private function getCurrentAcademicYear() {
-        $currentYear = date('Y');
-        $currentMonth = date('n');
-        
-        // Assuming academic year starts in August (month 8)
-        if ($currentMonth >= 8) {
-            return $currentYear . '-' . ($currentYear + 1);
-        } else {
-            return ($currentYear - 1) . '-' . $currentYear;
+        // use the database
+        $stmt = $this->pdo->query("SELECT school_year FROM school_years WHERE is_current = 1 LIMIT 1");
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
+            return $row['school_year'];
         }
     }
 

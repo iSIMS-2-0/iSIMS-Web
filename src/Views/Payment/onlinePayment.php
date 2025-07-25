@@ -29,6 +29,8 @@
                 </div>
             </div>
 
+            <?php // Tuition is already calculated in the controller as $totalTuition ?>
+
             <form method="post" enctype="multipart/form-data">
                 <table class="payment-history-table">
                     <thead>
@@ -58,13 +60,6 @@
                             <td><?= number_format($totalTuition, 2) ?></td>
                             <td><?= number_format($totalTuition, 2) ?></td>
                             <td>
-                                <?php 
-                                    $isPending = (strtolower($paymentProofStatus ?? '') === 'pending');
-                                    $isReceived = (strtolower($paymentProofStatus ?? '') === 'received');
-                                    $disableUpload = $isPending || $isReceived;
-                                ?>
-                                <input type="file" name="tuition_due_upload" id="tuition-due-upload" accept=".jpg, .jpeg, .png, .pdf" style="display:none;" onchange="this.form.submit()" <?= $disableUpload ? 'disabled' : '' ?>>
-                                <label for="tuition-due-upload" class="<?= $isReceived ? 'received-file-upload__custom' : 'pending-file-upload__custom' ?>" style="cursor:pointer;<?= $disableUpload ? 'opacity:0.5;pointer-events:none;' : '' ?>">Upload</label>
                             </td>
                             <td>
                                 <?php if (!empty($paymentProofStatus)) echo htmlspecialchars($paymentProofStatus); ?>
@@ -86,9 +81,12 @@
                                     <td>
                                         <?php 
                                             $rowStatus = strtolower($row['status']);
-                                            $uploadClass = $rowStatus === 'received' ? 'received-file-upload__custom' : 'pending-file-upload__custom';
+                                            $isReceived = ($rowStatus === 'received');
+                                            $disableUpload = $isReceived;
+                                            $inputId = 'tuition-due-upload-' . $row['id']; // unique ID per row
                                         ?>
-                                        <label class="<?= $uploadClass ?>" style="opacity:0.5;pointer-events:none;cursor:not-allowed;">Upload</label>
+                                        <input type="file" name="tuition_due_upload_<?= $row['id'] ?>" id="<?= $inputId ?>" accept=".jpg, .jpeg, .png, .pdf" style="display:none;" onchange="this.form.submit()" <?= $disableUpload ? 'disabled' : '' ?>>
+                                        <label for="<?= $inputId ?>" class="<?= $isReceived ? 'received-file-upload__custom' : 'pending-file-upload__custom' ?>" style="cursor:pointer;<?= $disableUpload ? 'opacity:0.5;pointer-events:none;' : '' ?>">Upload</label>
                                     </td>
                                     <td><?= htmlspecialchars(ucfirst($row['status'])) ?></td>
                                 </tr>
@@ -98,6 +96,16 @@
                 </table>
             </form>
         </div>
+<?php
+                // DEBUG: Show current term, school year, and registered subjects
+                echo '<div style="background:#ffe;border:1px solid #cc0;padding:8px;margin-bottom:10px;">';
+                echo '<strong>DEBUG:</strong><br>';
+                echo 'Current School Year: ' . htmlspecialchars($currentSchoolYear) . '<br>';
+                echo 'Current Term: ' . htmlspecialchars($currentTerm) . '<br>';
+                echo 'Registered Subjects Count: ' . (is_array($registeredSubjects) ? count($registeredSubjects) : 0) . '<br>';
+                echo 'Total Tuition: ' . htmlspecialchars($totalTuition) . '<br>';
+                echo '</div>';
+?>
     </div>
 </body>
 </html>

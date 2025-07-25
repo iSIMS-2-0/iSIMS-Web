@@ -46,8 +46,18 @@
                 </thead>
 
                 <tbody class="payment-history-table__body">
-                    <?php if (!empty($paymentHistory)): ?>
-                        <?php foreach ($paymentHistory as $row): ?>
+                    <?php
+                    $approvedPayments = [];
+                    if (!empty($paymentHistory)) {
+                        foreach ($paymentHistory as $row) {
+                            $status = strtolower($row['status']);
+                            if ($status === 'approved' || $status === 'received') {
+                                $approvedPayments[] = $row;
+                            }
+                        }
+                    }
+                    if (!empty($approvedPayments)):
+                        foreach ($approvedPayments as $row): ?>
                             <tr>
                                 <td><?= htmlspecialchars($row['school_year']) ?></td>
                                 <td><?= htmlspecialchars($row['term']) ?></td>
@@ -59,7 +69,13 @@
                                 <td></td>
                                 <td><?= htmlspecialchars(ucfirst($row['status'])) ?></td>
                             </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach;
+                    elseif (!empty($paymentHistory)):
+                        // There are payments, but none approved
+                        ?>
+                        <tr>
+                            <td colspan="9" style="text-align:center;">No approved payment history found.</td>
+                        </tr>
                     <?php else: ?>
                         <tr>
                             <td colspan="9" style="text-align:center;">No payment history found.</td>

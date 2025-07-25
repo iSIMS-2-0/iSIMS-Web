@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../Helpers/SchoolYearHelpers.php';
 class PaymentController {
     private $pdo;
 
@@ -16,6 +17,8 @@ class PaymentController {
         }
 
         // Render the ERF view
+        $current = getCurrentSchoolYearAndTerm($this->pdo);
+        // Pass $current to the view as needed
         require __DIR__ . '/../Views/Payment/erf.php';
     }
 
@@ -37,6 +40,8 @@ class PaymentController {
 
         // Get student information
         $student = $userModel->findByStudentNumber($_SESSION['student_number']);
+        $current = getCurrentSchoolYearAndTerm($this->pdo);
+        // Use $current['school_year'] and $current['term'] for queries
 
         // Fetch all payment history for this student
         $stmt = $this->pdo->prepare("SELECT * FROM payment_proofs WHERE student_id = ? ORDER BY upload_date DESC");
@@ -68,54 +73,32 @@ class PaymentController {
         $stmt->execute([$student_id]);
         $paymentHistory = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Handle file upload for proof of payment
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['tuition_due_upload']) && $_FILES['tuition_due_upload']['error'] === UPLOAD_ERR_OK) {
-            $fileTmpPath = $_FILES['tuition_due_upload']['tmp_name'];
-            $fileName = $_FILES['tuition_due_upload']['name'];
-            $fileType = $_FILES['tuition_due_upload']['type'];
-            $fileSize = $_FILES['tuition_due_upload']['size'];
-            $fileContent = file_get_contents($fileTmpPath);
-
-            $currentEnrollment = $registrationModel->getCurrentEnrollment($student_id);
-            $currentSchoolYear = $currentEnrollment['school_year'] ?? '';
-            $currentTerm = $currentEnrollment['term'] ?? '';
-            $paymentDescription = 'Tuition Fee';
-
-            // Calculate tuition amount for this upload
-            $registeredSubjects = $registrationModel->getRegisteredSubjects($student_id);
-            $labFee = 6620;
-            $tuitionPerSub = 7692;
-            $miscFee = 19920;
-            $labCount = 0;
-            $subCount = 0;
-            if (!empty($registeredSubjects)) {
-                foreach ($registeredSubjects as $subject) {
-                    if (!empty($subject['is_laboratory']) && $subject['is_laboratory']) {
-                        $labCount++;
-                    }
-                    $subCount++;
+        // Handle file upload for any payment proof row (dynamic input names)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES)) {
+            foreach ($_FILES as $inputName => $fileInfo) {
+                if (strpos($inputName, 'tuition_due_upload_') === 0 && $fileInfo['error'] === UPLOAD_ERR_OK) {
+                    // Extract payment proof ID from input name
+                    $proofId = (int)str_replace('tuition_due_upload_', '', $inputName);
+                    $fileTmpPath = $fileInfo['tmp_name'];
+                    $fileName = $fileInfo['name'];
+                    $fileType = $fileInfo['type'];
+                    $fileSize = $fileInfo['size'];
+                    $fileContent = file_get_contents($fileTmpPath);
+                    // Update the payment_proofs row with new file and set status to Pending
+                    $updateStmt = $this->pdo->prepare("UPDATE payment_proofs SET file_name = ?, file_type = ?, file_size = ?, file_blob = ?, status = ?, upload_date = NOW() WHERE id = ?");
+                    $updateStmt->execute([
+                        $fileName,
+                        $fileType,
+                        $fileSize,
+                        $fileContent,
+                        'Pending',
+                        $proofId
+                    ]);
+                    // Redirect to avoid form resubmission
+                    header("Location: /public/index.php?page=onlinepayment");
+                    exit();
                 }
-                $totalTuition = ($labFee * $labCount) + ($tuitionPerSub * $subCount) + $miscFee;
-            } else {
-                $totalTuition = 0;
             }
-
-            $stmt = $this->pdo->prepare("INSERT INTO payment_proofs (student_id, payment_description, school_year, term, amount, file_name, file_type, file_size, file_blob, status, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
-            $stmt->execute([
-                $student_id,
-                $paymentDescription,
-                $currentSchoolYear,
-                $currentTerm,
-                $totalTuition,
-                $fileName,
-                $fileType,
-                $fileSize,
-                $fileContent,
-                'Pending'
-            ]);
-            // Redirect to avoid form resubmission on refresh (POST-Redirect-GET)
-            header("Location: /public/index.php?page=onlinePayment");
-            exit();
         }
 
         // Get student information
@@ -130,8 +113,23 @@ class PaymentController {
         $yearLevel = $currentEnrollment['year_level'] ?? '';
         $studentStatus = $registrationModel->getStudentStatus($student_id) ?? '';
 
-        // Get student's registered subjects for current term
-        $registeredSubjects = $registrationModel->getRegisteredSubjects($student_id);
+
+        // Filter registeredSubjects for current term and school year only
+        $allSubjects = $registrationModel->getRegisteredSubjects($student_id);
+        $registeredSubjects = [];
+        if (!empty($allSubjects) && !empty($currentSchoolYear) && !empty($currentTerm)) {
+            foreach ($allSubjects as $subject) {
+                // Normalize term for comparison (int or string)
+                $subjectTerm = isset($subject['term']) ? (is_numeric($subject['term']) ? (int)$subject['term'] : $subject['term']) : null;
+                $currentTermNorm = is_numeric($currentTerm) ? (int)$currentTerm : $currentTerm;
+                if (
+                    isset($subject['school_year']) && $subject['school_year'] == $currentSchoolYear &&
+                    $subjectTerm !== null && $subjectTerm == $currentTermNorm
+                ) {
+                    $registeredSubjects[] = $subject;
+                }
+            }
+        }
 
         // Fetch latest payment proof for this student, current term and school year
         $latestProofStatus = '';
@@ -162,6 +160,29 @@ class PaymentController {
             $totalTuition = ($labFee * $labCount) + ($tuitionPerSub * $subCount) + $miscFee;
         } else {
             $totalTuition = 0;
+        }
+
+        // Insert or update the Tuition Fee row in payment_proofs
+        if (!empty($student_id) && !empty($currentSchoolYear) && !empty($currentTerm)) {
+            // Check if a Tuition Fee row exists for this student/term/year
+            $stmt = $this->pdo->prepare("SELECT id, amount FROM payment_proofs WHERE student_id = ? AND school_year = ? AND term = ? AND payment_description = 'Tuition Fee' LIMIT 1");
+            $stmt->execute([$student_id, $currentSchoolYear, $currentTerm]);
+            $tuitionRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($tuitionRow) {
+                // Update only the amount if it has changed (do not touch file columns)
+                if ((float)$tuitionRow['amount'] !== (float)$totalTuition) {
+                    $stmt = $this->pdo->prepare("UPDATE payment_proofs SET amount = ? WHERE id = ?");
+                    $stmt->execute([$totalTuition, $tuitionRow['id']]);
+                }
+            } else {
+                // Insert new Tuition Fee row (status: Due) with safe placeholders for file columns (NOT NULL)
+                $safeFileName = 'tuition_placeholder.pdf';
+                $safeFileType = 'application/pdf';
+                $safeFileSize = 1;
+                $safeFileBlob = ' '; // single space as a non-empty blob
+                $stmt = $this->pdo->prepare("INSERT INTO payment_proofs (student_id, payment_description, school_year, term, amount, status, upload_date, file_name, file_type, file_size, file_blob) VALUES (?, 'Tuition Fee', ?, ?, ?, 'Due', NOW(), ?, ?, ?, ?)");
+                $stmt->execute([$student_id, $currentSchoolYear, $currentTerm, $totalTuition, $safeFileName, $safeFileType, $safeFileSize, $safeFileBlob]);
+            }
         }
 
         // Make variables available to the view

@@ -16,10 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['issue_payment'])) {
     $desc = $_POST['description'] ?? '';
     $amount = $_POST['amount'] ?? '';
     $school_year = $_POST['school_year'] ?? '';
-    $term = $_POST['term'] ?? '';
-    if ($student_id && $desc && $amount && $school_year && $term) {
-        $stmt = $pdo->prepare("INSERT INTO payment_proofs (student_id, payment_description, school_year, term, amount, status, upload_date) VALUES (?, ?, ?, ?, ?, ?, NOW())");
-        $stmt->execute([$student_id, $desc, $school_year, $term, $amount, 'Pending']);
+    $term = isset($_POST['term']) ? (int)$_POST['term'] : '';
+    if ($student_id && $desc && $amount && $school_year && $term !== '') {
+        // Safe placeholders for NOT NULL file columns
+        $safeFileName = 'admin_placeholder.pdf';
+        $safeFileType = 'application/pdf';
+        $safeFileSize = 1;
+        $safeFileBlob = ' ';
+        $stmt = $pdo->prepare("INSERT INTO payment_proofs (student_id, payment_description, school_year, term, amount, file_name, file_type, file_size, file_blob, status, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+        $stmt->execute([$student_id, $desc, $school_year, $term, $amount, $safeFileName, $safeFileType, $safeFileSize, $safeFileBlob, 'Pending']);
         $message = "<span style='color:green'>Payment issued to student ID $student_id</span>";
     } else {
         $message = "<span style='color:red'>All fields are required.</span>";
@@ -63,7 +68,7 @@ $payments = $pdo->query("SELECT p.*, s.student_number, s.name FROM payment_proof
         Description: <input name="description" required><br>
         Amount: <input name="amount" type="number" step="0.01" required><br>
         School Year: <input name="school_year" required placeholder="e.g. 2025-2026"><br>
-        Term: <input name="term" required placeholder="e.g. 1st Term"><br>
+        Term: <input name="term" type="number" min="1" max="3" required placeholder="e.g. 1 (integer)"><br>
         <button type="submit" name="issue_payment">Issue Payment</button>
     </form>
 

@@ -96,16 +96,6 @@
                 </table>
             </form>
         </div>
-<?php
-                // DEBUG: Show current term, school year, and registered subjects
-                echo '<div style="background:#ffe;border:1px solid #cc0;padding:8px;margin-bottom:10px;">';
-                echo '<strong>DEBUG:</strong><br>';
-                echo 'Current School Year: ' . htmlspecialchars($currentSchoolYear) . '<br>';
-                echo 'Current Term: ' . htmlspecialchars($currentTerm) . '<br>';
-                echo 'Registered Subjects Count: ' . (is_array($registeredSubjects) ? count($registeredSubjects) : 0) . '<br>';
-                echo 'Total Tuition: ' . htmlspecialchars($totalTuition) . '<br>';
-                echo '</div>';
-?>
     </div>
 </body>
 </html>

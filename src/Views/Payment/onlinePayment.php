@@ -49,23 +49,6 @@
                     </thead>
 
                     <tbody class="payment-history-table__body">
-                        <!-- Tuition Calculation Row -->
-                        <tr>
-                            <td><?= htmlspecialchars($currentSchoolYear ?? '') ?></td>
-                            <td><?= htmlspecialchars($currentTerm ?? '') ?></td>
-                            <td><?= htmlspecialchars($yearLevel ?? '') ?></td>
-                            <td></td>
-                            <td>TOTAL AMOUNT DUE</td>
-                            <td></td>
-                            <td><?= number_format($totalTuition, 2) ?></td>
-                            <td><?= number_format($totalTuition, 2) ?></td>
-                            <td>
-                            </td>
-                            <td>
-                                <?php if (!empty($paymentProofStatus)) echo htmlspecialchars($paymentProofStatus); ?>
-                            </td>
-                        </tr>
-
                         <!-- Previous Payments Rows (from paymentHistory) -->
                         <?php if (!empty($paymentHistory)): ?>
                             <?php foreach ($paymentHistory as $row): ?>

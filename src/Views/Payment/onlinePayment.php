@@ -63,13 +63,15 @@
                                     <td></td>
                                     <td>
                                         <?php 
-                                            $rowStatus = strtolower($row['status']);
-                                            $isReceived = ($rowStatus === 'received');
-                                            $disableUpload = $isReceived;
                                             $inputId = 'tuition-due-upload-' . $row['id']; // unique ID per row
+                                            $isPlaceholder = isset($row['file_name'], $row['file_type']) && $row['file_name'] === 'tuition_placeholder.pdf' && $row['file_type'] === 'application/pdf';
+                                            $isReceived = isset($row['status']) && strtolower($row['status']) === 'received';
+                                            $isPending = isset($row['status']) && strtolower($row['status']) === 'pending';
+                                            // Lock if received or file is placeholder; unlock only if pending and not placeholder
+                                            $disableUpload = $isReceived || $isPlaceholder ? true : !$isPending;
                                         ?>
                                         <input type="file" name="tuition_due_upload_<?= $row['id'] ?>" id="<?= $inputId ?>" accept=".jpg, .jpeg, .png, .pdf" style="display:none;" onchange="this.form.submit()" <?= $disableUpload ? 'disabled' : '' ?>>
-                                        <label for="<?= $inputId ?>" class="<?= $isReceived ? 'received-file-upload__custom' : 'pending-file-upload__custom' ?>" style="cursor:pointer;<?= $disableUpload ? 'opacity:0.5;pointer-events:none;' : '' ?>">Upload</label>
+                                        <label for="<?= $inputId ?>" class="<?= $disableUpload ? 'received-file-upload__custom' : 'pending-file-upload__custom' ?>" style="cursor:pointer;<?= $disableUpload ? 'opacity:0.5;pointer-events:none;' : '' ?>">Upload</label>
                                     </td>
                                     <td><?= htmlspecialchars(ucfirst($row['status'])) ?></td>
                                 </tr>

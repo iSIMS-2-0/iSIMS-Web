@@ -180,7 +180,7 @@ class PaymentController {
                 $safeFileType = 'application/pdf';
                 $safeFileSize = 1;
                 $safeFileBlob = ' '; // single space as a non-empty blob
-                $stmt = $this->pdo->prepare("INSERT INTO payment_proofs (student_id, payment_description, school_year, term, amount, status, upload_date, file_name, file_type, file_size, file_blob) VALUES (?, 'Tuition Fee', ?, ?, ?, 'Due', NOW(), ?, ?, ?, ?)");
+                $stmt = $this->pdo->prepare("INSERT INTO payment_proofs (student_id, payment_description, school_year, term, amount, status, upload_date, file_name, file_type, file_size, file_blob) VALUES (?, 'Tuition Fee', ?, ?, ?, 'Pending', NOW(), ?, ?, ?, ?)");
                 $stmt->execute([$student_id, $currentSchoolYear, $currentTerm, $totalTuition, $safeFileName, $safeFileType, $safeFileSize, $safeFileBlob]);
             }
         }

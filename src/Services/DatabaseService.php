@@ -12,7 +12,7 @@ class DatabaseService {
         $this->pdo = new PDO($dsn, $config['user'], $config['pass']);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
-
+    // A Singleton Instance
     public static function getInstance(): DatabaseService {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -23,8 +23,4 @@ class DatabaseService {
     public function getConnection(): PDO {
         return $this->pdo;
     }
-
-    // Prevent cloning and serialization
-    private function __clone() {}
-    public function __wakeup() {}
 }

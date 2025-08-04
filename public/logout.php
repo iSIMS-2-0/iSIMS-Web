@@ -1,8 +1,8 @@
 <?php
-session_start();
+require_once __DIR__ . '/../src/Services/AuthService.php';
+
 sleep(1); // Add a 1-second delay
-session_unset(); // Unset all session variables
-session_destroy(); // Destroy the session
+AuthService::logout();
 header("Location: /public/index.php?page=login"); // Redirect to the login page
 exit();
 ?>

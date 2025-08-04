@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../Models/Schedule.php';
 require_once __DIR__ . '/../Models/Grades.php';
 require_once __DIR__ . '/../Models/User.php';
+require_once __DIR__ . '/../Services/AuthService.php';
+
 class ProfileController {
     private $pdo;
 
@@ -10,23 +12,16 @@ class ProfileController {
     }
 
     public function showProfile() {
-        session_start();
-        if (!isset($_SESSION['student_id'])) {
-            header("Location: /public/index.php?page=login");
-            exit();
-        }
+        AuthService::requireAuth();
         require __DIR__ . '/../Views/Profile.php';
     }
 
 public function showStudentProfile() {
-    session_start();
-    if (!isset($_SESSION['student_id'])) {
-        header("Location: /public/index.php?page=login");
-        exit();
-    }
+    AuthService::requireAuth();
+    $currentUser = AuthService::getCurrentUser();
 
     $userModel = new User($this->pdo);
-    $user = $userModel->findByStudentNumber($_SESSION['student_number']);
+    $user = $userModel->findByStudentNumber($currentUser['student_number']);
     $family = $userModel->findFamilyInfoByID($user['family_info_id']);
     $medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
     $program = $userModel->findProgramById($user['id']);
@@ -75,7 +70,7 @@ public function showStudentProfile() {
             $error = "Failed to update profile.";
         }
         // Refresh data after update
-        $user = $userModel->findByStudentNumber($_SESSION['student_number']);
+        $user = $userModel->findByStudentNumber($currentUser['student_number']);
         $family = $userModel->findFamilyInfoByID($user['family_info_id']);
         $medical = $userModel->findMedicalHistoryByID($user['medical_historyid']);
     }
@@ -84,12 +79,9 @@ public function showStudentProfile() {
 }
     
     public function showGrades() {
-        session_start();
-        if (!isset($_SESSION['student_id'])) {
-            header("Location: /public/index.php?page=login");
-            exit();
-        }
-        $student_id = $_SESSION['student_id'];
+        AuthService::requireAuth();
+        $currentUser = AuthService::getCurrentUser();
+        $student_id = $currentUser['student_id'];
         $selected_sy = $_GET['schoolYear'] ?? date('Y') . '-' . (date('Y')+1);
         $selected_term = $_GET['term'] ?? '1st Term';
         
@@ -115,13 +107,9 @@ public function showStudentProfile() {
     }
 
     public function showSchedule() {
-        session_start();
-        if (!isset($_SESSION['student_id'])) {
-            header("Location: /public/index.php?page=login");
-            exit();
-        }
-        
-        $student_id = $_SESSION['student_id'] ?? null;
+        AuthService::requireAuth();
+        $currentUser = AuthService::getCurrentUser();
+        $student_id = $currentUser['student_id'];
         $selected_sy = $_GET['schoolYear'] ?? date('Y') . '-' . (date('Y')+1);
         $selected_term = $_GET['term'] ?? '1st Term';
 

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../Models/Curriculum.php';
+require_once __DIR__ . '/../Services/AuthService.php';
 
 class CurriculumController {
     private $pdo;
@@ -9,14 +10,11 @@ class CurriculumController {
     }
 
     public function showCurriculum() {
-        session_start();
-        if (!isset($_SESSION['student_id'])) {
-            header("Location: /public/index.php?page=login");
-            exit();
-        }
+        AuthService::requireAuth();
+        $currentUser = AuthService::getCurrentUser();
+        $student_id = $currentUser['student_id'];
 
         $curriculumModel = new Curriculum($this->pdo);
-        $student_id = $_SESSION['student_id'];
 
         // Get student's program
         $student = $curriculumModel->getStudentProgram($student_id);

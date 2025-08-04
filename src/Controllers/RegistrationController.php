@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../Models/Registration.php';
 require_once __DIR__ . '/../Models/User.php';
+require_once __DIR__ . '/../Services/AuthService.php';
 
 class RegistrationController {
     private $pdo;
@@ -10,18 +11,15 @@ class RegistrationController {
     }
 
     public function showManageSection() {
-        session_start();
-        if (!isset($_SESSION['student_id'])) {
-            header("Location: /public/index.php?page=login");
-            exit();
-        }
+        AuthService::requireAuth();
+        $currentUser = AuthService::getCurrentUser();
+        $student_id = $currentUser['student_id'];
 
         $registrationModel = new Registration($this->pdo);
         $userModel = new User($this->pdo);
-        $student_id = $_SESSION['student_id'];
 
         // Get student information
-        $student = $userModel->findByStudentNumber($_SESSION['student_number']);
+        $student = $userModel->findByStudentNumber($currentUser['student_number']);
         $program = $userModel->findProgramById($student['id']);
         
         // Get program name properly 

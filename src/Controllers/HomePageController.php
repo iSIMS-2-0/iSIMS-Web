@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../Services/AuthService.php';
 
 class HomePageController {
     private $pdo;
@@ -8,36 +9,17 @@ class HomePageController {
     }
 
     public function showHomePage() {
-        // Check if the user is logged in
-        session_start();
-        if (!isset($_SESSION['student_number'])) {
-            // If not logged in, redirect to the login page
-            header("Location: /public/index.php?page=login");
+        // Check authentication using the service
+        AuthService::requireAuth();
+        
+        // Check for session timeout (optional)
+        if (AuthService::checkSessionTimeout()) {
+            header("Location: /public/index.php?page=login&message=Session expired. Please log in again.");
             exit();
         }
-
-        // idk maybe process some shit here
-        // but for now
-        // Render the home page view
         
-        // session_start();
-        // // Check if the user is logged in
-        // if (!isset($_SESSION['user_id'])) {
-        //     header("Location: /public/index.php?message=Please log in to access this page.");
-        //     exit();
-        // }
-
-        // // Check for session timeout
-        // if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 600)) { // 600 seconds = 10 minutes
-        //     // Session has expired
-        //     session_unset();
-        //     session_destroy();
-        //     header("Location: /public/index.php?page=login?message=Session expired. Please log in again.");
-        //     exit();
-        // }
-        // Update last activity time
-        // $_SESSION['last_activity'] = time();
-       require __DIR__ . '/../Views/HomePage.php';
+        // Render the home page view
+        require __DIR__ . '/../Views/HomePage.php';
     }
 }
 

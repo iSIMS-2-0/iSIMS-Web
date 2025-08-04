@@ -1,21 +1,15 @@
 <?php
+require_once __DIR__ . '/../Services/AuthService.php';
 
 class ConcernsController {
-        private $pdo;
+    private $pdo;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
     public function showConcerns() {
-        session_start();
-        if (!isset($_SESSION['student_number'])) {
-            // If not logged in, redirect to the login page
-            header("Location: /public/index.php?page=login");
-            exit();
-        }
-
-        // Render the ERF view
+        AuthService::requireAuth();
         require __DIR__ . '/../Views/ConcernsFeedback/concernsFeedback.php';
     }
 }
